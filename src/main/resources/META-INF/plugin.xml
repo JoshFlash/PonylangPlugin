@@ -1,8 +1,8 @@
-<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>com.github.joshflash.ponylangplugin</id>
-    <name>PonylangPlugin</name>
-    <vendor>joshflash</vendor>
+    <name>Pony Language Plugin</name>
+    <vendor>Josh Flash</vendor>
+    <description>Support for the Pony programming language</description>
 
     <depends>com.intellij.modules.platform</depends>
 
@@ -10,6 +10,12 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow factoryClass="com.github.joshflash.ponylangplugin.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <fileType
+                name="Pony"
+                implementationClass="com.github.joshflash.ponylangplugin.language.PonyFileType"
+                fieldName="INSTANCE"
+                language="Pony"
+                extensions="pony"/>
     </extensions>
 
     <applicationListeners>

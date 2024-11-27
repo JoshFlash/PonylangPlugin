@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <!-- Circle background -->
+    <circle cx="8" cy="8" r="7" fill="#0077CC"/>
+    
+    <!-- Simple house silhouette -->
+    <path d="M4 11V7L8 4L12 7V11H9V8H7V11H4Z" 
+          fill="black"/>
+</svg>
