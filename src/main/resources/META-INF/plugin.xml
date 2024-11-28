@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>com.github.joshflash.ponylangplugin</id>
-    <name>Pony Language Plugin</name>
+    <name>Ponylang</name>
     <vendor>Josh Flash</vendor>
     <description>Support for the Pony programming language</description>
 
@@ -16,6 +16,9 @@
                 fieldName="INSTANCE"
                 language="Pony"
                 extensions="pony"/>
+        <lang.parserDefinition
+                language="Pony"
+                implementationClass="com.github.joshflash.ponylangplugin.language.PonyParserDefinition"/>
     </extensions>
 
     <applicationListeners>
