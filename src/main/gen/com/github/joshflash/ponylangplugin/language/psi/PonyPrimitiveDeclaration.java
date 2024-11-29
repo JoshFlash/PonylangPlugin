@@ -7,16 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface PonyPrimitiveDeclaration extends PsiElement {
 
-  @Nullable
-  PonyDocString getDocString();
+  @NotNull
+  PonyPrimitiveBody getPrimitiveBody();
 
   @NotNull
-  List<PonyMethod> getMethodList();
-
-  @Nullable
-  PonyTypeParams getTypeParams();
-
-  @NotNull
-  PsiElement getId();
+  PsiElement getIdentifier();
 
 }

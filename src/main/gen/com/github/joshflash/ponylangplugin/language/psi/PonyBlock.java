@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface PonyBlock extends PsiElement {
 
   @NotNull
-  List<PonyExpr> getExprList();
+  List<PonyStatement> getStatementList();
 
 }

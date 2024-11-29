@@ -29,8 +29,8 @@ public class PonyMatchCaseImpl extends ASTWrapperPsiElement implements PonyMatch
 
   @Override
   @NotNull
-  public PonyExpr getExpr() {
-    return findNotNullChildByClass(PonyExpr.class);
+  public PonyBlock getBlock() {
+    return findNotNullChildByClass(PonyBlock.class);
   }
 
   @Override

@@ -29,50 +29,14 @@ public class PonyActorDeclarationImpl extends ASTWrapperPsiElement implements Po
 
   @Override
   @NotNull
-  public List<PonyBehavior> getBehaviorList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyBehavior.class);
+  public PonyActorBody getActorBody() {
+    return findNotNullChildByClass(PonyActorBody.class);
   }
 
   @Override
   @NotNull
-  public List<PonyConstructor> getConstructorList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyConstructor.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyDocString getDocString() {
-    return findChildByClass(PonyDocString.class);
-  }
-
-  @Override
-  @NotNull
-  public List<PonyField> getFieldList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyField.class);
-  }
-
-  @Override
-  @NotNull
-  public List<PonyMethod> getMethodList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyMethod.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyTypeList getTypeList() {
-    return findChildByClass(PonyTypeList.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyTypeParams getTypeParams() {
-    return findChildByClass(PonyTypeParams.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getId() {
-    return findNotNullChildByType(ID);
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

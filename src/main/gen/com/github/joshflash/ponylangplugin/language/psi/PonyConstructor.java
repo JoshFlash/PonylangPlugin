@@ -10,16 +10,10 @@ public interface PonyConstructor extends PsiElement {
   @NotNull
   PonyBlock getBlock();
 
-  @Nullable
-  PonyCapability getCapability();
-
-  @Nullable
-  PonyDocString getDocString();
+  @NotNull
+  PonyParameterList getParameterList();
 
   @NotNull
-  PonyParamList getParamList();
-
-  @Nullable
-  PsiElement getId();
+  PsiElement getIdentifier();
 
 }

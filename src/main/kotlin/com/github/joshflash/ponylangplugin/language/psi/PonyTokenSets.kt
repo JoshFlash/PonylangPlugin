@@ -1,33 +1,24 @@
 package com.github.joshflash.ponylangplugin.language.psi
 
+import com.github.joshflash.ponylangplugin.language.psi.PonyTypes.*
 import com.intellij.psi.tree.TokenSet
 
 interface PonyTokenSets {
     companion object {
-        val IDENTIFIERS = TokenSet.create(PonyTypes.ID)
-        val COMMENTS = TokenSet.create(PonyTypes.LINE_COMMENT, PonyTypes.BLOCK_COMMENT)
-        val LITERALS = TokenSet.create(
-            PonyTypes.STRING,
-            PonyTypes.NUMBER,
-            PonyTypes.BOOLEAN_LITERAL,
-            PonyTypes.STRING_LITERAL
+        val KEYWORDS: TokenSet = TokenSet.create(
+            KW_ACTOR, KW_CLASS, KW_TRAIT, KW_PRIMITIVE, KW_FUN, KW_BE, KW_NEW,
+            KW_LET, KW_VAR, KW_EMBED, KW_IS, KW_TRY, KW_ELSE, KW_END, KW_FOR,
+            KW_IN, KW_MATCH, KW_RECOVER, KW_CONSUME, KW_ISO, KW_REF, KW_VAL
         )
-        val DECLARATIONS = TokenSet.create(
-            PonyTypes.CLASS_DECLARATION,
-            PonyTypes.ACTOR_DECLARATION,
-            PonyTypes.PRIMITIVE_DECLARATION,
-            PonyTypes.TRAIT_DECLARATION,
-            PonyTypes.INTERFACE_DECLARATION,
-            PonyTypes.USE_DECLARATION,
-            PonyTypes.EXTERNAL_DECLARATION
+
+        val OPERATORS: TokenSet = TokenSet.create(
+            ASSIGNMENT, PLUS, MINUS, MULT, DIV, EQUALS, NOT_EQUALS,
+            LESS_THAN, GREATER_THAN, LESS_EQUAL, GREATER_EQUAL
         )
-        val EXPRESSIONS = TokenSet.create(
-            PonyTypes.EXPR,
-            PonyTypes.IF_EXPR,
-            PonyTypes.MATCH_EXPR,
-            PonyTypes.TRY_EXPR,
-            PonyTypes.RECOVER_EXPR,
-            PonyTypes.CONSUME_EXPR
+
+        val DELIMITERS: TokenSet = TokenSet.create(
+            LEFT_PAREN, RIGHT_PAREN, LEFT_BRACKET, RIGHT_BRACKET, COMMA, DOT,
+            SEMICOLON, COLON
         )
     }
 }

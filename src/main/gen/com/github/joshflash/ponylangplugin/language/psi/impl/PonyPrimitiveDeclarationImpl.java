@@ -28,27 +28,15 @@ public class PonyPrimitiveDeclarationImpl extends ASTWrapperPsiElement implement
   }
 
   @Override
-  @Nullable
-  public PonyDocString getDocString() {
-    return findChildByClass(PonyDocString.class);
+  @NotNull
+  public PonyPrimitiveBody getPrimitiveBody() {
+    return findNotNullChildByClass(PonyPrimitiveBody.class);
   }
 
   @Override
   @NotNull
-  public List<PonyMethod> getMethodList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyMethod.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyTypeParams getTypeParams() {
-    return findChildByClass(PonyTypeParams.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getId() {
-    return findNotNullChildByType(ID);
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

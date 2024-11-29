@@ -29,20 +29,14 @@ public class PonyLiteralImpl extends ASTWrapperPsiElement implements PonyLiteral
 
   @Override
   @Nullable
-  public PonyBooleanLiteral getBooleanLiteral() {
-    return findChildByClass(PonyBooleanLiteral.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyStringLiteral getStringLiteral() {
-    return findChildByClass(PonyStringLiteral.class);
-  }
-
-  @Override
-  @Nullable
   public PsiElement getNumber() {
     return findChildByType(NUMBER);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getString() {
+    return findChildByType(STRING);
   }
 
 }

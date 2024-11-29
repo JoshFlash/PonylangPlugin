@@ -29,26 +29,8 @@ public class PonyPrimaryImpl extends ASTWrapperPsiElement implements PonyPrimary
 
   @Override
   @Nullable
-  public PonyBlock getBlock() {
-    return findChildByClass(PonyBlock.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyConsumeExpr getConsumeExpr() {
-    return findChildByClass(PonyConsumeExpr.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyExpr getExpr() {
-    return findChildByClass(PonyExpr.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyIfExpr getIfExpr() {
-    return findChildByClass(PonyIfExpr.class);
+  public PonyExpression getExpression() {
+    return findChildByClass(PonyExpression.class);
   }
 
   @Override
@@ -59,26 +41,8 @@ public class PonyPrimaryImpl extends ASTWrapperPsiElement implements PonyPrimary
 
   @Override
   @Nullable
-  public PonyMatchExpr getMatchExpr() {
-    return findChildByClass(PonyMatchExpr.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyRecoverExpr getRecoverExpr() {
-    return findChildByClass(PonyRecoverExpr.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyTryExpr getTryExpr() {
-    return findChildByClass(PonyTryExpr.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getId() {
-    return findChildByType(ID);
+  public PonyQualifiedIdentifier getQualifiedIdentifier() {
+    return findChildByClass(PonyQualifiedIdentifier.class);
   }
 
 }

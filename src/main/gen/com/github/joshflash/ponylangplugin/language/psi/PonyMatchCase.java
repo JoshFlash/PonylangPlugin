@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface PonyMatchCase extends PsiElement {
 
   @NotNull
-  PonyExpr getExpr();
+  PonyBlock getBlock();
 
   @NotNull
   PonyPattern getPattern();

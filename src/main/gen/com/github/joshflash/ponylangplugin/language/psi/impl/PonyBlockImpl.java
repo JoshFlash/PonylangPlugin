@@ -29,8 +29,8 @@ public class PonyBlockImpl extends ASTWrapperPsiElement implements PonyBlock {
 
   @Override
   @NotNull
-  public List<PonyExpr> getExprList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyExpr.class);
+  public List<PonyStatement> getStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyStatement.class);
   }
 
 }

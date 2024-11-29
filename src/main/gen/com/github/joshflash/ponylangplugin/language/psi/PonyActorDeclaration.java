@@ -8,27 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface PonyActorDeclaration extends PsiElement {
 
   @NotNull
-  List<PonyBehavior> getBehaviorList();
+  PonyActorBody getActorBody();
 
   @NotNull
-  List<PonyConstructor> getConstructorList();
-
-  @Nullable
-  PonyDocString getDocString();
-
-  @NotNull
-  List<PonyField> getFieldList();
-
-  @NotNull
-  List<PonyMethod> getMethodList();
-
-  @Nullable
-  PonyTypeList getTypeList();
-
-  @Nullable
-  PonyTypeParams getTypeParams();
-
-  @NotNull
-  PsiElement getId();
+  PsiElement getIdentifier();
 
 }

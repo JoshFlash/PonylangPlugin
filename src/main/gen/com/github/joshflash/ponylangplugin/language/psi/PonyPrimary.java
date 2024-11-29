@@ -8,30 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface PonyPrimary extends PsiElement {
 
   @Nullable
-  PonyBlock getBlock();
-
-  @Nullable
-  PonyConsumeExpr getConsumeExpr();
-
-  @Nullable
-  PonyExpr getExpr();
-
-  @Nullable
-  PonyIfExpr getIfExpr();
+  PonyExpression getExpression();
 
   @Nullable
   PonyLiteral getLiteral();
 
   @Nullable
-  PonyMatchExpr getMatchExpr();
-
-  @Nullable
-  PonyRecoverExpr getRecoverExpr();
-
-  @Nullable
-  PonyTryExpr getTryExpr();
-
-  @Nullable
-  PsiElement getId();
+  PonyQualifiedIdentifier getQualifiedIdentifier();
 
 }

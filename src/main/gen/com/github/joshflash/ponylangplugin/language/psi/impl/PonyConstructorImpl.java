@@ -34,27 +34,15 @@ public class PonyConstructorImpl extends ASTWrapperPsiElement implements PonyCon
   }
 
   @Override
-  @Nullable
-  public PonyCapability getCapability() {
-    return findChildByClass(PonyCapability.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyDocString getDocString() {
-    return findChildByClass(PonyDocString.class);
+  @NotNull
+  public PonyParameterList getParameterList() {
+    return findNotNullChildByClass(PonyParameterList.class);
   }
 
   @Override
   @NotNull
-  public PonyParamList getParamList() {
-    return findNotNullChildByClass(PonyParamList.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getId() {
-    return findChildByType(ID);
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

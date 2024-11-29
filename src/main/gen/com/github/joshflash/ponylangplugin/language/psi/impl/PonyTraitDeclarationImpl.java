@@ -28,27 +28,15 @@ public class PonyTraitDeclarationImpl extends ASTWrapperPsiElement implements Po
   }
 
   @Override
-  @Nullable
-  public PonyDocString getDocString() {
-    return findChildByClass(PonyDocString.class);
+  @NotNull
+  public PonyTraitBody getTraitBody() {
+    return findNotNullChildByClass(PonyTraitBody.class);
   }
 
   @Override
   @NotNull
-  public List<PonyMethod> getMethodList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyMethod.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyTypeParams getTypeParams() {
-    return findChildByClass(PonyTypeParams.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getId() {
-    return findNotNullChildByType(ID);
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

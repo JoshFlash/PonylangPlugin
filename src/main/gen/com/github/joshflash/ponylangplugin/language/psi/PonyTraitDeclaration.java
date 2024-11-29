@@ -7,16 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface PonyTraitDeclaration extends PsiElement {
 
-  @Nullable
-  PonyDocString getDocString();
+  @NotNull
+  PonyTraitBody getTraitBody();
 
   @NotNull
-  List<PonyMethod> getMethodList();
-
-  @Nullable
-  PonyTypeParams getTypeParams();
-
-  @NotNull
-  PsiElement getId();
+  PsiElement getIdentifier();
 
 }

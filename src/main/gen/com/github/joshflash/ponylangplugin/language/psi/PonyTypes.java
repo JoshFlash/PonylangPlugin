@@ -8,106 +8,126 @@ import com.github.joshflash.ponylangplugin.language.psi.impl.*;
 
 public interface PonyTypes {
 
+  IElementType ACTOR_BODY = new PonyElementType("ACTOR_BODY");
   IElementType ACTOR_DECLARATION = new PonyElementType("ACTOR_DECLARATION");
-  IElementType BEHAVIOR = new PonyElementType("BEHAVIOR");
-  IElementType BINARY_OP = new PonyElementType("BINARY_OP");
+  IElementType ANNOTATION = new PonyElementType("ANNOTATION");
+  IElementType ARGUMENT_LIST = new PonyElementType("ARGUMENT_LIST");
+  IElementType ASSIGNMENT_STATEMENT = new PonyElementType("ASSIGNMENT_STATEMENT");
+  IElementType BEHAVIOR_DECLARATION = new PonyElementType("BEHAVIOR_DECLARATION");
   IElementType BLOCK = new PonyElementType("BLOCK");
-  IElementType BOOLEAN_LITERAL = new PonyElementType("BOOLEAN_LITERAL");
-  IElementType CALL_ARGS = new PonyElementType("CALL_ARGS");
-  IElementType CAPABILITY = new PonyElementType("CAPABILITY");
+  IElementType CLASS_BODY = new PonyElementType("CLASS_BODY");
   IElementType CLASS_DECLARATION = new PonyElementType("CLASS_DECLARATION");
   IElementType CONSTRUCTOR = new PonyElementType("CONSTRUCTOR");
-  IElementType CONSUME_EXPR = new PonyElementType("CONSUME_EXPR");
-  IElementType DOC_STRING = new PonyElementType("DOC_STRING");
-  IElementType DOT_ACCESS = new PonyElementType("DOT_ACCESS");
-  IElementType EXPR = new PonyElementType("EXPR");
-  IElementType EXPR_SUFFIX = new PonyElementType("EXPR_SUFFIX");
-  IElementType EXTERNAL_DECLARATION = new PonyElementType("EXTERNAL_DECLARATION");
-  IElementType FIELD = new PonyElementType("FIELD");
-  IElementType IF_EXPR = new PonyElementType("IF_EXPR");
-  IElementType INTERFACE_DECLARATION = new PonyElementType("INTERFACE_DECLARATION");
+  IElementType DECLARATION = new PonyElementType("DECLARATION");
+  IElementType EXPRESSION = new PonyElementType("EXPRESSION");
+  IElementType EXPRESSION_STATEMENT = new PonyElementType("EXPRESSION_STATEMENT");
+  IElementType FIELD_DECLARATION = new PonyElementType("FIELD_DECLARATION");
+  IElementType FOR_STATEMENT = new PonyElementType("FOR_STATEMENT");
+  IElementType FUNCTION_CALL = new PonyElementType("FUNCTION_CALL");
+  IElementType IF_STATEMENT = new PonyElementType("IF_STATEMENT");
   IElementType LITERAL = new PonyElementType("LITERAL");
   IElementType MATCH_CASE = new PonyElementType("MATCH_CASE");
-  IElementType MATCH_EXPR = new PonyElementType("MATCH_EXPR");
-  IElementType METHOD = new PonyElementType("METHOD");
-  IElementType METHOD_MODIFIER = new PonyElementType("METHOD_MODIFIER");
-  IElementType PARAM = new PonyElementType("PARAM");
-  IElementType PARAM_LIST = new PonyElementType("PARAM_LIST");
+  IElementType MATCH_CASES = new PonyElementType("MATCH_CASES");
+  IElementType MATCH_STATEMENT = new PonyElementType("MATCH_STATEMENT");
+  IElementType METHOD_CALL = new PonyElementType("METHOD_CALL");
+  IElementType METHOD_DECLARATION = new PonyElementType("METHOD_DECLARATION");
+  IElementType PARAMETER = new PonyElementType("PARAMETER");
+  IElementType PARAMETER_LIST = new PonyElementType("PARAMETER_LIST");
   IElementType PATTERN = new PonyElementType("PATTERN");
   IElementType PRIMARY = new PonyElementType("PRIMARY");
-  IElementType PRIMARY_TYPE = new PonyElementType("PRIMARY_TYPE");
+  IElementType PRIMITIVE_BODY = new PonyElementType("PRIMITIVE_BODY");
   IElementType PRIMITIVE_DECLARATION = new PonyElementType("PRIMITIVE_DECLARATION");
-  IElementType RECOVER_EXPR = new PonyElementType("RECOVER_EXPR");
-  IElementType STRING_LITERAL = new PonyElementType("STRING_LITERAL");
+  IElementType QUALIFIED_IDENTIFIER = new PonyElementType("QUALIFIED_IDENTIFIER");
+  IElementType STATEMENT = new PonyElementType("STATEMENT");
+  IElementType TRAIT_BODY = new PonyElementType("TRAIT_BODY");
   IElementType TRAIT_DECLARATION = new PonyElementType("TRAIT_DECLARATION");
-  IElementType TRY_EXPR = new PonyElementType("TRY_EXPR");
-  IElementType TYPE_ARGS = new PonyElementType("TYPE_ARGS");
-  IElementType TYPE_EXPR = new PonyElementType("TYPE_EXPR");
-  IElementType TYPE_LIST = new PonyElementType("TYPE_LIST");
-  IElementType TYPE_PARAM = new PonyElementType("TYPE_PARAM");
-  IElementType TYPE_PARAMS = new PonyElementType("TYPE_PARAMS");
-  IElementType TYPE_SUFFIX = new PonyElementType("TYPE_SUFFIX");
-  IElementType UNARY_OP = new PonyElementType("UNARY_OP");
-  IElementType USE_DECLARATION = new PonyElementType("USE_DECLARATION");
+  IElementType TRY_STATEMENT = new PonyElementType("TRY_STATEMENT");
+  IElementType TUPLE = new PonyElementType("TUPLE");
+  IElementType TYPE = new PonyElementType("TYPE");
+  IElementType TYPE_ARGUMENTS = new PonyElementType("TYPE_ARGUMENTS");
+  IElementType USE_STATEMENT = new PonyElementType("USE_STATEMENT");
 
-  IElementType AND = new PonyTokenType("and");
-  IElementType AS = new PonyTokenType("as");
+  IElementType ARROW = new PonyTokenType("=>");
+  IElementType ASSIGNMENT = new PonyTokenType("=");
   IElementType BLOCK_COMMENT = new PonyTokenType("block_comment");
   IElementType COLON = new PonyTokenType(":");
   IElementType COMMA = new PonyTokenType(",");
-  IElementType DARROW = new PonyTokenType("=>");
-  IElementType DIVIDE = new PonyTokenType("/");
+  IElementType DIV = new PonyTokenType("/");
   IElementType DOT = new PonyTokenType(".");
-  IElementType EQ = new PonyTokenType("=");
-  IElementType EQEQ = new PonyTokenType("==");
-  IElementType GT = new PonyTokenType(">");
-  IElementType GTEQ = new PonyTokenType(">=");
-  IElementType ID = new PonyTokenType("id");
-  IElementType IS = new PonyTokenType("is");
-  IElementType LARROW = new PonyTokenType("<-");
-  IElementType LBRACKET = new PonyTokenType("[");
+  IElementType EQUALS = new PonyTokenType("==");
+  IElementType FAT_ARROW = new PonyTokenType("<-");
+  IElementType GREATER_EQUAL = new PonyTokenType(">=");
+  IElementType GREATER_THAN = new PonyTokenType(">");
+  IElementType IDENTIFIER = new PonyTokenType("identifier");
+  IElementType KW_ACTOR = new PonyTokenType("actor");
+  IElementType KW_BE = new PonyTokenType("be");
+  IElementType KW_CLASS = new PonyTokenType("class");
+  IElementType KW_CONSUME = new PonyTokenType("consume");
+  IElementType KW_DO = new PonyTokenType("do");
+  IElementType KW_ELSE = new PonyTokenType("else");
+  IElementType KW_EMBED = new PonyTokenType("embed");
+  IElementType KW_END = new PonyTokenType("end");
+  IElementType KW_FOR = new PonyTokenType("for");
+  IElementType KW_FUN = new PonyTokenType("fun");
+  IElementType KW_IF = new PonyTokenType("if");
+  IElementType KW_IN = new PonyTokenType("in");
+  IElementType KW_IS = new PonyTokenType("is");
+  IElementType KW_ISO = new PonyTokenType("iso");
+  IElementType KW_LET = new PonyTokenType("let");
+  IElementType KW_MATCH = new PonyTokenType("match");
+  IElementType KW_NEW = new PonyTokenType("new");
+  IElementType KW_PRIMITIVE = new PonyTokenType("primitive");
+  IElementType KW_RECOVER = new PonyTokenType("recover");
+  IElementType KW_REF = new PonyTokenType("ref");
+  IElementType KW_THEN = new PonyTokenType("KW_THEN");
+  IElementType KW_TRAIT = new PonyTokenType("trait");
+  IElementType KW_TRY = new PonyTokenType("try");
+  IElementType KW_USE = new PonyTokenType("use");
+  IElementType KW_VAL = new PonyTokenType("val");
+  IElementType KW_VAR = new PonyTokenType("var");
+  IElementType KW_WITH = new PonyTokenType("with");
+  IElementType LEFT_BRACKET = new PonyTokenType("[");
+  IElementType LEFT_PAREN = new PonyTokenType("(");
+  IElementType LESS_EQUAL = new PonyTokenType("<=");
+  IElementType LESS_THAN = new PonyTokenType("<");
   IElementType LINE_COMMENT = new PonyTokenType("line_comment");
-  IElementType LPAREN = new PonyTokenType("(");
-  IElementType LT = new PonyTokenType("<");
-  IElementType LTEQ = new PonyTokenType("<=");
   IElementType MINUS = new PonyTokenType("-");
-  IElementType MOD = new PonyTokenType("%");
-  IElementType MULTIPLY = new PonyTokenType("*");
-  IElementType NOT = new PonyTokenType("not");
-  IElementType NOTEQ = new PonyTokenType("!=");
+  IElementType MULT = new PonyTokenType("*");
+  IElementType NOT_EQUALS = new PonyTokenType("!=");
   IElementType NUMBER = new PonyTokenType("number");
-  IElementType OR = new PonyTokenType("or");
-  IElementType PIPE = new PonyTokenType("|");
   IElementType PLUS = new PonyTokenType("+");
-  IElementType RBRACKET = new PonyTokenType("]");
-  IElementType RPAREN = new PonyTokenType(")");
+  IElementType RIGHT_BRACKET = new PonyTokenType("]");
+  IElementType RIGHT_PAREN = new PonyTokenType(")");
   IElementType SEMICOLON = new PonyTokenType(";");
+  IElementType SPACE = new PonyTokenType("space");
   IElementType STRING = new PonyTokenType("string");
-  IElementType WHERE = new PonyTokenType("where");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == ACTOR_DECLARATION) {
+      if (type == ACTOR_BODY) {
+        return new PonyActorBodyImpl(node);
+      }
+      else if (type == ACTOR_DECLARATION) {
         return new PonyActorDeclarationImpl(node);
       }
-      else if (type == BEHAVIOR) {
-        return new PonyBehaviorImpl(node);
+      else if (type == ANNOTATION) {
+        return new PonyAnnotationImpl(node);
       }
-      else if (type == BINARY_OP) {
-        return new PonyBinaryOpImpl(node);
+      else if (type == ARGUMENT_LIST) {
+        return new PonyArgumentListImpl(node);
+      }
+      else if (type == ASSIGNMENT_STATEMENT) {
+        return new PonyAssignmentStatementImpl(node);
+      }
+      else if (type == BEHAVIOR_DECLARATION) {
+        return new PonyBehaviorDeclarationImpl(node);
       }
       else if (type == BLOCK) {
         return new PonyBlockImpl(node);
       }
-      else if (type == BOOLEAN_LITERAL) {
-        return new PonyBooleanLiteralImpl(node);
-      }
-      else if (type == CALL_ARGS) {
-        return new PonyCallArgsImpl(node);
-      }
-      else if (type == CAPABILITY) {
-        return new PonyCapabilityImpl(node);
+      else if (type == CLASS_BODY) {
+        return new PonyClassBodyImpl(node);
       }
       else if (type == CLASS_DECLARATION) {
         return new PonyClassDeclarationImpl(node);
@@ -115,32 +135,26 @@ public interface PonyTypes {
       else if (type == CONSTRUCTOR) {
         return new PonyConstructorImpl(node);
       }
-      else if (type == CONSUME_EXPR) {
-        return new PonyConsumeExprImpl(node);
+      else if (type == DECLARATION) {
+        return new PonyDeclarationImpl(node);
       }
-      else if (type == DOC_STRING) {
-        return new PonyDocStringImpl(node);
+      else if (type == EXPRESSION) {
+        return new PonyExpressionImpl(node);
       }
-      else if (type == DOT_ACCESS) {
-        return new PonyDotAccessImpl(node);
+      else if (type == EXPRESSION_STATEMENT) {
+        return new PonyExpressionStatementImpl(node);
       }
-      else if (type == EXPR) {
-        return new PonyExprImpl(node);
+      else if (type == FIELD_DECLARATION) {
+        return new PonyFieldDeclarationImpl(node);
       }
-      else if (type == EXPR_SUFFIX) {
-        return new PonyExprSuffixImpl(node);
+      else if (type == FOR_STATEMENT) {
+        return new PonyForStatementImpl(node);
       }
-      else if (type == EXTERNAL_DECLARATION) {
-        return new PonyExternalDeclarationImpl(node);
+      else if (type == FUNCTION_CALL) {
+        return new PonyFunctionCallImpl(node);
       }
-      else if (type == FIELD) {
-        return new PonyFieldImpl(node);
-      }
-      else if (type == IF_EXPR) {
-        return new PonyIfExprImpl(node);
-      }
-      else if (type == INTERFACE_DECLARATION) {
-        return new PonyInterfaceDeclarationImpl(node);
+      else if (type == IF_STATEMENT) {
+        return new PonyIfStatementImpl(node);
       }
       else if (type == LITERAL) {
         return new PonyLiteralImpl(node);
@@ -148,20 +162,23 @@ public interface PonyTypes {
       else if (type == MATCH_CASE) {
         return new PonyMatchCaseImpl(node);
       }
-      else if (type == MATCH_EXPR) {
-        return new PonyMatchExprImpl(node);
+      else if (type == MATCH_CASES) {
+        return new PonyMatchCasesImpl(node);
       }
-      else if (type == METHOD) {
-        return new PonyMethodImpl(node);
+      else if (type == MATCH_STATEMENT) {
+        return new PonyMatchStatementImpl(node);
       }
-      else if (type == METHOD_MODIFIER) {
-        return new PonyMethodModifierImpl(node);
+      else if (type == METHOD_CALL) {
+        return new PonyMethodCallImpl(node);
       }
-      else if (type == PARAM) {
-        return new PonyParamImpl(node);
+      else if (type == METHOD_DECLARATION) {
+        return new PonyMethodDeclarationImpl(node);
       }
-      else if (type == PARAM_LIST) {
-        return new PonyParamListImpl(node);
+      else if (type == PARAMETER) {
+        return new PonyParameterImpl(node);
+      }
+      else if (type == PARAMETER_LIST) {
+        return new PonyParameterListImpl(node);
       }
       else if (type == PATTERN) {
         return new PonyPatternImpl(node);
@@ -169,47 +186,38 @@ public interface PonyTypes {
       else if (type == PRIMARY) {
         return new PonyPrimaryImpl(node);
       }
-      else if (type == PRIMARY_TYPE) {
-        return new PonyPrimaryTypeImpl(node);
+      else if (type == PRIMITIVE_BODY) {
+        return new PonyPrimitiveBodyImpl(node);
       }
       else if (type == PRIMITIVE_DECLARATION) {
         return new PonyPrimitiveDeclarationImpl(node);
       }
-      else if (type == RECOVER_EXPR) {
-        return new PonyRecoverExprImpl(node);
+      else if (type == QUALIFIED_IDENTIFIER) {
+        return new PonyQualifiedIdentifierImpl(node);
       }
-      else if (type == STRING_LITERAL) {
-        return new PonyStringLiteralImpl(node);
+      else if (type == STATEMENT) {
+        return new PonyStatementImpl(node);
+      }
+      else if (type == TRAIT_BODY) {
+        return new PonyTraitBodyImpl(node);
       }
       else if (type == TRAIT_DECLARATION) {
         return new PonyTraitDeclarationImpl(node);
       }
-      else if (type == TRY_EXPR) {
-        return new PonyTryExprImpl(node);
+      else if (type == TRY_STATEMENT) {
+        return new PonyTryStatementImpl(node);
       }
-      else if (type == TYPE_ARGS) {
-        return new PonyTypeArgsImpl(node);
+      else if (type == TUPLE) {
+        return new PonyTupleImpl(node);
       }
-      else if (type == TYPE_EXPR) {
-        return new PonyTypeExprImpl(node);
+      else if (type == TYPE) {
+        return new PonyTypeImpl(node);
       }
-      else if (type == TYPE_LIST) {
-        return new PonyTypeListImpl(node);
+      else if (type == TYPE_ARGUMENTS) {
+        return new PonyTypeArgumentsImpl(node);
       }
-      else if (type == TYPE_PARAM) {
-        return new PonyTypeParamImpl(node);
-      }
-      else if (type == TYPE_PARAMS) {
-        return new PonyTypeParamsImpl(node);
-      }
-      else if (type == TYPE_SUFFIX) {
-        return new PonyTypeSuffixImpl(node);
-      }
-      else if (type == UNARY_OP) {
-        return new PonyUnaryOpImpl(node);
-      }
-      else if (type == USE_DECLARATION) {
-        return new PonyUseDeclarationImpl(node);
+      else if (type == USE_STATEMENT) {
+        return new PonyUseStatementImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

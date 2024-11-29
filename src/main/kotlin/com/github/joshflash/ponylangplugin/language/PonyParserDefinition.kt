@@ -26,7 +26,7 @@ class PonyParserDefinition : ParserDefinition {
 
     override fun getFileNodeType(): IFileElementType = FILE
 
-    override fun getCommentTokens(): TokenSet = PonyTokenSets.COMMENTS
+    override fun getCommentTokens(): TokenSet = TokenSet.create(PonyTypes.LINE_COMMENT, PonyTypes.BLOCK_COMMENT)
 
     override fun getStringLiteralElements(): TokenSet = TokenSet.create(PonyTypes.STRING)
 

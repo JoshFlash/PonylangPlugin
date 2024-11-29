@@ -11,122 +11,137 @@
   elementTypeClass="com.github.joshflash.ponylangplugin.language.psi.PonyElementType"
   tokenTypeClass="com.github.joshflash.ponylangplugin.language.psi.PonyTokenType"
 
-  tokens=[
-    space='regexp:\s+'
-    id="regexp:[a-zA-Z_][a-zA-Z0-9_]*"
-    string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
-    number="regexp:\d+"
-    line_comment="regexp://.*"
-    block_comment="regexp:/\\*.*?\\*/"
+  tokens = [
+    ASSIGNMENT="="
+    ARROW="=>"
+    FAT_ARROW="<-"
+    COLON=":"
+    SEMICOLON=";"
+    COMMA=","
+    DOT="."
+    PLUS="+"
+    MINUS="-"
+    MULT="*"
+    DIV="/"
+    EQUALS="=="
+    NOT_EQUALS="!="
+    LESS_THAN="<"
+    GREATER_THAN=">"
+    LESS_EQUAL="<="
+    GREATER_EQUAL=">="
+    LEFT_PAREN="("
+    RIGHT_PAREN=")"
+    LEFT_BRACKET="["
+    RIGHT_BRACKET="]"
+    KW_USE="use"
+    KW_ACTOR="actor"
+    KW_CLASS="class"
+    KW_TRAIT="trait"
+    KW_PRIMITIVE="primitive"
+    KW_FUN="fun"
+    KW_BE="be"
+    KW_NEW="new"
+    KW_LET="let"
+    KW_VAR="var"
+    KW_EMBED="embed"
+    KW_IS="is"
+    KW_IF="if"
+    KW_TRY="try"
+    KW_ELSE="else"
+    KW_END="end"
+    KW_FOR="for"
+    KW_IN="in"
+    KW_DO="do"
+    KW_WITH="with"
+    KW_MATCH="match"
+    KW_RECOVER="recover"
+    KW_CONSUME="consume"
+    KW_ISO="iso"
+    KW_REF="ref"
+    KW_VAL="val"
 
-    DARROW='=>'
-    LARROW='<-'
-    LPAREN='('
-    RPAREN=')'
-    LBRACKET='['
-    RBRACKET=']'
-    DOT='.'
-    COMMA=','
-    COLON=':'
-    SEMICOLON=';'
-    PIPE='|'
-    PLUS='+'
-    MINUS='-'
-    MULTIPLY='*'
-    DIVIDE='/'
-    MOD='%'
-    EQ='='
-    EQEQ='=='
-    NOTEQ='!='
-    LT='<'
-    GT='>'
-    LTEQ='<='
-    GTEQ='>='
-    AND='and'
-    OR='or'
-    NOT='not'
-    IS='is'
-    AS='as'
-    WHERE='where'
+    space="regexp:\\s+"
+    identifier="regexp:[a-zA-Z_][a-zA-Z0-9_]*"
+    number="regexp:[0-9]+"
+    string="regexp:('([^'\\]|\\\\.)*'|\"([^\"\\]|\\\\.)*\")"
+    line_comment="regexp://.*"
+    block_comment="regexp:/\\*([^*]|\\*+[^*/])*\\*/"
   ]
 }
 
-program ::= use_declaration* (declaration | external_declaration)*
+program ::= (use_statement | declaration | statement)*;
 
-private declaration ::=
-  class_declaration
-  | actor_declaration
-  | primitive_declaration
-  | trait_declaration
-  | interface_declaration
+use_statement ::= KW_USE string;
 
-use_declaration ::= 'use' string_literal ('=' string_literal)?
+qualified_identifier ::= identifier (DOT identifier)*;
 
-class_declaration ::= doc_string? capability? 'class' ('iso' | 'val')? id type_params? ('is' type_list)? field* constructor* method*
-actor_declaration ::= doc_string? 'actor' id type_params? ('is' type_list)? field* constructor* behavior* method*
-primitive_declaration ::= doc_string? 'primitive' id type_params? method*
-trait_declaration ::= doc_string? 'trait' id type_params? method*
-interface_declaration ::= doc_string? 'interface' id type_params? method*
+declaration ::= actor_declaration | class_declaration | trait_declaration | primitive_declaration;
 
-capability ::= 'iso' | 'trn' | 'ref' | 'val' | 'box' | 'tag'
+actor_declaration ::= KW_ACTOR identifier actor_body;
+actor_body ::= (field_declaration | method_declaration | behavior_declaration | constructor)*;
 
-field ::= ('let' | 'var') id ':' type_expr ('=' expr)?
+class_declaration ::= KW_CLASS identifier (KW_IS identifier)? class_body;
+class_body ::= (field_declaration | method_declaration | constructor)*;
 
-type_params ::= '[' type_param (',' type_param)* ']'
-type_param ::= id (':' type_expr)?
+trait_declaration ::= KW_TRAIT identifier trait_body;
+trait_body ::= method_declaration*;
 
-constructor ::= doc_string? capability? 'new' id? 'create' param_list block
-method ::= doc_string? method_modifier? 'fun' capability? id type_params? param_list (':' type_expr)? ('=>' expr)?
-behavior ::= doc_string? 'be' id param_list ('=>' expr)?
+primitive_declaration ::= KW_PRIMITIVE identifier primitive_body;
+primitive_body ::= method_declaration*;
 
-method_modifier ::= 'ref' | 'val' | 'box'
+field_declaration ::= (KW_VAR | KW_LET | KW_EMBED) identifier (COLON type)? (ASSIGNMENT expression)?;
+annotation ::= "@" identifier;
 
-param_list ::= '(' (param (',' param)*)? ')'
-param ::= id ':' type_expr
+constructor ::= KW_NEW identifier parameter_list ARROW block;
+method_declaration ::= (annotation*)? KW_FUN (KW_REF | KW_ISO | KW_VAL)? identifier parameter_list (COLON type)? ARROW block;
+behavior_declaration ::= KW_BE identifier parameter_list (COLON type)? ARROW block;
 
-type_expr ::= primary_type type_suffix*
-primary_type ::= id type_args? | '(' type_expr ')'
-type_suffix ::= capability | '|' primary_type | '&' primary_type
-type_args ::= '[' type_expr (',' type_expr)* ']'
-type_list ::= type_expr (',' type_expr)*
+parameter_list ::= LEFT_PAREN (parameter (COMMA parameter)*)? RIGHT_PAREN;
+parameter ::= identifier COLON type;
 
-expr ::= unary_op? primary expr_suffix*
-primary ::=
-  literal
-  | id
-  | block
-  | if_expr
-  | match_expr
-  | try_expr
-  | recover_expr
-  | consume_expr
-  | '(' expr ')'
+block ::= statement*;
+statement ::= field_declaration
+            | assignment_statement
+            | expression_statement
+            | if_statement
+            | for_statement
+            | try_statement
+            | match_statement;
 
-expr_suffix ::=
-  binary_op expr
-  | call_args
-  | dot_access
+assignment_statement ::= identifier ASSIGNMENT expression;
 
-binary_op ::= '+' | '-' | '*' | '/' | '=' | '==' | '!=' | '<' | '>' | '<=' | '>=' | 'and' | 'or'
-unary_op ::= '-' | 'not'
+expression_statement ::= expression
+            | KW_CONSUME expression
+            | LEFT_PAREN expression RIGHT_PAREN;
 
-call_args ::= '(' (expr (',' expr)*)? ')'
-dot_access ::= '.' id
+expression ::= primary
+             | function_call
+             | method_call
+             | KW_RECOVER block KW_END
+             | tuple;
 
-block ::= ('regexp:\n\t' expr)+
-if_expr ::= 'if' expr 'then' expr ('else' expr)?
-match_expr ::= 'match' expr ('|' match_case)* ('else' expr)?
-match_case ::= pattern '=>' expr
-try_expr ::= 'try' expr ('else' expr)? 'end'
-recover_expr ::= 'recover' capability? expr 'end'
-consume_expr ::= 'consume' expr
+tuple ::= LEFT_PAREN expression (COMMA expression)* RIGHT_PAREN;
 
-pattern ::= literal | id | '(' pattern ')'
+primary ::= qualified_identifier | literal | LEFT_PAREN expression RIGHT_PAREN;
 
-literal ::= number | string_literal | boolean_literal | 'None'
-boolean_literal ::= 'true' | 'false'
-string_literal ::= string
+literal ::= number | string | "true" | "false" | "None";
 
-doc_string ::= '"""' string '"""'
+function_call ::= qualified_identifier LEFT_PAREN argument_list? RIGHT_PAREN;
+method_call ::= primary DOT identifier LEFT_PAREN argument_list? RIGHT_PAREN;
 
-external_declaration ::= '<<' id expr* '>>'
+argument_list ::= expression (COMMA expression)*;
+
+type ::= identifier type_arguments?;
+type_arguments ::= LEFT_BRACKET type (COMMA type)* RIGHT_BRACKET;
+
+if_statement ::= KW_IF expression KW_THEN block (KW_ELSE block)? KW_END;
+
+for_statement ::= KW_FOR identifier KW_IN expression KW_DO block KW_END;
+
+try_statement ::= KW_TRY block (KW_ELSE block)? KW_END;
+
+match_statement ::= KW_MATCH expression KW_WITH match_cases;
+match_cases ::= match_case+;
+match_case ::= pattern ARROW block;
+
+pattern ::= identifier | "_";

@@ -7,15 +7,27 @@ import com.intellij.psi.PsiElement;
 
 public class PonyVisitor extends PsiElementVisitor {
 
+  public void visitActorBody(@NotNull PonyActorBody o) {
+    visitPsiElement(o);
+  }
+
   public void visitActorDeclaration(@NotNull PonyActorDeclaration o) {
     visitPsiElement(o);
   }
 
-  public void visitBehavior(@NotNull PonyBehavior o) {
+  public void visitAnnotation(@NotNull PonyAnnotation o) {
     visitPsiElement(o);
   }
 
-  public void visitBinaryOp(@NotNull PonyBinaryOp o) {
+  public void visitArgumentList(@NotNull PonyArgumentList o) {
+    visitPsiElement(o);
+  }
+
+  public void visitAssignmentStatement(@NotNull PonyAssignmentStatement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitBehaviorDeclaration(@NotNull PonyBehaviorDeclaration o) {
     visitPsiElement(o);
   }
 
@@ -23,15 +35,7 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitBooleanLiteral(@NotNull PonyBooleanLiteral o) {
-    visitPsiElement(o);
-  }
-
-  public void visitCallArgs(@NotNull PonyCallArgs o) {
-    visitPsiElement(o);
-  }
-
-  public void visitCapability(@NotNull PonyCapability o) {
+  public void visitClassBody(@NotNull PonyClassBody o) {
     visitPsiElement(o);
   }
 
@@ -43,39 +47,31 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitConsumeExpr(@NotNull PonyConsumeExpr o) {
+  public void visitDeclaration(@NotNull PonyDeclaration o) {
     visitPsiElement(o);
   }
 
-  public void visitDocString(@NotNull PonyDocString o) {
+  public void visitExpression(@NotNull PonyExpression o) {
     visitPsiElement(o);
   }
 
-  public void visitDotAccess(@NotNull PonyDotAccess o) {
+  public void visitExpressionStatement(@NotNull PonyExpressionStatement o) {
     visitPsiElement(o);
   }
 
-  public void visitExpr(@NotNull PonyExpr o) {
+  public void visitFieldDeclaration(@NotNull PonyFieldDeclaration o) {
     visitPsiElement(o);
   }
 
-  public void visitExprSuffix(@NotNull PonyExprSuffix o) {
+  public void visitForStatement(@NotNull PonyForStatement o) {
     visitPsiElement(o);
   }
 
-  public void visitExternalDeclaration(@NotNull PonyExternalDeclaration o) {
+  public void visitFunctionCall(@NotNull PonyFunctionCall o) {
     visitPsiElement(o);
   }
 
-  public void visitField(@NotNull PonyField o) {
-    visitPsiElement(o);
-  }
-
-  public void visitIfExpr(@NotNull PonyIfExpr o) {
-    visitPsiElement(o);
-  }
-
-  public void visitInterfaceDeclaration(@NotNull PonyInterfaceDeclaration o) {
+  public void visitIfStatement(@NotNull PonyIfStatement o) {
     visitPsiElement(o);
   }
 
@@ -87,23 +83,27 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitMatchExpr(@NotNull PonyMatchExpr o) {
+  public void visitMatchCases(@NotNull PonyMatchCases o) {
     visitPsiElement(o);
   }
 
-  public void visitMethod(@NotNull PonyMethod o) {
+  public void visitMatchStatement(@NotNull PonyMatchStatement o) {
     visitPsiElement(o);
   }
 
-  public void visitMethodModifier(@NotNull PonyMethodModifier o) {
+  public void visitMethodCall(@NotNull PonyMethodCall o) {
     visitPsiElement(o);
   }
 
-  public void visitParam(@NotNull PonyParam o) {
+  public void visitMethodDeclaration(@NotNull PonyMethodDeclaration o) {
     visitPsiElement(o);
   }
 
-  public void visitParamList(@NotNull PonyParamList o) {
+  public void visitParameter(@NotNull PonyParameter o) {
+    visitPsiElement(o);
+  }
+
+  public void visitParameterList(@NotNull PonyParameterList o) {
     visitPsiElement(o);
   }
 
@@ -115,7 +115,7 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitPrimaryType(@NotNull PonyPrimaryType o) {
+  public void visitPrimitiveBody(@NotNull PonyPrimitiveBody o) {
     visitPsiElement(o);
   }
 
@@ -123,11 +123,15 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitRecoverExpr(@NotNull PonyRecoverExpr o) {
+  public void visitQualifiedIdentifier(@NotNull PonyQualifiedIdentifier o) {
     visitPsiElement(o);
   }
 
-  public void visitStringLiteral(@NotNull PonyStringLiteral o) {
+  public void visitStatement(@NotNull PonyStatement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTraitBody(@NotNull PonyTraitBody o) {
     visitPsiElement(o);
   }
 
@@ -135,39 +139,23 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitTryExpr(@NotNull PonyTryExpr o) {
+  public void visitTryStatement(@NotNull PonyTryStatement o) {
     visitPsiElement(o);
   }
 
-  public void visitTypeArgs(@NotNull PonyTypeArgs o) {
+  public void visitTuple(@NotNull PonyTuple o) {
     visitPsiElement(o);
   }
 
-  public void visitTypeExpr(@NotNull PonyTypeExpr o) {
+  public void visitType(@NotNull PonyType o) {
     visitPsiElement(o);
   }
 
-  public void visitTypeList(@NotNull PonyTypeList o) {
+  public void visitTypeArguments(@NotNull PonyTypeArguments o) {
     visitPsiElement(o);
   }
 
-  public void visitTypeParam(@NotNull PonyTypeParam o) {
-    visitPsiElement(o);
-  }
-
-  public void visitTypeParams(@NotNull PonyTypeParams o) {
-    visitPsiElement(o);
-  }
-
-  public void visitTypeSuffix(@NotNull PonyTypeSuffix o) {
-    visitPsiElement(o);
-  }
-
-  public void visitUnaryOp(@NotNull PonyUnaryOp o) {
-    visitPsiElement(o);
-  }
-
-  public void visitUseDeclaration(@NotNull PonyUseDeclaration o) {
+  public void visitUseStatement(@NotNull PonyUseStatement o) {
     visitPsiElement(o);
   }
 
