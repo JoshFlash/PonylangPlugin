@@ -1,0 +1,146 @@
+{
+  parserClass="com.github.joshflash.ponylangplugin.parser.PonyParser"
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Pony"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.github.joshflash.ponylangplugin.language.psi"
+  psiImplPackage="com.github.joshflash.ponylangplugin.language.psi.impl"
+
+  elementTypeHolderClass="com.github.joshflash.ponylangplugin.language.psi.PonyTypes"
+  elementTypeClass="com.github.joshflash.ponylangplugin.language.psi.PonyElementType"
+  tokenTypeClass="com.github.joshflash.ponylangplugin.language.psi.PonyTokenType"
+
+  tokens = [
+    ARROW="=>"
+    FAT_ARROW="<-"
+    COLON=":"
+    SEMICOLON=";"
+    COMMA=","
+    DOT="."
+    PLUS="+"
+    MINUS="-"
+    MULT="*"
+    DIV="/"
+    EQUALS="=="
+    NOT_EQUALS="!="
+    LESS_THAN="<"
+    GREATER_THAN=">"
+    LESS_EQUAL="<="
+    GREATER_EQUAL=">="
+    LEFT_PAREN="("
+    RIGHT_PAREN=")"
+    LEFT_BRACKET="["
+    RIGHT_BRACKET="]"
+    USE="use"
+    ACTOR="actor"
+    CLASS="class"
+    TRAIT="trait"
+    PRIMITIVE="primitive"
+    FUN="fun"
+    BE="be"
+    NEW="new"
+    LET="let"
+    VAR="var"
+    EMBED="embed"
+    IS="is"
+    IF="if"
+    TRY="try"
+    ELSE="else"
+    END="end"
+    FOR="for"
+    IN="in"
+    DO="do"
+    WITH="with"
+    MATCH="match"
+    RECOVER="recover"
+    CONSUME="consume"
+    ISO="iso"
+    REF="ref"
+    VAL="val"
+
+    space="regexp:\\s+"
+    identifier="regexp:[a-zA-Z_][a-zA-Z0-9_]*"
+    number="regexp:[0-9]+"
+    string="regexp:('([^'\\]|\\\\.)*'|\"([^\"\\]|\\\\.)*\")"
+    line_comment="regexp://.*"
+    block_comment="regexp:/\\*([^*]|\\*+[^*/])*\\*/"
+  ]
+}
+
+program ::= (use_statement | declaration | statement)*;
+
+use_statement ::= USE string;
+
+qualified_identifier ::= identifier (DOT identifier)*;
+
+declaration ::= actor_declaration | class_declaration | trait_declaration | primitive_declaration;
+
+actor_declaration ::= ACTOR identifier actor_body;
+actor_body ::= (field_declaration | method_declaration | behavior_declaration | constructor)*;
+
+class_declaration ::= CLASS identifier (IS identifier)? class_body;
+class_body ::= (field_declaration | method_declaration | constructor)*;
+
+trait_declaration ::= TRAIT identifier trait_body;
+trait_body ::= method_declaration*;
+
+primitive_declaration ::= PRIMITIVE identifier primitive_body;
+primitive_body ::= method_declaration*;
+
+field_declaration ::= (VAR | LET | EMBED) identifier (COLON type)? ("=" expression)?;
+annotation ::= "@" identifier;
+
+constructor ::= NEW identifier parameter_list ARROW block;
+method_declaration ::= (annotation*)? FUN (REF | ISO | VAL)? identifier parameter_list (COLON type)? ARROW block;
+behavior_declaration ::= BE identifier parameter_list (COLON type)? ARROW block;
+
+parameter_list ::= LEFT_PAREN (parameter (COMMA parameter)*)? RIGHT_PAREN;
+parameter ::= identifier COLON type;
+
+block ::= statement*;
+statement ::= field_declaration
+            | assignment_statement
+            | expression_statement
+            | if_statement
+            | for_statement
+            | try_statement
+            | match_statement;
+
+assignment_statement ::= identifier "=" expression;
+
+expression_statement ::= expression
+            | CONSUME expression
+            | LEFT_PAREN expression RIGHT_PAREN;
+
+expression ::= primary
+             | function_call
+             | method_call
+             | RECOVER block END
+             | tuple;
+
+tuple ::= LEFT_PAREN expression (COMMA expression)* RIGHT_PAREN;
+
+primary ::= qualified_identifier | literal | LEFT_PAREN expression RIGHT_PAREN;
+
+literal ::= number | string | "true" | "false" | "None";
+
+function_call ::= qualified_identifier LEFT_PAREN argument_list? RIGHT_PAREN;
+method_call ::= primary DOT identifier LEFT_PAREN argument_list? RIGHT_PAREN;
+
+argument_list ::= expression (COMMA expression)*;
+
+type ::= identifier type_arguments?;
+type_arguments ::= LEFT_BRACKET type (COMMA type)* RIGHT_BRACKET;
+
+if_statement ::= IF expression THEN block (ELSE block)? END;
+
+for_statement ::= FOR identifier IN expression DO block END;
+
+try_statement ::= TRY block (ELSE block)? END;
+
+match_statement ::= MATCH expression WITH match_cases;
+match_cases ::= match_case+;
+match_case ::= pattern ARROW block;
+
+pattern ::= identifier | "_";

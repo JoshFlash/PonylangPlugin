@@ -12,136 +12,411 @@
   tokenTypeClass="com.github.joshflash.ponylangplugin.language.psi.PonyTokenType"
 
   tokens = [
-    ASSIGNMENT="="
+  // keywords
+    USE="use"
+    TYPE="type"
+    INTERFACE="interface"
+    TRAIT="trait"
+    PRIMITIVE="primitive"
+    STRUCT="struct"
+    CLASS="class"
+    ACTOR="actor"
+    OBJECT="object"
+    FUN="fun"
+    BE="be"
+    NEW="new"
+    LET="let"
+    VAR="var"
+    EMBED="embed"
+    THIS="this"
+    IS="is"
+    AS="as"
+    ISNT="isnt"
+    IF="if"
+    NOT="not"
+    ELSEIF="elseif"
+    THEN="then"
+    TRY="try"
+    ELSE="else"
+    END="end"
+    FOR="for"
+    IN="in"
+    DO="do"
+    WHERE="where"
+    WHILE="while"
+    WITH="with"
+    MATCH="match"
+    RECOVER="recover"
+    CONSUME="consume"
+    IFDEF="ifdef"
+    IFTYPE="iftype"
+    REPEAT="repeat"
+    UNTIL="until"
+    ISO="iso"
+    REF="ref"
+    TRN="trn"
+    VAL="val"
+    BOX="box"
+    TAG="tag"
+    RETURN="return"
+    BREAK="break"
+    CONTINUE="continue"
+    ERROR="error"
+    COMP_INT="compile_intrinsic"
+    COMP_ERR="compile_error"
+    SOURCELOC="__loc"
+    ADDRESSOF="addressof"
+    DIGESTOF="digestof"
+  // symbols
+    EQUALS="="
     ARROW="=>"
-    FAT_ARROW="<-"
+    TYPE_ARROW="->"
     COLON=":"
-    SEMICOLON=";"
+    SEMI=";"
     COMMA=","
     DOT="."
-    PLUS="+"
-    MINUS="-"
-    MULT="*"
+    LP="("
+    RP=")"
+    LBK="["
+    RBK="]"
+    LBC="{"
+    RBC="}"
+    RCVR="@{"
+    AT="@"
+    QM="?"
+    CARET="^"
+    BANG="!"
+    CHAIN=".>"
+    TILDE="~"
+    PIPE="|"
+    AMP="&"
+    ISA="<:"
+    HASH="#"
+    ELIPSIS="..."
+  // operators
+    AND="and"
+    OR="or"
+    XOR="xor"
+    ADD="+"
+    SUB="-"
+    MUL="*"
     DIV="/"
-    EQUALS="=="
-    NOT_EQUALS="!="
-    LESS_THAN="<"
-    GREATER_THAN=">"
-    LESS_EQUAL="<="
-    GREATER_EQUAL=">="
-    LEFT_PAREN="("
-    RIGHT_PAREN=")"
-    LEFT_BRACKET="["
-    RIGHT_BRACKET="]"
-    KW_USE="use"
-    KW_ACTOR="actor"
-    KW_CLASS="class"
-    KW_TRAIT="trait"
-    KW_PRIMITIVE="primitive"
-    KW_FUN="fun"
-    KW_BE="be"
-    KW_NEW="new"
-    KW_LET="let"
-    KW_VAR="var"
-    KW_EMBED="embed"
-    KW_IS="is"
-    KW_IF="if"
-    KW_TRY="try"
-    KW_ELSE="else"
-    KW_END="end"
-    KW_FOR="for"
-    KW_IN="in"
-    KW_DO="do"
-    KW_WITH="with"
-    KW_MATCH="match"
-    KW_RECOVER="recover"
-    KW_CONSUME="consume"
-    KW_ISO="iso"
-    KW_REF="ref"
-    KW_VAL="val"
-
+    REM="%"
+    MOD="%%"
+    SHL="<<"
+    SHR=">>"
+    EQ="=="
+    NEQ="!="
+    LT="<"
+    GT=">"
+    LEQ="<="
+    GEQ=">="
+    ADD_UNSAFE="+~"
+    SUB_UNSAFE="-~"
+    MUL_UNSAFE="*~"
+    DIV_UNSAFE="/~"
+    REM_UNSAFE="%~"
+    MOD_UNSAFE="%%~"
+    SHL_UNSAFE="<<~"
+    SHR_UNSAFE=">>~"
+    EQ_UNSAFE="==~"
+    NEQ_UNSAFE="!=~"
+    LT_UNSAFE="<~"
+    GT_UNSAFE=">~"
+    LEQ_UNSAFE="<=~"
+    GEQ_UNSAFE=">=~"
+    ADD_PARTIAL="+?"
+    SUB_PARTIAL="-?"
+    MUL_PARTIAL="*?"
+    DIV_PARTIAL="/?"
+    REM_PARTIAL="%?"
+    MOD_PARTIAL="%%?"
+  // lexemes
+    true="true"
+    false="false"
     space="regexp:\\s+"
-    identifier="regexp:[a-zA-Z_][a-zA-Z0-9_]*"
+    newline="regexp:\\n[ \\tr]*"
+    id="regexp:[a-zA-Z_][a-zA-Z0-9_]*"
     number="regexp:[0-9]+"
     string="regexp:('([^'\\]|\\\\.)*'|\"([^\"\\]|\\\\.)*\")"
     line_comment="regexp://.*"
     block_comment="regexp:/\\*([^*]|\\*+[^*/])*\\*/"
+    doc_string="regexp:(?s)\"\"\"(.*?)\"\"\""
+    gencap = 'regexp:#(read|send|share|alias|any)'
   ]
 }
 
-program ::= (use_statement | declaration | statement)*;
+module ::= [string] use* class_def* ;
 
-use_statement ::= KW_USE string;
+use ::= USE [id EQUALS] (string | use_ffi) [IF infix] ;
 
-qualified_identifier ::= identifier (DOT identifier)*;
+use_ffi ::= AT (id | string) typeargs LP [params] RP [QM] ;
 
-declaration ::= actor_declaration | class_declaration | trait_declaration | primitive_declaration;
+class_def ::= declaration [idlist] [AT] [cap] id [typeparams] [IS type] [string] members ;
 
-actor_declaration ::= KW_ACTOR identifier actor_body;
-actor_body ::= (field_declaration | method_declaration | behavior_declaration | constructor)*;
+declaration ::= (TYPE | INTERFACE | TRAIT | PRIMITIVE | STRUCT | CLASS | ACTOR) ;
 
-class_declaration ::= KW_CLASS identifier (KW_IS identifier)? class_body;
-class_body ::= (field_declaration | method_declaration | constructor)*;
+members ::= field* method* ;
 
-trait_declaration ::= KW_TRAIT identifier trait_body;
-trait_body ::= method_declaration*;
+field ::= (VAR | LET | EMBED) id COLON type [EQUALS infix] [string] ;
 
-primitive_declaration ::= KW_PRIMITIVE identifier primitive_body;
-primitive_body ::= method_declaration*;
+method ::= (FUN | BE | NEW) [idlist] [cap | AT] id [typeparams]
+    LP [params] RP [COLON type] [QM] [string] [ARROW rawseq] ;
 
-field_declaration ::= (KW_VAR | KW_LET | KW_EMBED) identifier (COLON type)? (ASSIGNMENT expression)?;
-annotation ::= "@" identifier;
+annotatedrawseq ::= [idlist] (exprseq | jump) ;
 
-constructor ::= KW_NEW identifier parameter_list ARROW block;
-method_declaration ::= (annotation*)? KW_FUN (KW_REF | KW_ISO | KW_VAL)? identifier parameter_list (COLON type)? ARROW block;
-behavior_declaration ::= KW_BE identifier parameter_list (COLON type)? ARROW block;
+rawseq ::= exprseq | jump ;
 
-parameter_list ::= LEFT_PAREN (parameter (COMMA parameter)*)? RIGHT_PAREN;
-parameter ::= identifier COLON type;
+exprseq ::= assignment [nosemi] ;
 
-block ::= statement*;
-statement ::= field_declaration
-            | assignment_statement
-            | expression_statement
-            | if_statement
-            | for_statement
-            | try_statement
-            | match_statement;
+nosemi ::= jump | nextexprseq [semiexpr | jump ] ;
 
-assignment_statement ::= identifier ASSIGNMENT expression;
+nextexprseq ::= nextassignment+ ;
 
-expression_statement ::= expression
-            | KW_CONSUME expression
-            | LEFT_PAREN expression RIGHT_PAREN;
+semiexpr ::= SEMI (exprseq | jump) ;
 
-expression ::= primary
-             | function_call
-             | method_call
-             | KW_RECOVER block KW_END
-             | tuple;
+jump ::= (RETURN | BREAK | CONTINUE | ERROR | COMP_INT | COMP_ERR) [rawseq] ;
 
-tuple ::= LEFT_PAREN expression (COMMA expression)* RIGHT_PAREN;
+nextassignment ::= nextinfix [EQUALS assignment] ;
 
-primary ::= qualified_identifier | literal | LEFT_PAREN expression RIGHT_PAREN;
+assignment ::= infix [EQUALS assignment] ;
 
-literal ::= number | string | "true" | "false" | "None";
+nextinfix ::= nextterm infixop*;
 
-function_call ::= qualified_identifier LEFT_PAREN argument_list? RIGHT_PAREN;
-method_call ::= primary DOT identifier LEFT_PAREN argument_list? RIGHT_PAREN;
+infix ::= term infixop* ;
 
-argument_list ::= expression (COMMA expression)*;
+infixop ::= binop | isop | AS type
 
-type ::= identifier type_arguments?;
-type_arguments ::= LEFT_BRACKET type (COMMA type)* RIGHT_BRACKET;
+isop ::= (IS | ISNT) term ;
 
-if_statement ::= KW_IF expression KW_THEN block (KW_ELSE block)? KW_END;
+safeop ::=
+    AND | OR  | XOR | ADD | SUB | MUL
+  | DIV | REM | MOD | SHL | SHR | EQ
+  | NEQ | LT  | LEQ | GEQ | GT
 
-for_statement ::= KW_FOR identifier KW_IN expression KW_DO block KW_END;
+unsafeop ::=
+    ADD_UNSAFE | SUB_UNSAFE | MUL_UNSAFE
+  | DIV_UNSAFE | REM_UNSAFE | MOD_UNSAFE
+  | SHL_UNSAFE | SHR_UNSAFE | EQ_UNSAFE
+  | NEQ_UNSAFE | LT_UNSAFE  | LEQ_UNSAFE
+  | GT_UNSAFE  | GEQ_UNSAFE
 
-try_statement ::= KW_TRY block (KW_ELSE block)? KW_END;
+partialop ::=
+    ADD_PARTIAL | SUB_PARTIAL | MUL_PARTIAL
+  | DIV_PARTIAL | REM_PARTIAL | MOD_PARTIAL
 
-match_statement ::= KW_MATCH expression KW_WITH match_cases;
-match_cases ::= match_case+;
-match_case ::= pattern ARROW block;
+binop ::=
+   ( safeop | unsafeop | partialop ) [QM] term ;
 
-pattern ::= identifier | "_";
+nextterm ::=
+    IF [idlist] rawseq THEN rawseq [elseif | (ELSE annotatedrawseq)] END
+  | IFDEF [idlist] infix THEN rawseq [elseifdef | (ELSE annotatedrawseq)] END
+  | IFTYPE [idlist] iftype [elseiftype | (ELSE annotatedrawseq)] END
+  | MATCH [idlist] rawseq caseexpr* [ELSE annotatedrawseq] END
+  | WHILE [idlist] rawseq DO rawseq [ELSE annotatedrawseq] END
+  | REPEAT [idlist] rawseq UNTIL annotatedrawseq [ELSE annotatedrawseq] END
+  | FOR [idlist] idseq IN rawseq DO rawseq [ELSE annotatedrawseq] END
+  | WITH [idlist] withelem (COMMA withelem)* DO rawseq END
+  | TRY [idlist] rawseq [ELSE annotatedrawseq] [THEN annotatedrawseq] END
+  | RECOVER [idlist] [cap] rawseq END
+  | CONSUME [cap] term
+  | nextpattern
+  | HASH postfix ;
+
+term ::=
+    IF [idlist] rawseq THEN rawseq [elseif | (ELSE annotatedrawseq)] END
+  | IFDEF [idlist] infix THEN rawseq [elseifdef | (ELSE annotatedrawseq)] END
+  | IFTYPE [idlist] iftype [elseiftype | (ELSE annotatedrawseq)] END
+  | MATCH [idlist] rawseq caseexpr* [ELSE annotatedrawseq] END
+  | WHILE [idlist] rawseq DO rawseq [ELSE annotatedrawseq] END
+  | REPEAT [idlist] rawseq UNTIL annotatedrawseq [ELSE annotatedrawseq] END
+  | FOR [idlist] idseq IN rawseq DO rawseq [ELSE annotatedrawseq] END
+  | WITH [idlist] withelem (COMMA withelem)* DO rawseq END
+  | TRY [idlist] rawseq [ELSE annotatedrawseq] [THEN annotatedrawseq] END
+  | RECOVER [idlist] [cap] rawseq END
+  | CONSUME [cap] term
+  | pattern
+  | HASH postfix ;
+
+withelem ::= idseq EQUALS rawseq ;
+
+caseexpr ::=
+    PIPE [idlist] [casepattern] [IF rawseq] [ARROW rawseq] ;
+
+elseiftype ::=
+    ELSEIF [idlist] iftype [elseiftype | (ELSE annotatedrawseq)] ;
+
+iftype ::= type ISA type THEN rawseq ;
+
+elseifdef ::=
+    ELSEIF [idlist] infix THEN rawseq [elseifdef | (ELSE annotatedrawseq)] ;
+
+elseif ::=
+    ELSEIF [idlist] rawseq THEN rawseq [elseif | (ELSE annotatedrawseq)] ;
+
+idseq ::=
+    id
+  | LP idseq_in_seq (COMMA idseq_in_seq)* RP ;
+
+idseq_in_seq ::=
+    id
+  | LP idseq_in_seq (COMMA idseq_in_seq)* RP ;
+
+nextpattern ::=
+    (VAR | LET | EMBED) id [COLON type]
+  | nextparampattern ;
+
+casepattern ::=
+    (VAR | LET | EMBED) id [COLON type]
+  | caseparampattern ;
+
+pattern ::=
+    (VAR | LET | EMBED) id [COLON type]
+  | parampattern ;
+
+nextparampattern ::=
+    (NOT | ADDRESSOF | newline SUB | newline SUB_UNSAFE | DIGESTOF) parampattern
+  | nextpostfix ;
+
+caseparampattern ::=
+    (NOT | ADDRESSOF | SUB | SUB_UNSAFE | newline SUB | newline SUB_UNSAFE | DIGESTOF) caseparampattern
+  | casepostfix ;
+
+parampattern ::=
+    (NOT | ADDRESSOF | SUB | SUB_UNSAFE | newline SUB | newline SUB_UNSAFE | DIGESTOF) parampattern
+  | postfix ;
+
+nextpostfix ::= nextatom postfixelem* ;
+
+casepostfix ::= caseatom postfixelem* ;
+
+postfix ::= atom postfixelem* ;
+
+postfixelem ::= dot | tilde | chain | typeargs | call ;
+
+call ::= LP [positional] [named] RP [QM] ;
+
+chain ::= CHAIN id ;
+
+tilde ::= TILDE id ;
+
+dot ::= DOT id ;
+
+nextatom ::=
+    id
+  | THIS
+  | literal
+  | newline LP rawseq [tuple] RP
+  | newline LBK [AS type COLON] [rawseq] RBK
+  | OBJECT [idlist] [cap] [IS type] members END
+  | LBC [idlist] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures]
+        [COLON type] [QM] ARROW rawseq RBC [cap]
+  | RCVR [idlist] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures]
+        [COLON type] [QM] ARROW rawseq RBC [cap]
+  | AT (id | string) [typeargs] LP [positional] [named] RP [QM]
+  | SOURCELOC
+  | IF [idlist] rawseq THEN rawseq [elseif | (ELSE annotatedrawseq)] END
+  | WHILE [idlist] rawseq DO rawseq [ELSE annotatedrawseq] END
+  | FOR [idlist] idseq IN rawseq DO rawseq [ELSE annotatedrawseq] END ;
+
+caseatom ::=
+    id
+  | THIS
+  | literal
+  | LP rawseq [tuple] RP
+  | LBK [AS type COLON] [rawseq] RBK
+  | OBJECT [idlist] [cap] [IS type] members END
+  | LBC [idlist] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures]
+        [COLON type] [QM] ARROW rawseq RBC [cap]
+  | RCVR [idlist] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures]
+        [COLON type] [QM] ARROW rawseq RBC [cap]
+  | AT (id | string) [typeargs] LP [positional] [named] RP [QM]
+  | SOURCELOC
+  | WHILE [idlist] rawseq DO rawseq [ELSE annotatedrawseq] END
+  | FOR [idlist] idseq IN rawseq DO rawseq [ELSE annotatedrawseq] END ;
+
+atom ::=
+    id
+  | THIS
+  | literal
+  | LP rawseq [tuple] RP
+  | LBK [AS type COLON] [rawseq] RBK
+  | OBJECT [idlist] [cap] [IS type] members END
+  | LBC [idlist] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures]
+        [COLON type] [QM] ARROW rawseq RBC [cap]
+  | RCVR [idlist] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures]
+        [COLON type] [QM] ARROW rawseq RBC [cap]
+  | AT (id | string) [typeargs] LP [positional] [named] RP [QM]
+  | SOURCELOC
+  | IF [idlist] rawseq THEN rawseq [elseif | (ELSE annotatedrawseq)] END
+  | WHILE [idlist] rawseq DO rawseq [ELSE annotatedrawseq] END
+  | FOR [idlist] idseq IN rawseq DO rawseq [ELSE annotatedrawseq] END ;
+
+tuple ::= COMMA rawseq (COMMA rawseq)* ;
+
+lambdacaptures ::= LP (lambdacapture | THIS) (COMMA (lambdacapture | THIS))* RP ;
+
+lambdacapture ::= id [COLON type] [EQUALS infix] ;
+
+lambdaparams ::= lambdaparam (COMMA lambdaparam)* ;
+
+lambdaparam ::= id [COLON type] [EQUALS infix] ;
+
+positional ::= rawseq (COMMA rawseq)* ;
+
+named ::= WHERE namedarg (COMMA namedarg)* ;
+
+namedarg ::= id EQUALS rawseq ;
+
+type ::= atomtype [TYPE_ARROW type] ;
+
+atomtype ::=
+    THIS
+  | cap
+  | LP infixtype [tupletype] RP
+  | nominal
+  | lambdatype
+  | barelambdatype ;
+
+barelambdatype ::=
+    RCVR [cap] [id] [typeparams] LP [type (COMMA type)*] RP [COLON type] [QM] RBC [cap | gencap] [CARET | BANG] ;
+
+lambdatype ::=
+    LBC [cap] [id] [typeparams] LP [type (COMMA type)*] RP [COLON type] [QM] RBC [cap | gencap] [CARET | BANG] ;
+
+tupletype ::= COMMA infixtype (COMMA infixtype)* ;
+
+infixtype ::= type (uniontype | isecttype)* ;
+
+isecttype ::= AMP type ;
+
+uniontype ::= PIPE type ;
+
+nominal ::= id [DOT id] [typeargs] [cap | gencap] [CARET | BANG] ;
+
+cap ::= ISO | REF | TRN | VAL | BOX | TAG ;
+
+typeargs ::= LBK typearg (COMMA typearg)* RBK ;
+
+typeparams ::= LBK typeparam (COMMA typeparam)* RBK ;
+
+params ::= (param | ELIPSIS) (COMMA (param | ELIPSIS))* ;
+
+typeparam ::= id [COLON type] [EQUALS typearg] ;
+
+typearg ::=
+    type
+  | literal
+  | HASH postfix ;
+
+literal ::=
+    true
+  | false
+  | int
+  | float
+  | string ;
+
+param ::= id COLON type [EQUALS infix] ;
+
+idlist ::= id (COMMA id)*
+
