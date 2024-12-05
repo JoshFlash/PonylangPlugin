@@ -33,7 +33,6 @@
     AS="as"
     ISNT="isnt"
     IF="if"
-    NOT="not"
     ELSEIF="elseif"
     THEN="then"
     TRY="try"
@@ -96,6 +95,7 @@
   // operators
     AND="and"
     OR="or"
+    NOT="not"
     XOR="xor"
     ADD="+"
     SUB="-"
@@ -158,10 +158,11 @@ declaration ::= (TYPE | INTERFACE | TRAIT | PRIMITIVE | STRUCT | CLASS | ACTOR) 
 
 members ::= field* method* ;
 
-field ::= (VAR | LET | EMBED) id COLON type [EQUALS infix] [string] ;
+field ::= binding id COLON type [EQUALS infix] [string] ;
 
-method ::= (FUN | BE | NEW) [idlist] [cap | AT] id [typeparams]
-    LP [params] RP [COLON type] [QM] [string] [ARROW rawseq] ;
+binding ::= (VAR | LET | EMBED)
+
+method ::= (FUN | BE | NEW) [idlist] [cap | AT] id [typeparams] LP [params] RP [COLON type] [QM] [string] [ARROW rawseq] ;
 
 annotatedrawseq ::= [idlist] (exprseq | jump) ;
 
@@ -206,36 +207,28 @@ partialop ::=
   | DIV_PARTIAL | REM_PARTIAL | MOD_PARTIAL
 
 binop ::=
-   ( safeop | unsafeop | partialop ) [QM] term ;
+   (safeop | unsafeop | partialop) [QM] term ;
 
 nextterm ::=
-    IF [idlist] rawseq THEN rawseq [elseif | (ELSE annotatedrawseq)] END
-  | IFDEF [idlist] infix THEN rawseq [elseifdef | (ELSE annotatedrawseq)] END
-  | IFTYPE [idlist] iftype [elseiftype | (ELSE annotatedrawseq)] END
-  | MATCH [idlist] rawseq caseexpr* [ELSE annotatedrawseq] END
-  | WHILE [idlist] rawseq DO rawseq [ELSE annotatedrawseq] END
-  | REPEAT [idlist] rawseq UNTIL annotatedrawseq [ELSE annotatedrawseq] END
-  | FOR [idlist] idseq IN rawseq DO rawseq [ELSE annotatedrawseq] END
-  | WITH [idlist] withelem (COMMA withelem)* DO rawseq END
-  | TRY [idlist] rawseq [ELSE annotatedrawseq] [THEN annotatedrawseq] END
-  | RECOVER [idlist] [cap] rawseq END
-  | CONSUME [cap] term
-  | nextpattern
-  | HASH postfix ;
+    construct
+  | nextpattern ;
 
 term ::=
-    IF [idlist] rawseq THEN rawseq [elseif | (ELSE annotatedrawseq)] END
+    construct
+  | pattern
+
+construct ::=
+    ifblock
+  | whileloop
+  | forloop
   | IFDEF [idlist] infix THEN rawseq [elseifdef | (ELSE annotatedrawseq)] END
   | IFTYPE [idlist] iftype [elseiftype | (ELSE annotatedrawseq)] END
   | MATCH [idlist] rawseq caseexpr* [ELSE annotatedrawseq] END
-  | WHILE [idlist] rawseq DO rawseq [ELSE annotatedrawseq] END
   | REPEAT [idlist] rawseq UNTIL annotatedrawseq [ELSE annotatedrawseq] END
-  | FOR [idlist] idseq IN rawseq DO rawseq [ELSE annotatedrawseq] END
   | WITH [idlist] withelem (COMMA withelem)* DO rawseq END
   | TRY [idlist] rawseq [ELSE annotatedrawseq] [THEN annotatedrawseq] END
   | RECOVER [idlist] [cap] rawseq END
   | CONSUME [cap] term
-  | pattern
   | HASH postfix ;
 
 withelem ::= idseq EQUALS rawseq ;
@@ -263,15 +256,15 @@ idseq_in_seq ::=
   | LP idseq_in_seq (COMMA idseq_in_seq)* RP ;
 
 nextpattern ::=
-    (VAR | LET | EMBED) id [COLON type]
+    binding id [COLON type]
   | nextparampattern ;
 
 casepattern ::=
-    (VAR | LET | EMBED) id [COLON type]
+    binding id [COLON type]
   | caseparampattern ;
 
 pattern ::=
-    (VAR | LET | EMBED) id [COLON type]
+    binding id [COLON type]
   | parampattern ;
 
 nextparampattern ::=
@@ -279,11 +272,11 @@ nextparampattern ::=
   | nextpostfix ;
 
 caseparampattern ::=
-    (NOT | ADDRESSOF | SUB | SUB_UNSAFE | newline SUB | newline SUB_UNSAFE | DIGESTOF) caseparampattern
+    (NOT | ADDRESSOF | [newline] SUB | [newline] SUB_UNSAFE | DIGESTOF) caseparampattern
   | casepostfix ;
 
 parampattern ::=
-    (NOT | ADDRESSOF | SUB | SUB_UNSAFE | newline SUB | newline SUB_UNSAFE | DIGESTOF) parampattern
+    (NOT | ADDRESSOF | [newline] SUB | [newline] SUB_UNSAFE | DIGESTOF) parampattern
   | postfix ;
 
 nextpostfix ::= nextatom postfixelem* ;
@@ -303,54 +296,43 @@ tilde ::= TILDE id ;
 dot ::= DOT id ;
 
 nextatom ::=
-    id
-  | THIS
-  | literal
+    particle
+  | ifblock
+  | whileloop
+  | forloop
   | newline LP rawseq [tuple] RP
-  | newline LBK [AS type COLON] [rawseq] RBK
-  | OBJECT [idlist] [cap] [IS type] members END
-  | LBC [idlist] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures]
-        [COLON type] [QM] ARROW rawseq RBC [cap]
-  | RCVR [idlist] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures]
-        [COLON type] [QM] ARROW rawseq RBC [cap]
-  | AT (id | string) [typeargs] LP [positional] [named] RP [QM]
-  | SOURCELOC
-  | IF [idlist] rawseq THEN rawseq [elseif | (ELSE annotatedrawseq)] END
-  | WHILE [idlist] rawseq DO rawseq [ELSE annotatedrawseq] END
-  | FOR [idlist] idseq IN rawseq DO rawseq [ELSE annotatedrawseq] END ;
+  | newline LBK [AS type COLON] [rawseq] RBK;
 
 caseatom ::=
-    id
-  | THIS
-  | literal
+    particle
+  | whileloop
+  | forloop
   | LP rawseq [tuple] RP
-  | LBK [AS type COLON] [rawseq] RBK
-  | OBJECT [idlist] [cap] [IS type] members END
-  | LBC [idlist] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures]
-        [COLON type] [QM] ARROW rawseq RBC [cap]
-  | RCVR [idlist] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures]
-        [COLON type] [QM] ARROW rawseq RBC [cap]
-  | AT (id | string) [typeargs] LP [positional] [named] RP [QM]
-  | SOURCELOC
-  | WHILE [idlist] rawseq DO rawseq [ELSE annotatedrawseq] END
-  | FOR [idlist] idseq IN rawseq DO rawseq [ELSE annotatedrawseq] END ;
+  | LBK [AS type COLON] [rawseq] RBK ;
 
 atom ::=
+    particle
+  | ifblock
+  | whileloop
+  | forloop
+  | LP rawseq [tuple] RP
+  | LBK [AS type COLON] [rawseq] RBK ;
+
+particle ::=
     id
   | THIS
   | literal
-  | LP rawseq [tuple] RP
-  | LBK [AS type COLON] [rawseq] RBK
   | OBJECT [idlist] [cap] [IS type] members END
-  | LBC [idlist] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures]
-        [COLON type] [QM] ARROW rawseq RBC [cap]
-  | RCVR [idlist] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures]
-        [COLON type] [QM] ARROW rawseq RBC [cap]
+  | LBC [idlist] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
+  | RCVR [idlist] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
   | AT (id | string) [typeargs] LP [positional] [named] RP [QM]
-  | SOURCELOC
-  | IF [idlist] rawseq THEN rawseq [elseif | (ELSE annotatedrawseq)] END
-  | WHILE [idlist] rawseq DO rawseq [ELSE annotatedrawseq] END
-  | FOR [idlist] idseq IN rawseq DO rawseq [ELSE annotatedrawseq] END ;
+  | SOURCELOC ;
+
+whileloop ::= WHILE [idlist] rawseq DO rawseq [ELSE annotatedrawseq] END ;
+
+forloop ::= FOR [idlist] idseq IN rawseq DO rawseq [ELSE annotatedrawseq] END ;
+
+ifblock ::= IF [idlist] rawseq THEN rawseq [elseif | (ELSE annotatedrawseq)] END ;
 
 tuple ::= COMMA rawseq (COMMA rawseq)* ;
 
