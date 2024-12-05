@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface PonyTuple extends PsiElement {
 
   @NotNull
-  List<PonyExpression> getExpressionList();
+  List<PonyRawseq> getRawseqList();
 
 }

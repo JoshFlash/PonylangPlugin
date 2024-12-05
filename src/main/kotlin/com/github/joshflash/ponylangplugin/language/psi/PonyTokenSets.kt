@@ -6,19 +6,27 @@ import com.intellij.psi.tree.TokenSet
 interface PonyTokenSets {
     companion object {
         val KEYWORDS: TokenSet = TokenSet.create(
-            KW_ACTOR, KW_CLASS, KW_TRAIT, KW_PRIMITIVE, KW_FUN, KW_BE, KW_NEW,
-            KW_LET, KW_VAR, KW_EMBED, KW_IS, KW_TRY, KW_ELSE, KW_END, KW_FOR,
-            KW_IN, KW_MATCH, KW_RECOVER, KW_CONSUME, KW_ISO, KW_REF, KW_VAL
+            ACTOR, ADDRESSOF, AND, AS, BE, BOX, BREAK, COMP_ERR, COMP_INT,
+            CONSUME, CONTINUE, DIGESTOF, DO, ELSE, ELSEIF, EMBED, END,
+            FALSE, FLOAT, FOR, FUN, IF, IFDEF, IFTYPE, IN, INTERFACE, IS,
+            ISNT, ISO, LET, MATCH, NEW, NOT, OBJECT, OR, PRIMITIVE, RECOVER,
+            REF, REPEAT, RETURN, STRUCT, TAG, THEN, THIS, TRAIT, TRN,
+            TRUE, TRY, UNTIL, USE, VAL, VAR, WHERE, WHILE, WITH, XOR
         )
 
         val OPERATORS: TokenSet = TokenSet.create(
-            ASSIGNMENT, PLUS, MINUS, MULT, DIV, EQUALS, NOT_EQUALS,
-            LESS_THAN, GREATER_THAN, LESS_EQUAL, GREATER_EQUAL
+            ADD, ADD_PARTIAL, ADD_UNSAFE, AMP, ARROW, BANG, CARET, CHAIN,
+            DIV, DIV_PARTIAL, DIV_UNSAFE, EQ, EQ_UNSAFE, GEQ, GEQ_UNSAFE,
+            GT, GT_UNSAFE, ISA, ISNT, LEQ, LEQ_UNSAFE, LT, LT_UNSAFE,
+            MOD, MOD_PARTIAL, MOD_UNSAFE, MUL, MUL_PARTIAL, MUL_UNSAFE,
+            NEQ, NEQ_UNSAFE, NOT, PIPE, REM, REM_PARTIAL, REM_UNSAFE,
+            SHL, SHL_UNSAFE, SHR, SHR_UNSAFE, SUB, SUB_PARTIAL, SUB_UNSAFE,
+            TYPE_ARROW, XOR
         )
 
         val DELIMITERS: TokenSet = TokenSet.create(
-            LEFT_PAREN, RIGHT_PAREN, LEFT_BRACKET, RIGHT_BRACKET, COMMA, DOT,
-            SEMICOLON, COLON
+            AT, COLON, COMMA, DOT, ELIPSIS, HASH, LBC, LBK, LP, QM, RBC,
+            RBK, RCVR, RP, SEMI, SPACE, TILDE
         )
     }
 }

@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface PonyType extends PsiElement {
 
-  @Nullable
-  PonyTypeArguments getTypeArguments();
-
   @NotNull
-  PsiElement getIdentifier();
+  PonyAtomtype getAtomtype();
+
+  @Nullable
+  PonyType getType();
 
 }

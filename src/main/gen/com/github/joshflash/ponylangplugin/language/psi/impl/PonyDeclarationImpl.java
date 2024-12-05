@@ -27,28 +27,4 @@ public class PonyDeclarationImpl extends ASTWrapperPsiElement implements PonyDec
     else super.accept(visitor);
   }
 
-  @Override
-  @Nullable
-  public PonyActorDeclaration getActorDeclaration() {
-    return findChildByClass(PonyActorDeclaration.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyClassDeclaration getClassDeclaration() {
-    return findChildByClass(PonyClassDeclaration.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyPrimitiveDeclaration getPrimitiveDeclaration() {
-    return findChildByClass(PonyPrimitiveDeclaration.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyTraitDeclaration getTraitDeclaration() {
-    return findChildByClass(PonyTraitDeclaration.class);
-  }
-
 }

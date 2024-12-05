@@ -8,6 +8,15 @@ import com.intellij.psi.PsiElement;
 public interface PonyPattern extends PsiElement {
 
   @Nullable
-  PsiElement getIdentifier();
+  PonyBinding getBinding();
+
+  @Nullable
+  PonyParampattern getParampattern();
+
+  @Nullable
+  PonyType getType();
+
+  @Nullable
+  PsiElement getId();
 
 }

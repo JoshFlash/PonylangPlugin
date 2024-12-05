@@ -29,8 +29,26 @@ public class PonyPatternImpl extends ASTWrapperPsiElement implements PonyPattern
 
   @Override
   @Nullable
-  public PsiElement getIdentifier() {
-    return findChildByType(IDENTIFIER);
+  public PonyBinding getBinding() {
+    return findChildByClass(PonyBinding.class);
+  }
+
+  @Override
+  @Nullable
+  public PonyParampattern getParampattern() {
+    return findChildByClass(PonyParampattern.class);
+  }
+
+  @Override
+  @Nullable
+  public PonyType getType() {
+    return findChildByClass(PonyType.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getId() {
+    return findChildByType(ID);
   }
 
 }

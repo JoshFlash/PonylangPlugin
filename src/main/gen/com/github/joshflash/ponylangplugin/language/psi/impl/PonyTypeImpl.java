@@ -28,15 +28,15 @@ public class PonyTypeImpl extends ASTWrapperPsiElement implements PonyType {
   }
 
   @Override
-  @Nullable
-  public PonyTypeArguments getTypeArguments() {
-    return findChildByClass(PonyTypeArguments.class);
+  @NotNull
+  public PonyAtomtype getAtomtype() {
+    return findNotNullChildByClass(PonyAtomtype.class);
   }
 
   @Override
-  @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  @Nullable
+  public PonyType getType() {
+    return findChildByClass(PonyType.class);
   }
 
 }

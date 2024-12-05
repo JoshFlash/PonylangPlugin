@@ -7,16 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface PonyDeclaration extends PsiElement {
 
-  @Nullable
-  PonyActorDeclaration getActorDeclaration();
-
-  @Nullable
-  PonyClassDeclaration getClassDeclaration();
-
-  @Nullable
-  PonyPrimitiveDeclaration getPrimitiveDeclaration();
-
-  @Nullable
-  PonyTraitDeclaration getTraitDeclaration();
-
 }

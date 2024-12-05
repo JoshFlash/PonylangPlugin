@@ -29,8 +29,8 @@ public class PonyTupleImpl extends ASTWrapperPsiElement implements PonyTuple {
 
   @Override
   @NotNull
-  public List<PonyExpression> getExpressionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyExpression.class);
+  public List<PonyRawseq> getRawseqList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyRawseq.class);
   }
 
 }

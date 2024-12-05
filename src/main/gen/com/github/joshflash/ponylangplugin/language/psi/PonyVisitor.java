@@ -7,43 +7,71 @@ import com.intellij.psi.PsiElement;
 
 public class PonyVisitor extends PsiElementVisitor {
 
-  public void visitActorBody(@NotNull PonyActorBody o) {
+  public void visitAnnotatedrawseq(@NotNull PonyAnnotatedrawseq o) {
     visitPsiElement(o);
   }
 
-  public void visitActorDeclaration(@NotNull PonyActorDeclaration o) {
+  public void visitAssignment(@NotNull PonyAssignment o) {
     visitPsiElement(o);
   }
 
-  public void visitAnnotation(@NotNull PonyAnnotation o) {
+  public void visitAtom(@NotNull PonyAtom o) {
     visitPsiElement(o);
   }
 
-  public void visitArgumentList(@NotNull PonyArgumentList o) {
+  public void visitAtomtype(@NotNull PonyAtomtype o) {
     visitPsiElement(o);
   }
 
-  public void visitAssignmentStatement(@NotNull PonyAssignmentStatement o) {
+  public void visitBarelambdatype(@NotNull PonyBarelambdatype o) {
     visitPsiElement(o);
   }
 
-  public void visitBehaviorDeclaration(@NotNull PonyBehaviorDeclaration o) {
+  public void visitBinding(@NotNull PonyBinding o) {
     visitPsiElement(o);
   }
 
-  public void visitBlock(@NotNull PonyBlock o) {
+  public void visitBinop(@NotNull PonyBinop o) {
     visitPsiElement(o);
   }
 
-  public void visitClassBody(@NotNull PonyClassBody o) {
+  public void visitCall(@NotNull PonyCall o) {
     visitPsiElement(o);
   }
 
-  public void visitClassDeclaration(@NotNull PonyClassDeclaration o) {
+  public void visitCap(@NotNull PonyCap o) {
     visitPsiElement(o);
   }
 
-  public void visitConstructor(@NotNull PonyConstructor o) {
+  public void visitCaseatom(@NotNull PonyCaseatom o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCaseexpr(@NotNull PonyCaseexpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCaseparampattern(@NotNull PonyCaseparampattern o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCasepattern(@NotNull PonyCasepattern o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCasepostfix(@NotNull PonyCasepostfix o) {
+    visitPsiElement(o);
+  }
+
+  public void visitChainId(@NotNull PonyChainId o) {
+    visitPsiElement(o);
+  }
+
+  public void visitClassDef(@NotNull PonyClassDef o) {
+    visitPsiElement(o);
+  }
+
+  public void visitConstruct(@NotNull PonyConstruct o) {
     visitPsiElement(o);
   }
 
@@ -51,27 +79,95 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitExpression(@NotNull PonyExpression o) {
+  public void visitDotId(@NotNull PonyDotId o) {
     visitPsiElement(o);
   }
 
-  public void visitExpressionStatement(@NotNull PonyExpressionStatement o) {
+  public void visitElif(@NotNull PonyElif o) {
     visitPsiElement(o);
   }
 
-  public void visitFieldDeclaration(@NotNull PonyFieldDeclaration o) {
+  public void visitElifdef(@NotNull PonyElifdef o) {
     visitPsiElement(o);
   }
 
-  public void visitForStatement(@NotNull PonyForStatement o) {
+  public void visitEliftype(@NotNull PonyEliftype o) {
     visitPsiElement(o);
   }
 
-  public void visitFunctionCall(@NotNull PonyFunctionCall o) {
+  public void visitExprseq(@NotNull PonyExprseq o) {
     visitPsiElement(o);
   }
 
-  public void visitIfStatement(@NotNull PonyIfStatement o) {
+  public void visitField(@NotNull PonyField o) {
+    visitPsiElement(o);
+  }
+
+  public void visitForloop(@NotNull PonyForloop o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIdlist(@NotNull PonyIdlist o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIdseq(@NotNull PonyIdseq o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIdseqInSeq(@NotNull PonyIdseqInSeq o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIfblock(@NotNull PonyIfblock o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInfix(@NotNull PonyInfix o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInfixop(@NotNull PonyInfixop o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInfixtype(@NotNull PonyInfixtype o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIsecttype(@NotNull PonyIsecttype o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIsop(@NotNull PonyIsop o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIstype(@NotNull PonyIstype o) {
+    visitPsiElement(o);
+  }
+
+  public void visitJump(@NotNull PonyJump o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLambdacapture(@NotNull PonyLambdacapture o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLambdacaptures(@NotNull PonyLambdacaptures o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLambdaparam(@NotNull PonyLambdaparam o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLambdaparams(@NotNull PonyLambdaparams o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLambdatype(@NotNull PonyLambdatype o) {
     visitPsiElement(o);
   }
 
@@ -79,31 +175,79 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitMatchCase(@NotNull PonyMatchCase o) {
+  public void visitMembers(@NotNull PonyMembers o) {
     visitPsiElement(o);
   }
 
-  public void visitMatchCases(@NotNull PonyMatchCases o) {
+  public void visitMethod(@NotNull PonyMethod o) {
     visitPsiElement(o);
   }
 
-  public void visitMatchStatement(@NotNull PonyMatchStatement o) {
+  public void visitNamed(@NotNull PonyNamed o) {
     visitPsiElement(o);
   }
 
-  public void visitMethodCall(@NotNull PonyMethodCall o) {
+  public void visitNamedarg(@NotNull PonyNamedarg o) {
     visitPsiElement(o);
   }
 
-  public void visitMethodDeclaration(@NotNull PonyMethodDeclaration o) {
+  public void visitNextassignment(@NotNull PonyNextassignment o) {
     visitPsiElement(o);
   }
 
-  public void visitParameter(@NotNull PonyParameter o) {
+  public void visitNextatom(@NotNull PonyNextatom o) {
     visitPsiElement(o);
   }
 
-  public void visitParameterList(@NotNull PonyParameterList o) {
+  public void visitNextexprseq(@NotNull PonyNextexprseq o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNextinfix(@NotNull PonyNextinfix o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNextparampattern(@NotNull PonyNextparampattern o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNextpattern(@NotNull PonyNextpattern o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNextpostfix(@NotNull PonyNextpostfix o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNextterm(@NotNull PonyNextterm o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNominal(@NotNull PonyNominal o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNosemi(@NotNull PonyNosemi o) {
+    visitPsiElement(o);
+  }
+
+  public void visitParam(@NotNull PonyParam o) {
+    visitPsiElement(o);
+  }
+
+  public void visitParampattern(@NotNull PonyParampattern o) {
+    visitPsiElement(o);
+  }
+
+  public void visitParams(@NotNull PonyParams o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPartialop(@NotNull PonyPartialop o) {
+    visitPsiElement(o);
+  }
+
+  public void visitParticle(@NotNull PonyParticle o) {
     visitPsiElement(o);
   }
 
@@ -111,35 +255,35 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitPrimary(@NotNull PonyPrimary o) {
+  public void visitPositional(@NotNull PonyPositional o) {
     visitPsiElement(o);
   }
 
-  public void visitPrimitiveBody(@NotNull PonyPrimitiveBody o) {
+  public void visitPostfix(@NotNull PonyPostfix o) {
     visitPsiElement(o);
   }
 
-  public void visitPrimitiveDeclaration(@NotNull PonyPrimitiveDeclaration o) {
+  public void visitPostfixelem(@NotNull PonyPostfixelem o) {
     visitPsiElement(o);
   }
 
-  public void visitQualifiedIdentifier(@NotNull PonyQualifiedIdentifier o) {
+  public void visitRawseq(@NotNull PonyRawseq o) {
     visitPsiElement(o);
   }
 
-  public void visitStatement(@NotNull PonyStatement o) {
+  public void visitSafeop(@NotNull PonySafeop o) {
     visitPsiElement(o);
   }
 
-  public void visitTraitBody(@NotNull PonyTraitBody o) {
+  public void visitSemiexpr(@NotNull PonySemiexpr o) {
     visitPsiElement(o);
   }
 
-  public void visitTraitDeclaration(@NotNull PonyTraitDeclaration o) {
+  public void visitTerm(@NotNull PonyTerm o) {
     visitPsiElement(o);
   }
 
-  public void visitTryStatement(@NotNull PonyTryStatement o) {
+  public void visitTildeId(@NotNull PonyTildeId o) {
     visitPsiElement(o);
   }
 
@@ -147,15 +291,51 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitTupletype(@NotNull PonyTupletype o) {
+    visitPsiElement(o);
+  }
+
   public void visitType(@NotNull PonyType o) {
     visitPsiElement(o);
   }
 
-  public void visitTypeArguments(@NotNull PonyTypeArguments o) {
+  public void visitTypearg(@NotNull PonyTypearg o) {
     visitPsiElement(o);
   }
 
-  public void visitUseStatement(@NotNull PonyUseStatement o) {
+  public void visitTypeargs(@NotNull PonyTypeargs o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTypeparam(@NotNull PonyTypeparam o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTypeparams(@NotNull PonyTypeparams o) {
+    visitPsiElement(o);
+  }
+
+  public void visitUniontype(@NotNull PonyUniontype o) {
+    visitPsiElement(o);
+  }
+
+  public void visitUnsafeop(@NotNull PonyUnsafeop o) {
+    visitPsiElement(o);
+  }
+
+  public void visitUseFfi(@NotNull PonyUseFfi o) {
+    visitPsiElement(o);
+  }
+
+  public void visitUsestmt(@NotNull PonyUsestmt o) {
+    visitPsiElement(o);
+  }
+
+  public void visitWhileloop(@NotNull PonyWhileloop o) {
+    visitPsiElement(o);
+  }
+
+  public void visitWithelem(@NotNull PonyWithelem o) {
     visitPsiElement(o);
   }
 

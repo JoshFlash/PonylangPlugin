@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface PonyLiteral extends PsiElement {
 
   @Nullable
-  PsiElement getNumber();
-
-  @Nullable
   PsiElement getString();
 
 }
