@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 public interface PonyCaseexpr extends PsiElement {
 
   @Nullable
-  PonyCasepattern getCasepattern();
+  PonyAnnotatedids getAnnotatedids();
 
   @Nullable
-  PonyIdlist getIdlist();
+  PonyCasepattern getCasepattern();
 
   @NotNull
   List<PonyRawseq> getRawseqList();

@@ -29,6 +29,12 @@ public class PonyElifdefImpl extends ASTWrapperPsiElement implements PonyElifdef
 
   @Override
   @Nullable
+  public PonyAnnotatedids getAnnotatedids() {
+    return findChildByClass(PonyAnnotatedids.class);
+  }
+
+  @Override
+  @Nullable
   public PonyAnnotatedrawseq getAnnotatedrawseq() {
     return findChildByClass(PonyAnnotatedrawseq.class);
   }
@@ -37,12 +43,6 @@ public class PonyElifdefImpl extends ASTWrapperPsiElement implements PonyElifdef
   @Nullable
   public PonyElifdef getElifdef() {
     return findChildByClass(PonyElifdef.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyIdlist getIdlist() {
-    return findChildByClass(PonyIdlist.class);
   }
 
   @Override

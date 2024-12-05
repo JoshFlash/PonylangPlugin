@@ -151,7 +151,7 @@ usestmt ::= USE [id EQUALS] (string | use_ffi) [IF infix] ;
 
 use_ffi ::= AT (id | string) typeargs LP [params] RP [QM] ;
 
-class_def ::= declaration [idlist] [AT] [cap] id [typeparams] [IS type] [string] members ;
+class_def ::= declaration [annotatedids] [AT] [cap] id [typeparams] [IS type] [string] members ;
 
 declaration ::= (TYPEDEF | INTERFACE | TRAIT | PRIMITIVE | STRUCT | CLASS | ACTOR) ;
 
@@ -161,9 +161,9 @@ field ::= binding id COLON type [EQUALS infix] [string] ;
 
 binding ::= (VAR | LET | EMBED)
 
-method ::= (FUN | BE | NEW) [idlist] [cap | AT] id [typeparams] LP [params] RP [COLON type] [QM] [string] [ARROW rawseq] ;
+method ::= (FUN | BE | NEW) [annotatedids] [cap | AT] id [typeparams] LP [params] RP [COLON type] [QM] [string] [ARROW rawseq] ;
 
-annotatedrawseq ::= [idlist] (exprseq | jump) ;
+annotatedrawseq ::= [annotatedids] (exprseq | jump) ;
 
 rawseq ::= exprseq | jump ;
 
@@ -220,31 +220,31 @@ construct ::=
     ifblock
   | whileloop
   | forloop
-  | IFDEF [idlist] infix THEN rawseq [elifdef | (ELSE annotatedrawseq)] END
-  | IFTYPE [idlist] istype [eliftype | (ELSE annotatedrawseq)] END
-  | MATCH [idlist] rawseq caseexpr* [ELSE annotatedrawseq] END
-  | REPEAT [idlist] rawseq UNTIL annotatedrawseq [ELSE annotatedrawseq] END
-  | WITH [idlist] withelem (COMMA withelem)* DO rawseq END
-  | TRY [idlist] rawseq [ELSE annotatedrawseq] [THEN annotatedrawseq] END
-  | RECOVER [idlist] [cap] rawseq END
+  | IFDEF [annotatedids] infix THEN rawseq [elifdef | (ELSE annotatedrawseq)] END
+  | IFTYPE [annotatedids] istype [eliftype | (ELSE annotatedrawseq)] END
+  | MATCH [annotatedids] rawseq caseexpr* [ELSE annotatedrawseq] END
+  | REPEAT [annotatedids] rawseq UNTIL annotatedrawseq [ELSE annotatedrawseq] END
+  | WITH [annotatedids] withelem (COMMA withelem)* DO rawseq END
+  | TRY [annotatedids] rawseq [ELSE annotatedrawseq] [THEN annotatedrawseq] END
+  | RECOVER [annotatedids] [cap] rawseq END
   | CONSUME [cap] term
   | HASH postfix ;
 
 withelem ::= idseq EQUALS rawseq ;
 
 caseexpr ::=
-    PIPE [idlist] [casepattern] [IF rawseq] [ARROW rawseq] ;
+    PIPE [annotatedids] [casepattern] [IF rawseq] [ARROW rawseq] ;
 
 eliftype ::=
-    ELSEIF [idlist] istype [eliftype | (ELSE annotatedrawseq)] ;
+    ELSEIF [annotatedids] istype [eliftype | (ELSE annotatedrawseq)] ;
 
 istype ::= type ISA type THEN rawseq ;
 
 elifdef ::=
-    ELSEIF [idlist] infix THEN rawseq [elifdef | (ELSE annotatedrawseq)] ;
+    ELSEIF [annotatedids] infix THEN rawseq [elifdef | (ELSE annotatedrawseq)] ;
 
 elif ::=
-    ELSEIF [idlist] rawseq THEN rawseq [elif | (ELSE annotatedrawseq)] ;
+    ELSEIF [annotatedids] rawseq THEN rawseq [elif | (ELSE annotatedrawseq)] ;
 
 idseq ::=
     id
@@ -321,17 +321,17 @@ particle ::=
     id
   | THIS
   | literal
-  | OBJECT [idlist] [cap] [IS type] members END
-  | LBC [idlist] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
-  | RCVR [idlist] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
+  | OBJECT [annotatedids] [cap] [IS type] members END
+  | LBC [annotatedids] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
+  | RCVR [annotatedids] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
   | AT (id | string) [typeargs] LP [positional] [named] RP [QM]
   | SOURCELOC ;
 
-whileloop ::= WHILE [idlist] rawseq DO rawseq [ELSE annotatedrawseq] END ;
+whileloop ::= WHILE [annotatedids] rawseq DO rawseq [ELSE annotatedrawseq] END ;
 
-forloop ::= FOR [idlist] idseq IN rawseq DO rawseq [ELSE annotatedrawseq] END ;
+forloop ::= FOR [annotatedids] idseq IN rawseq DO rawseq [ELSE annotatedrawseq] END ;
 
-ifblock ::= IF [idlist] rawseq THEN rawseq [elif | (ELSE annotatedrawseq)] END ;
+ifblock ::= IF [annotatedids] rawseq THEN rawseq [elif | (ELSE annotatedrawseq)] END ;
 
 tuple ::= COMMA rawseq (COMMA rawseq)* ;
 
@@ -399,5 +399,5 @@ literal ::=
 
 param ::= id COLON type [EQUALS infix] ;
 
-idlist ::= id (COMMA id)*
+annotatedids ::= "\\" id (COMMA id)* "\\"
 

@@ -29,14 +29,14 @@ public class PonyAnnotatedrawseqImpl extends ASTWrapperPsiElement implements Pon
 
   @Override
   @Nullable
-  public PonyExprseq getExprseq() {
-    return findChildByClass(PonyExprseq.class);
+  public PonyAnnotatedids getAnnotatedids() {
+    return findChildByClass(PonyAnnotatedids.class);
   }
 
   @Override
   @Nullable
-  public PonyIdlist getIdlist() {
-    return findChildByClass(PonyIdlist.class);
+  public PonyExprseq getExprseq() {
+    return findChildByClass(PonyExprseq.class);
   }
 
   @Override

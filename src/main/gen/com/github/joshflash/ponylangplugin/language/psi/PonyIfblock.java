@@ -8,13 +8,13 @@ import com.intellij.psi.PsiElement;
 public interface PonyIfblock extends PsiElement {
 
   @Nullable
+  PonyAnnotatedids getAnnotatedids();
+
+  @Nullable
   PonyAnnotatedrawseq getAnnotatedrawseq();
 
   @Nullable
   PonyElif getElif();
-
-  @Nullable
-  PonyIdlist getIdlist();
 
   @NotNull
   List<PonyRawseq> getRawseqList();

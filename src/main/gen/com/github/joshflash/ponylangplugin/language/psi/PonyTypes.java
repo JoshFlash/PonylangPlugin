@@ -8,6 +8,7 @@ import com.github.joshflash.ponylangplugin.language.psi.impl.*;
 
 public interface PonyTypes {
 
+  IElementType ANNOTATEDIDS = new PonyElementType("ANNOTATEDIDS");
   IElementType ANNOTATEDRAWSEQ = new PonyElementType("ANNOTATEDRAWSEQ");
   IElementType ASSIGNMENT = new PonyElementType("ASSIGNMENT");
   IElementType ATOM = new PonyElementType("ATOM");
@@ -33,7 +34,6 @@ public interface PonyTypes {
   IElementType EXPRSEQ = new PonyElementType("EXPRSEQ");
   IElementType FIELD = new PonyElementType("FIELD");
   IElementType FORLOOP = new PonyElementType("FORLOOP");
-  IElementType IDLIST = new PonyElementType("IDLIST");
   IElementType IDSEQ = new PonyElementType("IDSEQ");
   IElementType IDSEQ_IN_SEQ = new PonyElementType("IDSEQ_IN_SEQ");
   IElementType IFBLOCK = new PonyElementType("IFBLOCK");
@@ -224,7 +224,10 @@ public interface PonyTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == ANNOTATEDRAWSEQ) {
+      if (type == ANNOTATEDIDS) {
+        return new PonyAnnotatedidsImpl(node);
+      }
+      else if (type == ANNOTATEDRAWSEQ) {
         return new PonyAnnotatedrawseqImpl(node);
       }
       else if (type == ASSIGNMENT) {
@@ -298,9 +301,6 @@ public interface PonyTypes {
       }
       else if (type == FORLOOP) {
         return new PonyForloopImpl(node);
-      }
-      else if (type == IDLIST) {
-        return new PonyIdlistImpl(node);
       }
       else if (type == IDSEQ) {
         return new PonyIdseqImpl(node);

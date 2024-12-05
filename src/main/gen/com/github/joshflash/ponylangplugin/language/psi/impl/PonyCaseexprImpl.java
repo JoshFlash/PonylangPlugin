@@ -29,14 +29,14 @@ public class PonyCaseexprImpl extends ASTWrapperPsiElement implements PonyCaseex
 
   @Override
   @Nullable
-  public PonyCasepattern getCasepattern() {
-    return findChildByClass(PonyCasepattern.class);
+  public PonyAnnotatedids getAnnotatedids() {
+    return findChildByClass(PonyAnnotatedids.class);
   }
 
   @Override
   @Nullable
-  public PonyIdlist getIdlist() {
-    return findChildByClass(PonyIdlist.class);
+  public PonyCasepattern getCasepattern() {
+    return findChildByClass(PonyCasepattern.class);
   }
 
   @Override

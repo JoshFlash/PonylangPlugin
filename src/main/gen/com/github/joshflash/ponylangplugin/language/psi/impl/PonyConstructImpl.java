@@ -29,6 +29,12 @@ public class PonyConstructImpl extends ASTWrapperPsiElement implements PonyConst
 
   @Override
   @Nullable
+  public PonyAnnotatedids getAnnotatedids() {
+    return findChildByClass(PonyAnnotatedids.class);
+  }
+
+  @Override
+  @Nullable
   public PonyAnnotatedrawseq getAnnotatedrawseq() {
     return findChildByClass(PonyAnnotatedrawseq.class);
   }
@@ -61,12 +67,6 @@ public class PonyConstructImpl extends ASTWrapperPsiElement implements PonyConst
   @Nullable
   public PonyForloop getForloop() {
     return findChildByClass(PonyForloop.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyIdlist getIdlist() {
-    return findChildByClass(PonyIdlist.class);
   }
 
   @Override

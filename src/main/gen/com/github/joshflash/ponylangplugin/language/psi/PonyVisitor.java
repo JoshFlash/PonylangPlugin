@@ -7,6 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public class PonyVisitor extends PsiElementVisitor {
 
+  public void visitAnnotatedids(@NotNull PonyAnnotatedids o) {
+    visitPsiElement(o);
+  }
+
   public void visitAnnotatedrawseq(@NotNull PonyAnnotatedrawseq o) {
     visitPsiElement(o);
   }
@@ -104,10 +108,6 @@ public class PonyVisitor extends PsiElementVisitor {
   }
 
   public void visitForloop(@NotNull PonyForloop o) {
-    visitPsiElement(o);
-  }
-
-  public void visitIdlist(@NotNull PonyIdlist o) {
     visitPsiElement(o);
   }
 

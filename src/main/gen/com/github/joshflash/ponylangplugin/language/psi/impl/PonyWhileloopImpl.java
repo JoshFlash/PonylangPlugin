@@ -29,14 +29,14 @@ public class PonyWhileloopImpl extends ASTWrapperPsiElement implements PonyWhile
 
   @Override
   @Nullable
-  public PonyAnnotatedrawseq getAnnotatedrawseq() {
-    return findChildByClass(PonyAnnotatedrawseq.class);
+  public PonyAnnotatedids getAnnotatedids() {
+    return findChildByClass(PonyAnnotatedids.class);
   }
 
   @Override
   @Nullable
-  public PonyIdlist getIdlist() {
-    return findChildByClass(PonyIdlist.class);
+  public PonyAnnotatedrawseq getAnnotatedrawseq() {
+    return findChildByClass(PonyAnnotatedrawseq.class);
   }
 
   @Override

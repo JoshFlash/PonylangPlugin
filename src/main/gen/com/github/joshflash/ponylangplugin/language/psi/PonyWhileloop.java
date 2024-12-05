@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 public interface PonyWhileloop extends PsiElement {
 
   @Nullable
-  PonyAnnotatedrawseq getAnnotatedrawseq();
+  PonyAnnotatedids getAnnotatedids();
 
   @Nullable
-  PonyIdlist getIdlist();
+  PonyAnnotatedrawseq getAnnotatedrawseq();
 
   @NotNull
   List<PonyRawseq> getRawseqList();

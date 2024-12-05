@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface PonyConstruct extends PsiElement {
 
   @Nullable
+  PonyAnnotatedids getAnnotatedids();
+
+  @Nullable
   PonyAnnotatedrawseq getAnnotatedrawseq();
 
   @Nullable
@@ -24,9 +27,6 @@ public interface PonyConstruct extends PsiElement {
 
   @Nullable
   PonyForloop getForloop();
-
-  @Nullable
-  PonyIdlist getIdlist();
 
   @Nullable
   PonyIfblock getIfblock();

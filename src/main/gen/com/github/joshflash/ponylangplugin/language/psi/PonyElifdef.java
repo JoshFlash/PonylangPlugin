@@ -8,13 +8,13 @@ import com.intellij.psi.PsiElement;
 public interface PonyElifdef extends PsiElement {
 
   @Nullable
+  PonyAnnotatedids getAnnotatedids();
+
+  @Nullable
   PonyAnnotatedrawseq getAnnotatedrawseq();
 
   @Nullable
   PonyElifdef getElifdef();
-
-  @Nullable
-  PonyIdlist getIdlist();
 
   @NotNull
   PonyInfix getInfix();

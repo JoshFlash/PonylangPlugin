@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 public interface PonyParticle extends PsiElement {
 
   @Nullable
-  PonyCap getCap();
+  PonyAnnotatedids getAnnotatedids();
 
   @Nullable
-  PonyIdlist getIdlist();
+  PonyCap getCap();
 
   @Nullable
   PonyLambdacaptures getLambdacaptures();

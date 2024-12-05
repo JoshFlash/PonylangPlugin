@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 public interface PonyAnnotatedrawseq extends PsiElement {
 
   @Nullable
-  PonyExprseq getExprseq();
+  PonyAnnotatedids getAnnotatedids();
 
   @Nullable
-  PonyIdlist getIdlist();
+  PonyExprseq getExprseq();
 
   @Nullable
   PonyJump getJump();

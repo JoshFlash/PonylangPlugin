@@ -29,14 +29,14 @@ public class PonyParticleImpl extends ASTWrapperPsiElement implements PonyPartic
 
   @Override
   @Nullable
-  public PonyCap getCap() {
-    return findChildByClass(PonyCap.class);
+  public PonyAnnotatedids getAnnotatedids() {
+    return findChildByClass(PonyAnnotatedids.class);
   }
 
   @Override
   @Nullable
-  public PonyIdlist getIdlist() {
-    return findChildByClass(PonyIdlist.class);
+  public PonyCap getCap() {
+    return findChildByClass(PonyCap.class);
   }
 
   @Override

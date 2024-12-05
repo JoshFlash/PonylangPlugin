@@ -29,6 +29,12 @@ public class PonyClassDefImpl extends ASTWrapperPsiElement implements PonyClassD
 
   @Override
   @Nullable
+  public PonyAnnotatedids getAnnotatedids() {
+    return findChildByClass(PonyAnnotatedids.class);
+  }
+
+  @Override
+  @Nullable
   public PonyCap getCap() {
     return findChildByClass(PonyCap.class);
   }
@@ -37,12 +43,6 @@ public class PonyClassDefImpl extends ASTWrapperPsiElement implements PonyClassD
   @NotNull
   public PonyDeclaration getDeclaration() {
     return findNotNullChildByClass(PonyDeclaration.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyIdlist getIdlist() {
-    return findChildByClass(PonyIdlist.class);
   }
 
   @Override

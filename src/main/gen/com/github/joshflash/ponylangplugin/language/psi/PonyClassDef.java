@@ -8,13 +8,13 @@ import com.intellij.psi.PsiElement;
 public interface PonyClassDef extends PsiElement {
 
   @Nullable
+  PonyAnnotatedids getAnnotatedids();
+
+  @Nullable
   PonyCap getCap();
 
   @NotNull
   PonyDeclaration getDeclaration();
-
-  @Nullable
-  PonyIdlist getIdlist();
 
   @NotNull
   PonyMembers getMembers();

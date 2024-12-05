@@ -11,14 +11,14 @@ import static com.github.joshflash.ponylangplugin.language.psi.PonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.joshflash.ponylangplugin.language.psi.*;
 
-public class PonyIdlistImpl extends ASTWrapperPsiElement implements PonyIdlist {
+public class PonyAnnotatedidsImpl extends ASTWrapperPsiElement implements PonyAnnotatedids {
 
-  public PonyIdlistImpl(@NotNull ASTNode node) {
+  public PonyAnnotatedidsImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PonyVisitor visitor) {
-    visitor.visitIdlist(this);
+    visitor.visitAnnotatedids(this);
   }
 
   @Override
