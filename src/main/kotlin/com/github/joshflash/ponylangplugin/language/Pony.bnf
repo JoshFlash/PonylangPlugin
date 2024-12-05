@@ -141,7 +141,6 @@
     string="regexp:('([^'\\]|\\\\.)*'|\"([^\"\\]|\\\\.)*\")"
     line_comment="regexp://.*"
     block_comment="regexp:/\\*([^*]|\\*+[^*/])*\\*/"
-    doc_string="regexp:(?s)\"\"\"(.*?)\"\"\""
     gencap = 'regexp:#(read|send|share|alias|any)'
   ]
 }

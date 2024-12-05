@@ -121,7 +121,6 @@ public interface PonyTypes {
   IElementType DIV_PARTIAL = new PonyTokenType("/?");
   IElementType DIV_UNSAFE = new PonyTokenType("/~");
   IElementType DO = new PonyTokenType("do");
-  IElementType DOC_STRING = new PonyTokenType("doc_string");
   IElementType DOT = new PonyTokenType(".");
   IElementType ELIPSIS = new PonyTokenType("...");
   IElementType ELSE = new PonyTokenType("else");
