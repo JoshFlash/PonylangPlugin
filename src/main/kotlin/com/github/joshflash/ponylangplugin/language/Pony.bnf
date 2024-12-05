@@ -14,7 +14,7 @@
   tokens = [
   // keywords
     USE="use"
-    TYPE="type"
+    TYPEDEF="type"
     INTERFACE="interface"
     TRAIT="trait"
     PRIMITIVE="primitive"
@@ -146,15 +146,15 @@
   ]
 }
 
-module ::= [string] use* class_def* ;
+module ::= [string] usestmt* class_def* ;
 
-use ::= USE [id EQUALS] (string | use_ffi) [IF infix] ;
+usestmt ::= USE [id EQUALS] (string | use_ffi) [IF infix] ;
 
 use_ffi ::= AT (id | string) typeargs LP [params] RP [QM] ;
 
 class_def ::= declaration [idlist] [AT] [cap] id [typeparams] [IS type] [string] members ;
 
-declaration ::= (TYPE | INTERFACE | TRAIT | PRIMITIVE | STRUCT | CLASS | ACTOR) ;
+declaration ::= (TYPEDEF | INTERFACE | TRAIT | PRIMITIVE | STRUCT | CLASS | ACTOR) ;
 
 members ::= field* method* ;
 
@@ -221,8 +221,8 @@ construct ::=
     ifblock
   | whileloop
   | forloop
-  | IFDEF [idlist] infix THEN rawseq [elseifdef | (ELSE annotatedrawseq)] END
-  | IFTYPE [idlist] iftype [elseiftype | (ELSE annotatedrawseq)] END
+  | IFDEF [idlist] infix THEN rawseq [elifdef | (ELSE annotatedrawseq)] END
+  | IFTYPE [idlist] istype [eliftype | (ELSE annotatedrawseq)] END
   | MATCH [idlist] rawseq caseexpr* [ELSE annotatedrawseq] END
   | REPEAT [idlist] rawseq UNTIL annotatedrawseq [ELSE annotatedrawseq] END
   | WITH [idlist] withelem (COMMA withelem)* DO rawseq END
@@ -236,16 +236,16 @@ withelem ::= idseq EQUALS rawseq ;
 caseexpr ::=
     PIPE [idlist] [casepattern] [IF rawseq] [ARROW rawseq] ;
 
-elseiftype ::=
-    ELSEIF [idlist] iftype [elseiftype | (ELSE annotatedrawseq)] ;
+eliftype ::=
+    ELSEIF [idlist] istype [eliftype | (ELSE annotatedrawseq)] ;
 
-iftype ::= type ISA type THEN rawseq ;
+istype ::= type ISA type THEN rawseq ;
 
-elseifdef ::=
-    ELSEIF [idlist] infix THEN rawseq [elseifdef | (ELSE annotatedrawseq)] ;
+elifdef ::=
+    ELSEIF [idlist] infix THEN rawseq [elifdef | (ELSE annotatedrawseq)] ;
 
-elseif ::=
-    ELSEIF [idlist] rawseq THEN rawseq [elseif | (ELSE annotatedrawseq)] ;
+elif ::=
+    ELSEIF [idlist] rawseq THEN rawseq [elif | (ELSE annotatedrawseq)] ;
 
 idseq ::=
     id
@@ -285,15 +285,15 @@ casepostfix ::= caseatom postfixelem* ;
 
 postfix ::= atom postfixelem* ;
 
-postfixelem ::= dot | tilde | chain | typeargs | call ;
+postfixelem ::= dot_id | tilde_id | chain_id | typeargs | call ;
 
 call ::= LP [positional] [named] RP [QM] ;
 
-chain ::= CHAIN id ;
+chain_id ::= CHAIN id ;
 
-tilde ::= TILDE id ;
+tilde_id ::= TILDE id ;
 
-dot ::= DOT id ;
+dot_id ::= DOT id ;
 
 nextatom ::=
     particle
@@ -332,7 +332,7 @@ whileloop ::= WHILE [idlist] rawseq DO rawseq [ELSE annotatedrawseq] END ;
 
 forloop ::= FOR [idlist] idseq IN rawseq DO rawseq [ELSE annotatedrawseq] END ;
 
-ifblock ::= IF [idlist] rawseq THEN rawseq [elseif | (ELSE annotatedrawseq)] END ;
+ifblock ::= IF [idlist] rawseq THEN rawseq [elif | (ELSE annotatedrawseq)] END ;
 
 tuple ::= COMMA rawseq (COMMA rawseq)* ;
 
