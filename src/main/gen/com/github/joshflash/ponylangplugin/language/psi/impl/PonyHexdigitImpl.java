@@ -11,14 +11,14 @@ import static com.github.joshflash.ponylangplugin.language.psi.PonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.joshflash.ponylangplugin.language.psi.*;
 
-public class PonyLiteralImpl extends ASTWrapperPsiElement implements PonyLiteral {
+public class PonyHexdigitImpl extends ASTWrapperPsiElement implements PonyHexdigit {
 
-  public PonyLiteralImpl(@NotNull ASTNode node) {
+  public PonyHexdigitImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PonyVisitor visitor) {
-    visitor.visitLiteral(this);
+    visitor.visitHexdigit(this);
   }
 
   @Override
@@ -29,20 +29,14 @@ public class PonyLiteralImpl extends ASTWrapperPsiElement implements PonyLiteral
 
   @Override
   @Nullable
-  public PonyFloat getFloat() {
-    return findChildByClass(PonyFloat.class);
+  public PonyHexletter getHexletter() {
+    return findChildByClass(PonyHexletter.class);
   }
 
   @Override
   @Nullable
-  public PonyInt getInt() {
-    return findChildByClass(PonyInt.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getString() {
-    return findChildByType(STRING);
+  public PsiElement getDigit() {
+    return findChildByType(DIGIT);
   }
 
 }

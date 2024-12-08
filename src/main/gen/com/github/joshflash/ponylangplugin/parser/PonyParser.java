@@ -391,6 +391,18 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // "0" | "1"
+  public static boolean bindigit(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "bindigit")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, BINDIGIT, "<bindigit>");
+    r = consumeToken(b, "0");
+    if (!r) r = consumeToken(b, "1");
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
   // VAR | LET | EMBED
   public static boolean binding(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "binding")) return false;
@@ -1429,6 +1441,65 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // ("e" | "E") [ADD | SUB] digit (digit | "_")*
+  public static boolean exponent(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "exponent")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, EXPONENT, "<exponent>");
+    r = exponent_0(b, l + 1);
+    r = r && exponent_1(b, l + 1);
+    r = r && consumeToken(b, DIGIT);
+    r = r && exponent_3(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // "e" | "E"
+  private static boolean exponent_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "exponent_0")) return false;
+    boolean r;
+    r = consumeToken(b, "e");
+    if (!r) r = consumeToken(b, "E");
+    return r;
+  }
+
+  // [ADD | SUB]
+  private static boolean exponent_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "exponent_1")) return false;
+    exponent_1_0(b, l + 1);
+    return true;
+  }
+
+  // ADD | SUB
+  private static boolean exponent_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "exponent_1_0")) return false;
+    boolean r;
+    r = consumeToken(b, ADD);
+    if (!r) r = consumeToken(b, SUB);
+    return r;
+  }
+
+  // (digit | "_")*
+  private static boolean exponent_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "exponent_3")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!exponent_3_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "exponent_3", c)) break;
+    }
+    return true;
+  }
+
+  // digit | "_"
+  private static boolean exponent_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "exponent_3_0")) return false;
+    boolean r;
+    r = consumeToken(b, DIGIT);
+    if (!r) r = consumeToken(b, "_");
+    return r;
+  }
+
+  /* ********************************************************** */
   // assignment [nosemi]
   public static boolean exprseq(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "exprseq")) return false;
@@ -1488,6 +1559,86 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // digit (digit | "_")* ['.' digit (digit | "_")*] [exponent]
+  public static boolean float_$(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "float_$")) return false;
+    if (!nextTokenIs(b, DIGIT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, DIGIT);
+    r = r && float_1(b, l + 1);
+    r = r && float_2(b, l + 1);
+    r = r && float_3(b, l + 1);
+    exit_section_(b, m, FLOAT, r);
+    return r;
+  }
+
+  // (digit | "_")*
+  private static boolean float_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "float_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!float_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "float_1", c)) break;
+    }
+    return true;
+  }
+
+  // digit | "_"
+  private static boolean float_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "float_1_0")) return false;
+    boolean r;
+    r = consumeToken(b, DIGIT);
+    if (!r) r = consumeToken(b, "_");
+    return r;
+  }
+
+  // ['.' digit (digit | "_")*]
+  private static boolean float_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "float_2")) return false;
+    float_2_0(b, l + 1);
+    return true;
+  }
+
+  // '.' digit (digit | "_")*
+  private static boolean float_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "float_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, DOT, DIGIT);
+    r = r && float_2_0_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (digit | "_")*
+  private static boolean float_2_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "float_2_0_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!float_2_0_2_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "float_2_0_2", c)) break;
+    }
+    return true;
+  }
+
+  // digit | "_"
+  private static boolean float_2_0_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "float_2_0_2_0")) return false;
+    boolean r;
+    r = consumeToken(b, DIGIT);
+    if (!r) r = consumeToken(b, "_");
+    return r;
+  }
+
+  // [exponent]
+  private static boolean float_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "float_3")) return false;
+    exponent(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
   // FOR [annotatedids] idseq IN rawseq DO rawseq [ELSE annotatedrawseq] END
   public static boolean forloop(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "forloop")) return false;
@@ -1528,6 +1679,52 @@ public class PonyParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeToken(b, ELSE);
     r = r && annotatedrawseq(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // digit | hexletter
+  public static boolean hexdigit(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "hexdigit")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, HEXDIGIT, "<hexdigit>");
+    r = consumeToken(b, DIGIT);
+    if (!r) r = hexletter(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // "A" | "B" | "C" | "D" | "E" | "F"
+  //     "a" | "b" | "c" | "d" | "e" | "f"
+  public static boolean hexletter(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "hexletter")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, HEXLETTER, "<hexletter>");
+    r = consumeToken(b, "A");
+    if (!r) r = consumeToken(b, "B");
+    if (!r) r = consumeToken(b, "C");
+    if (!r) r = consumeToken(b, "D");
+    if (!r) r = consumeToken(b, "E");
+    if (!r) r = hexletter_5(b, l + 1);
+    if (!r) r = consumeToken(b, "b");
+    if (!r) r = consumeToken(b, "c");
+    if (!r) r = consumeToken(b, "d");
+    if (!r) r = consumeToken(b, "e");
+    if (!r) r = consumeToken(b, "f");
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // "F"
+  //     "a"
+  private static boolean hexletter_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "hexletter_5")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, "F");
+    r = r && consumeToken(b, "a");
     exit_section_(b, m, null, r);
     return r;
   }
@@ -1760,6 +1957,116 @@ public class PonyParser implements PsiParser, LightPsiParser {
     boolean r;
     r = uniontype(b, l + 1);
     if (!r) r = isecttype(b, l + 1);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // digit         (digit    | "_")*
+  //   | "0x" hexdigit (hexdigit | "_")*
+  //   | "0b" bindigit (bindigit | "_")*
+  public static boolean int_$(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "int_$")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, INT, "<int $>");
+    r = int_0(b, l + 1);
+    if (!r) r = int_1(b, l + 1);
+    if (!r) r = int_2(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // digit         (digit    | "_")*
+  private static boolean int_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "int_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, DIGIT);
+    r = r && int_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (digit    | "_")*
+  private static boolean int_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "int_0_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!int_0_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "int_0_1", c)) break;
+    }
+    return true;
+  }
+
+  // digit    | "_"
+  private static boolean int_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "int_0_1_0")) return false;
+    boolean r;
+    r = consumeToken(b, DIGIT);
+    if (!r) r = consumeToken(b, "_");
+    return r;
+  }
+
+  // "0x" hexdigit (hexdigit | "_")*
+  private static boolean int_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "int_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, "0x");
+    r = r && hexdigit(b, l + 1);
+    r = r && int_1_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (hexdigit | "_")*
+  private static boolean int_1_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "int_1_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!int_1_2_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "int_1_2", c)) break;
+    }
+    return true;
+  }
+
+  // hexdigit | "_"
+  private static boolean int_1_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "int_1_2_0")) return false;
+    boolean r;
+    r = hexdigit(b, l + 1);
+    if (!r) r = consumeToken(b, "_");
+    return r;
+  }
+
+  // "0b" bindigit (bindigit | "_")*
+  private static boolean int_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "int_2")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, "0b");
+    r = r && bindigit(b, l + 1);
+    r = r && int_2_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (bindigit | "_")*
+  private static boolean int_2_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "int_2_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!int_2_2_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "int_2_2", c)) break;
+    }
+    return true;
+  }
+
+  // bindigit | "_"
+  private static boolean int_2_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "int_2_2_0")) return false;
+    boolean r;
+    r = bindigit(b, l + 1);
+    if (!r) r = consumeToken(b, "_");
     return r;
   }
 
@@ -2188,8 +2495,8 @@ public class PonyParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, LITERAL, "<literal>");
     r = consumeToken(b, TRUE);
     if (!r) r = consumeToken(b, FALSE);
-    if (!r) r = consumeToken(b, INT);
-    if (!r) r = consumeToken(b, FLOAT);
+    if (!r) r = int_$(b, l + 1);
+    if (!r) r = float_$(b, l + 1);
     if (!r) r = consumeToken(b, STRING);
     exit_section_(b, l, m, r, false, null);
     return r;

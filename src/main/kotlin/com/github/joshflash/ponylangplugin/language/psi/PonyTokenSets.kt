@@ -8,7 +8,7 @@ interface PonyTokenSets {
         val KEYWORDS: TokenSet = TokenSet.create(
             ACTOR, ADDRESSOF, AS, BE, BOX, BREAK, CLASS, COMP_ERR, COMP_INT,
             CONSUME, CONTINUE, DIGESTOF, DO, ELSE, ELSEIF, EMBED, END, ERROR,
-            FALSE, FLOAT, FOR, FUN, IF, IFDEF, IFTYPE, IN, INTERFACE, IS, ISNT,
+            FALSE, FOR, FUN, IF, IFDEF, IFTYPE, IN, INTERFACE, IS, ISNT,
             ISO, LET, MATCH, NEW, OBJECT, PRIMITIVE, RECOVER, REF, REPEAT,
             RETURN, SOURCELOC, STRUCT, TAG, THEN, THIS, TRAIT, TRN, TRUE, TRY,
             TYPEDEF, UNTIL, USE, VAL, VAR, WHERE, WHILE, WITH
@@ -37,7 +37,7 @@ interface PonyTokenSets {
         )
 
         val NUMBERS: TokenSet = TokenSet.create(
-            FLOAT, INT
+            INT, FLOAT
         )
 
         val TYPES: TokenSet = TokenSet.create(

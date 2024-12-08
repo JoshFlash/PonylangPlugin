@@ -5,15 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PonyLiteral extends PsiElement {
+public interface PonyInt extends PsiElement {
 
-  @Nullable
-  PonyFloat getFloat();
+  @NotNull
+  List<PonyBindigit> getBindigitList();
 
-  @Nullable
-  PonyInt getInt();
-
-  @Nullable
-  PsiElement getString();
+  @NotNull
+  List<PonyHexdigit> getHexdigitList();
 
 }

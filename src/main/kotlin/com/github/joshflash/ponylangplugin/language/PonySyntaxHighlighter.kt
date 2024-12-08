@@ -41,18 +41,16 @@ class PonySyntaxHighlighter : SyntaxHighlighter {
 
     override fun getHighlightingLexer(): Lexer = PonyLexerAdapter()
 
-    override fun getTokenHighlights(tokenType: IElementType): Array<TextAttributesKey> {
-        return when {
-            PonyTokenSets.KEYWORDS.contains(tokenType) -> KEYWORD_KEYS
-            PonyTokenSets.STRINGS.contains(tokenType) -> STRING_KEYS
-            PonyTokenSets.COMMENTS.contains(tokenType) -> COMMENT_KEYS
-            PonyTokenSets.NUMBERS.contains(tokenType) -> NUMBER_KEYS
-            PonyTokenSets.OPERATORS.contains(tokenType) -> OPERATOR_KEYS
-            PonyTokenSets.DELIMITERS.contains(tokenType) -> DELIMITER_KEYS
-            PonyTokenSets.TYPES.contains(tokenType) -> TYPE_KEYS
-            PonyTokenSets.IDENTIFIERS.contains(tokenType) -> IDENTIFIER_KEYS
-            else -> EMPTY_KEYS
-        }
+    override fun getTokenHighlights(tokenType: IElementType): Array<TextAttributesKey> = when {
+        PonyTokenSets.KEYWORDS.contains(tokenType) -> KEYWORD_KEYS
+        PonyTokenSets.STRINGS.contains(tokenType) -> STRING_KEYS
+        PonyTokenSets.COMMENTS.contains(tokenType) -> COMMENT_KEYS
+        PonyTokenSets.NUMBERS.contains(tokenType) -> NUMBER_KEYS
+        PonyTokenSets.OPERATORS.contains(tokenType) -> OPERATOR_KEYS
+        PonyTokenSets.DELIMITERS.contains(tokenType) -> DELIMITER_KEYS
+        PonyTokenSets.TYPES.contains(tokenType) -> TYPE_KEYS
+        PonyTokenSets.IDENTIFIERS.contains(tokenType) -> IDENTIFIER_KEYS
+        else -> EMPTY_KEYS
     }
 }
 

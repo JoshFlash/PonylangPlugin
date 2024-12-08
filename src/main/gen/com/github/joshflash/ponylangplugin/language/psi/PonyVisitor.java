@@ -31,6 +31,10 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitBindigit(@NotNull PonyBindigit o) {
+    visitPsiElement(o);
+  }
+
   public void visitBinding(@NotNull PonyBinding o) {
     visitPsiElement(o);
   }
@@ -99,6 +103,10 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitExponent(@NotNull PonyExponent o) {
+    visitPsiElement(o);
+  }
+
   public void visitExprseq(@NotNull PonyExprseq o) {
     visitPsiElement(o);
   }
@@ -107,7 +115,19 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitFloat(@NotNull PonyFloat o) {
+    visitPsiElement(o);
+  }
+
   public void visitForloop(@NotNull PonyForloop o) {
+    visitPsiElement(o);
+  }
+
+  public void visitHexdigit(@NotNull PonyHexdigit o) {
+    visitPsiElement(o);
+  }
+
+  public void visitHexletter(@NotNull PonyHexletter o) {
     visitPsiElement(o);
   }
 
@@ -132,6 +152,10 @@ public class PonyVisitor extends PsiElementVisitor {
   }
 
   public void visitInfixtype(@NotNull PonyInfixtype o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInt(@NotNull PonyInt o) {
     visitPsiElement(o);
   }
 

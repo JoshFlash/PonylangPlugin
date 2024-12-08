@@ -28,7 +28,7 @@ WHITE_SPACE=\s+
 SPACE=\[ \t\n\x0B\f\r]+
 NEWLINE=\\n[ \\tr]*
 ID=[a-zA-Z_][a-zA-Z0-9_]*
-NUMBER=[0-9]+
+DIGIT=[0-9]+
 STRING=('([^'\\]|\\\\.)*'|\"([^\"\\]|\\\\.)*\")
 LINE_COMMENT="//".*
 BLOCK_COMMENT="/"\\*([^*]|\\*+[^*/])*\\*"/"
@@ -113,9 +113,9 @@ GENCAP=#(read|send|share|alias|any)
   "~"                       { return TILDE; }
   "|"                       { return PIPE; }
   "&"                       { return AMP; }
-  "<:"                      { return ISA; }
   "#"                       { return HASH; }
   "..."                     { return ELIPSIS; }
+  "<:"                      { return ISA; }
   "and"                     { return AND; }
   "or"                      { return OR; }
   "not"                     { return NOT; }
@@ -156,13 +156,11 @@ GENCAP=#(read|send|share|alias|any)
   "%%?"                     { return MOD_PARTIAL; }
   "true"                    { return TRUE; }
   "false"                   { return FALSE; }
-  "int"                     { return INT; }
-  "float"                   { return FLOAT; }
 
   {SPACE}                   { return SPACE; }
   {NEWLINE}                 { return NEWLINE; }
   {ID}                      { return ID; }
-  {NUMBER}                  { return NUMBER; }
+  {DIGIT}                   { return DIGIT; }
   {STRING}                  { return STRING; }
   {LINE_COMMENT}            { return LINE_COMMENT; }
   {BLOCK_COMMENT}           { return BLOCK_COMMENT; }
