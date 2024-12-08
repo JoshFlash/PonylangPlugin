@@ -45,4 +45,16 @@ public class PonyNominalImpl extends ASTWrapperPsiElement implements PonyNominal
     return findChildByType(GENCAP);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getId() {
+    return findChildByType(ID);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getTypeId() {
+    return findNotNullChildByType(TYPE_ID);
+  }
+
 }

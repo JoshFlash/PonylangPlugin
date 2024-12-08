@@ -27,7 +27,8 @@ WHITE_SPACE=\s+
 
 SPACE=\[ \t\n\x0B\f\r]+
 NEWLINE=\\n[ \\tr]*
-ID=[a-zA-Z_][a-zA-Z0-9_]*
+TYPE_ID=[A-Z][a-zA-Z0-9_]*
+ID=[a-z_][a-zA-Z0-9_]*
 DIGIT=[0-9]+
 STRING=('([^'\\]|\\\\.)*'|\"([^\"\\]|\\\\.)*\")
 LINE_COMMENT="//".*
@@ -159,6 +160,7 @@ GENCAP=#(read|send|share|alias|any)
 
   {SPACE}                   { return SPACE; }
   {NEWLINE}                 { return NEWLINE; }
+  {TYPE_ID}                 { return TYPE_ID; }
   {ID}                      { return ID; }
   {DIGIT}                   { return DIGIT; }
   {STRING}                  { return STRING; }

@@ -795,7 +795,7 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // declaration [annotatedids] [AT] [cap] id [typeparams] [IS type] [string] members
+  // declaration [annotatedids] [AT] [cap] type_id [typeparams] [IS type] [string] members
   public static boolean class_def(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "class_def")) return false;
     boolean r;
@@ -804,7 +804,7 @@ public class PonyParser implements PsiParser, LightPsiParser {
     r = r && class_def_1(b, l + 1);
     r = r && class_def_2(b, l + 1);
     r = r && class_def_3(b, l + 1);
-    r = r && consumeToken(b, ID);
+    r = r && consumeToken(b, TYPE_ID);
     r = r && class_def_5(b, l + 1);
     r = r && class_def_6(b, l + 1);
     r = r && class_def_7(b, l + 1);
@@ -1559,7 +1559,7 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // digit (digit | "_")* ['.' digit (digit | "_")*] [exponent]
+  // digit (digit | "_")* [DOT digit (digit | "_")*] [exponent]
   public static boolean float_$(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "float_$")) return false;
     if (!nextTokenIs(b, DIGIT)) return false;
@@ -1593,14 +1593,14 @@ public class PonyParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // ['.' digit (digit | "_")*]
+  // [DOT digit (digit | "_")*]
   private static boolean float_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "float_2")) return false;
     float_2_0(b, l + 1);
     return true;
   }
 
-  // '.' digit (digit | "_")*
+  // DOT digit (digit | "_")*
   private static boolean float_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "float_2_0")) return false;
     boolean r;
@@ -3013,13 +3013,13 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // id [DOT id] [typeargs] [cap | gencap] [CARET | BANG]
+  // type_id [DOT id] [typeargs] [cap | gencap] [CARET | BANG]
   public static boolean nominal(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "nominal")) return false;
-    if (!nextTokenIs(b, ID)) return false;
+    if (!nextTokenIs(b, TYPE_ID)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, ID);
+    r = consumeToken(b, TYPE_ID);
     r = r && nominal_1(b, l + 1);
     r = r && nominal_2(b, l + 1);
     r = r && nominal_3(b, l + 1);

@@ -16,4 +16,10 @@ public interface PonyNominal extends PsiElement {
   @Nullable
   PsiElement getGencap();
 
+  @Nullable
+  PsiElement getId();
+
+  @NotNull
+  PsiElement getTypeId();
+
 }

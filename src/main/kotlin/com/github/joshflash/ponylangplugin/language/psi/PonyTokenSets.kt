@@ -41,7 +41,7 @@ interface PonyTokenSets {
         )
 
         val TYPES: TokenSet = TokenSet.create(
-            TYPE
+            TYPE_ID
         )
 
         val IDENTIFIERS: TokenSet = TokenSet.create(

@@ -136,7 +136,8 @@
     false="false"
     space="regexp:\\s+"
     newline="regexp:\\n[ \\tr]*"
-    id="regexp:[a-zA-Z_][a-zA-Z0-9_]*"
+    type_id="regexp:[A-Z][a-zA-Z0-9_]*"
+    id="regexp:[a-z_][a-zA-Z0-9_]*"
     digit="regexp:[0-9]+"
     string="regexp:('([^'\\]|\\\\.)*'|\"([^\"\\]|\\\\.)*\")"
     line_comment="regexp://.*"
@@ -151,7 +152,7 @@ usestmt ::= USE [id EQUALS] (string | use_ffi) [IF infix] ;
 
 use_ffi ::= AT (id | string) typeargs LP [params] RP [QM] ;
 
-class_def ::= declaration [annotatedids] [AT] [cap] id [typeparams] [IS type] [string] members ;
+class_def ::= declaration [annotatedids] [AT] [cap] type_id [typeparams] [IS type] [string] members ;
 
 declaration ::= (TYPEDEF | INTERFACE | TRAIT | PRIMITIVE | STRUCT | CLASS | ACTOR) ;
 
@@ -373,7 +374,7 @@ isecttype ::= AMP type ;
 
 uniontype ::= PIPE type ;
 
-nominal ::= id [DOT id] [typeargs] [cap | gencap] [CARET | BANG] ;
+nominal ::= type_id [DOT id] [typeargs] [cap | gencap] [CARET | BANG] ;
 
 cap ::= ISO | REF | TRN | VAL | BOX | TAG ;
 
@@ -406,7 +407,7 @@ int ::=
   | "0x" hexdigit (hexdigit | "_")*
   | "0b" bindigit (bindigit | "_")* ;
 
-float ::= digit (digit | "_")* ['.' digit (digit | "_")*] [exponent] ;
+float ::= digit (digit | "_")* [DOT digit (digit | "_")*] [exponent] ;
 
 exponent ::= ("e" | "E") [ADD | SUB] digit (digit | "_")* ;
 

@@ -25,10 +25,10 @@ public interface PonyClassDef extends PsiElement {
   @Nullable
   PonyTypeparams getTypeparams();
 
-  @NotNull
-  PsiElement getId();
-
   @Nullable
   PsiElement getString();
+
+  @NotNull
+  PsiElement getTypeId();
 
 }

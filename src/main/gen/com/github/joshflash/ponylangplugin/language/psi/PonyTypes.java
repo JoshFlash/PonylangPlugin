@@ -216,6 +216,7 @@ public interface PonyTypes {
   IElementType TRY = new PonyTokenType("try");
   IElementType TYPEDEF = new PonyTokenType("type");
   IElementType TYPE_ARROW = new PonyTokenType("->");
+  IElementType TYPE_ID = new PonyTokenType("type_id");
   IElementType UNTIL = new PonyTokenType("until");
   IElementType USE = new PonyTokenType("use");
   IElementType VAL = new PonyTokenType("val");
