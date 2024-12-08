@@ -19,6 +19,9 @@
         <lang.parserDefinition
                 language="Pony"
                 implementationClass="com.github.joshflash.ponylangplugin.language.PonyParserDefinition"/>
+        <lang.syntaxHighlighterFactory
+                language="Pony"
+                implementationClass="com.github.joshflash.ponylangplugin.language.PonySyntaxHighlighterFactory"/>
     </extensions>
 
     <applicationListeners>

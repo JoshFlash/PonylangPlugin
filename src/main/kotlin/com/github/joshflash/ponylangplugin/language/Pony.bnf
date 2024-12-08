@@ -89,10 +89,10 @@
     TILDE="~"
     PIPE="|"
     AMP="&"
-    ISA="<:"
     HASH="#"
     ELIPSIS="..."
   // operators
+    ISA="<:"
     AND="and"
     OR="or"
     NOT="not"

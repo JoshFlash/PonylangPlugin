@@ -6,27 +6,47 @@ import com.intellij.psi.tree.TokenSet
 interface PonyTokenSets {
     companion object {
         val KEYWORDS: TokenSet = TokenSet.create(
-            ACTOR, ADDRESSOF, AND, AS, BE, BOX, BREAK, COMP_ERR, COMP_INT,
-            CONSUME, CONTINUE, DIGESTOF, DO, ELSE, ELSEIF, EMBED, END,
-            FALSE, FLOAT, FOR, FUN, IF, IFDEF, IFTYPE, IN, INTERFACE, IS,
-            ISNT, ISO, LET, MATCH, NEW, NOT, OBJECT, OR, PRIMITIVE, RECOVER,
-            REF, REPEAT, RETURN, STRUCT, TAG, THEN, THIS, TRAIT, TRN,
-            TRUE, TRY, UNTIL, USE, VAL, VAR, WHERE, WHILE, WITH, XOR
+            ACTOR, ADDRESSOF, AS, BE, BOX, BREAK, CLASS, COMP_ERR, COMP_INT,
+            CONSUME, CONTINUE, DIGESTOF, DO, ELSE, ELSEIF, EMBED, END, ERROR,
+            FALSE, FLOAT, FOR, FUN, IF, IFDEF, IFTYPE, IN, INTERFACE, IS, ISNT,
+            ISO, LET, MATCH, NEW, OBJECT, PRIMITIVE, RECOVER, REF, REPEAT,
+            RETURN, SOURCELOC, STRUCT, TAG, THEN, THIS, TRAIT, TRN, TRUE, TRY,
+            TYPEDEF, UNTIL, USE, VAL, VAR, WHERE, WHILE, WITH
         )
 
         val OPERATORS: TokenSet = TokenSet.create(
-            ADD, ADD_PARTIAL, ADD_UNSAFE, AMP, ARROW, BANG, CARET, CHAIN,
-            DIV, DIV_PARTIAL, DIV_UNSAFE, EQ, EQ_UNSAFE, GEQ, GEQ_UNSAFE,
-            GT, GT_UNSAFE, ISA, ISNT, LEQ, LEQ_UNSAFE, LT, LT_UNSAFE,
-            MOD, MOD_PARTIAL, MOD_UNSAFE, MUL, MUL_PARTIAL, MUL_UNSAFE,
-            NEQ, NEQ_UNSAFE, NOT, PIPE, REM, REM_PARTIAL, REM_UNSAFE,
-            SHL, SHL_UNSAFE, SHR, SHR_UNSAFE, SUB, SUB_PARTIAL, SUB_UNSAFE,
-            TYPE_ARROW, XOR
+            ADD, ADD_PARTIAL, ADD_UNSAFE, AMP, AND, DIV, DIV_PARTIAL, DIV_UNSAFE,
+            EQ, EQ_UNSAFE, GEQ, GEQ_UNSAFE, GT, GT_UNSAFE, ISA, LEQ, LEQ_UNSAFE,
+            LT, LT_UNSAFE, MOD, MOD_PARTIAL, MOD_UNSAFE, MUL, MUL_PARTIAL,
+            MUL_UNSAFE, NEQ, NEQ_UNSAFE, NOT, OR, REM, REM_PARTIAL, REM_UNSAFE,
+            SHL, SHL_UNSAFE, SHR, SHR_UNSAFE, SUB, SUB_PARTIAL, SUB_UNSAFE, XOR
         )
 
         val DELIMITERS: TokenSet = TokenSet.create(
-            AT, COLON, COMMA, DOT, ELIPSIS, HASH, LBC, LBK, LP, QM, RBC,
-            RBK, RCVR, RP, SEMI, SPACE, TILDE
+            AMP, ARROW, AT, BANG, CARET, CHAIN, COLON, COMMA, DOT, ELIPSIS,
+            EQUALS, HASH, LBC, LBK, LP, PIPE, QM, RBC, RBK, RCVR, RP, SEMI, SPACE,
+            TILDE, TYPE_ARROW
         )
+
+        val STRINGS: TokenSet = TokenSet.create(
+            STRING
+        )
+
+        val COMMENTS: TokenSet = TokenSet.create(
+            LINE_COMMENT, BLOCK_COMMENT
+        )
+
+        val NUMBERS: TokenSet = TokenSet.create(
+            FLOAT, INT
+        )
+
+        val TYPES: TokenSet = TokenSet.create(
+            TYPE
+        )
+
+        val IDENTIFIERS: TokenSet = TokenSet.create(
+            ID
+        )
+
     }
 }

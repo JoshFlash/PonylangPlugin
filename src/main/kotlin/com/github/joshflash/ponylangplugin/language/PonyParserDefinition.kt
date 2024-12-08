@@ -1,7 +1,6 @@
 package com.github.joshflash.ponylangplugin.language
 
 import com.github.joshflash.ponylangplugin.language.psi.PonyFile
-import com.github.joshflash.ponylangplugin.language.psi.PonyTokenSets
 import com.github.joshflash.ponylangplugin.language.psi.PonyTypes
 import com.github.joshflash.ponylangplugin.parser.PonyParser
 import com.intellij.lang.ASTNode
