@@ -40,9 +40,7 @@ interface PonyTokenSets {
             INT, FLOAT
         )
 
-        val TYPES: TokenSet = TokenSet.create(
-            TYPE_ID
-        )
+        val TYPES: TokenSet = TokenSet.create()
 
         val IDENTIFIERS: TokenSet = TokenSet.create(
             ID

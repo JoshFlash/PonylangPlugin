@@ -22,6 +22,9 @@
         <lang.syntaxHighlighterFactory
                 language="Pony"
                 implementationClass="com.github.joshflash.ponylangplugin.language.PonySyntaxHighlighterFactory"/>
+        <annotator
+                language="Pony"
+                implementationClass="com.github.joshflash.ponylangplugin.language.PonyTypeAnnotator"/>
     </extensions>
 
     <applicationListeners>
