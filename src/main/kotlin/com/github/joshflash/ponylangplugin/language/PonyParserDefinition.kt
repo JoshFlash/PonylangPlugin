@@ -1,7 +1,9 @@
 package com.github.joshflash.ponylangplugin.language
 
 import com.github.joshflash.ponylangplugin.language.psi.PonyFile
+import com.github.joshflash.ponylangplugin.language.psi.PonyTokenSets
 import com.github.joshflash.ponylangplugin.language.psi.PonyTypes
+import com.github.joshflash.ponylangplugin.language.psi.impl.PonyTypesExt
 import com.github.joshflash.ponylangplugin.parser.PonyParser
 import com.intellij.lang.ASTNode
 import com.intellij.lang.ParserDefinition
@@ -25,11 +27,14 @@ class PonyParserDefinition : ParserDefinition {
 
     override fun getFileNodeType(): IFileElementType = FILE
 
-    override fun getCommentTokens(): TokenSet = TokenSet.create(PonyTypes.LINE_COMMENT, PonyTypes.BLOCK_COMMENT)
+    override fun getCommentTokens(): TokenSet = PonyTokenSets.COMMENTS
 
     override fun getStringLiteralElements(): TokenSet = TokenSet.create(PonyTypes.STRING)
 
-    override fun createElement(p0: ASTNode?): PsiElement = PonyTypes.Factory.createElement(p0)
+    override fun createElement(p0: ASTNode): PsiElement {
+        PonyTypesExt.Factory.createElement(p0)?.let { return it }
+        return PonyTypes.Factory.createElement(p0)
+    }
 
     override fun createFile(p0: FileViewProvider): PsiFile = PonyFile(p0)
 }

@@ -25,6 +25,9 @@
         <annotator
                 language="Pony"
                 implementationClass="com.github.joshflash.ponylangplugin.language.PonyTypeAnnotator"/>
+        <psi.referenceContributor
+                language="Pony"
+                implementation="com.github.joshflash.ponylangplugin.language.PonyReferenceContributor"/>
     </extensions>
 
     <applicationListeners>

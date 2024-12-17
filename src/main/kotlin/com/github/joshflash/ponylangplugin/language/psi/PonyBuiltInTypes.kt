@@ -28,5 +28,6 @@ object BuiltInTypes {
         "ULong",
         "F32",
         "F64",
+        "Main"
     )
 }
