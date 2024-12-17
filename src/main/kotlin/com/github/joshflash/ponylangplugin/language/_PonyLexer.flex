@@ -31,7 +31,6 @@ ID=[a-z_][a-zA-Z0-9_]*
 DIGIT=[0-9]+
 STRING=(\"(\\[abefnrtv0\"\\]|[^\"\\])*\")
 LINE_COMMENT="//".*
-BLOCK_COMMENT="/"\\*([^*]|\\*+[^*/])*\\*"/"
 GENCAP=#(read|send|share|alias|any)
 
 %%
@@ -163,7 +162,6 @@ GENCAP=#(read|send|share|alias|any)
   {DIGIT}                   { return DIGIT; }
   {STRING}                  { return STRING; }
   {LINE_COMMENT}            { return LINE_COMMENT; }
-  {BLOCK_COMMENT}           { return BLOCK_COMMENT; }
   {GENCAP}                  { return GENCAP; }
 
 }

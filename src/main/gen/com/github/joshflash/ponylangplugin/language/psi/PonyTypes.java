@@ -110,7 +110,6 @@ public interface PonyTypes {
   IElementType AT = new PonyTokenType("@");
   IElementType BANG = new PonyTokenType("!");
   IElementType BE = new PonyTokenType("be");
-  IElementType BLOCK_COMMENT = new PonyTokenType("block_comment");
   IElementType BOX = new PonyTokenType("box");
   IElementType BREAK = new PonyTokenType("break");
   IElementType CARET = new PonyTokenType("^");
@@ -200,7 +199,6 @@ public interface PonyTypes {
   IElementType SHR = new PonyTokenType(">>");
   IElementType SHR_UNSAFE = new PonyTokenType(">>~");
   IElementType SOURCELOC = new PonyTokenType("__loc");
-  IElementType SPACE = new PonyTokenType("space");
   IElementType STRING = new PonyTokenType("string");
   IElementType STRUCT = new PonyTokenType("struct");
   IElementType SUB = new PonyTokenType("-");

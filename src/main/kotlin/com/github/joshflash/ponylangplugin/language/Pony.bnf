@@ -140,7 +140,6 @@
     digit="regexp:[0-9]+"
     string = "regexp:(\"(\\[abefnrtv0\"\\]|[^\"\\])*\")"
     line_comment="regexp://.*"
-    block_comment="regexp:/\\*([^*]|\\*+[^*/])*\\*/"
     gencap = 'regexp:#(read|send|share|alias|any)'
   ]
 }

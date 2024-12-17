@@ -24,7 +24,7 @@ interface PonyTokenSets {
 
         val DELIMITERS: TokenSet = TokenSet.create(
             AMP, ARROW, AT, BANG, CARET, CHAIN, COLON, COMMA, DOT, ELIPSIS,
-            EQUALS, HASH, LBC, LBK, LP, PIPE, QM, RBC, RBK, RCVR, RP, SEMI, SPACE,
+            EQUALS, HASH, LBC, LBK, LP, PIPE, QM, RBC, RBK, RCVR, RP, SEMI,
             TILDE, TYPE_ARROW
         )
 
@@ -33,7 +33,7 @@ interface PonyTokenSets {
         )
 
         val COMMENTS: TokenSet = TokenSet.create(
-            LINE_COMMENT, BLOCK_COMMENT
+            LINE_COMMENT
         )
 
         val NUMBERS: TokenSet = TokenSet.create(
