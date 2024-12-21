@@ -5,21 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PonyNominal extends PsiElement {
-
-  @Nullable
-  PonyCap getCap();
+public interface PonyTypeRef extends PsiElement {
 
   @NotNull
-  PonyTypeRef getTypeRef();
-
-  @Nullable
-  PonyTypeargs getTypeargs();
-
-  @Nullable
-  PsiElement getGencap();
-
-  @Nullable
-  PsiElement getId();
+  PsiElement getTypeId();
 
 }

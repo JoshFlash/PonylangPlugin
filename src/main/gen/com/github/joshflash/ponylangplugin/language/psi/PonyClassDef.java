@@ -22,13 +22,13 @@ public interface PonyClassDef extends PsiElement {
   @Nullable
   PonyType getType();
 
+  @NotNull
+  PonyTypeRef getTypeRef();
+
   @Nullable
   PonyTypeparams getTypeparams();
 
   @Nullable
   PsiElement getString();
-
-  @NotNull
-  PsiElement getTypeId();
 
 }

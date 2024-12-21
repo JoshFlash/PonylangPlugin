@@ -9,18 +9,15 @@ import com.intellij.psi.PsiElement
 class PonyTypeAnnotator : Annotator {
 
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-
-        val typeId = when (element) {
-            is PonyNominal -> element.getTypeId()
-            is PonyClassDef -> element.getTypeId()
+        val resolved = when (element) {
+            is PonyTypeRef -> PonyTypeReference(element).resolve()
             else -> return
         }
-        val resolved = PonyTypeReference(typeId).resolve()
         if (resolved != null) {
-            highlightTypeReference(typeId, holder)
+            highlightTypeReference(element.typeId, holder)
         } else {
             holder.newAnnotation(HighlightSeverity.ERROR, "Unresolved type: ${element.text}")
-            .range(typeId.textRange)
+            .range(element.typeId.textRange)
             .create()
         }
     }

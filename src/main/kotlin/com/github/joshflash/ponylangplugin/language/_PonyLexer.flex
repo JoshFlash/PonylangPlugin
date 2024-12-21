@@ -30,8 +30,8 @@ TYPE_ID=[A-Z][a-zA-Z0-9_]*
 ID=[a-z_][a-zA-Z0-9_]*
 DIGIT=[0-9]+
 STRING=(\"(\\[abefnrtv0\"\\]|[^\"\\])*\")
-LINE_COMMENT="//".*
 GENCAP=#(read|send|share|alias|any)
+LINE_COMMENT="//".*
 
 %%
 <YYINITIAL> {
@@ -155,14 +155,16 @@ GENCAP=#(read|send|share|alias|any)
   "%%?"                     { return MOD_PARTIAL; }
   "true"                    { return TRUE; }
   "false"                   { return FALSE; }
+  "/*"                      { return BEGIN_COMMENT; }
+  "*/"                      { return END_COMMENT; }
 
   {NEWLINE}                 { return NEWLINE; }
   {TYPE_ID}                 { return TYPE_ID; }
   {ID}                      { return ID; }
   {DIGIT}                   { return DIGIT; }
   {STRING}                  { return STRING; }
-  {LINE_COMMENT}            { return LINE_COMMENT; }
   {GENCAP}                  { return GENCAP; }
+  {LINE_COMMENT}            { return LINE_COMMENT; }
 
 }
 

@@ -323,6 +323,10 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitTypeRef(@NotNull PonyTypeRef o) {
+    visitPsiElement(o);
+  }
+
   public void visitTypearg(@NotNull PonyTypearg o) {
     visitPsiElement(o);
   }

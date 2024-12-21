@@ -91,6 +91,7 @@ public interface PonyTypes {
   IElementType TYPEARGS = new PonyElementType("TYPEARGS");
   IElementType TYPEPARAM = new PonyElementType("TYPEPARAM");
   IElementType TYPEPARAMS = new PonyElementType("TYPEPARAMS");
+  IElementType TYPE_REF = new PonyElementType("TYPE_REF");
   IElementType UNIONTYPE = new PonyElementType("UNIONTYPE");
   IElementType UNSAFEOP = new PonyElementType("UNSAFEOP");
   IElementType USESTMT = new PonyElementType("USESTMT");
@@ -110,6 +111,7 @@ public interface PonyTypes {
   IElementType AT = new PonyTokenType("@");
   IElementType BANG = new PonyTokenType("!");
   IElementType BE = new PonyTokenType("be");
+  IElementType BEGIN_COMMENT = new PonyTokenType("/*");
   IElementType BOX = new PonyTokenType("box");
   IElementType BREAK = new PonyTokenType("break");
   IElementType CARET = new PonyTokenType("^");
@@ -133,6 +135,7 @@ public interface PonyTypes {
   IElementType ELSEIF = new PonyTokenType("elseif");
   IElementType EMBED = new PonyTokenType("embed");
   IElementType END = new PonyTokenType("end");
+  IElementType END_COMMENT = new PonyTokenType("*/");
   IElementType EQ = new PonyTokenType("==");
   IElementType EQUALS = new PonyTokenType("=");
   IElementType EQ_UNSAFE = new PonyTokenType("==~");
@@ -475,6 +478,9 @@ public interface PonyTypes {
       }
       else if (type == TYPEPARAMS) {
         return new PonyTypeparamsImpl(node);
+      }
+      else if (type == TYPE_REF) {
+        return new PonyTypeRefImpl(node);
       }
       else if (type == UNIONTYPE) {
         return new PonyUniontypeImpl(node);

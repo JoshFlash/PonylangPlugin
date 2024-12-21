@@ -58,6 +58,12 @@ public class PonyClassDefImpl extends ASTWrapperPsiElement implements PonyClassD
   }
 
   @Override
+  @NotNull
+  public PonyTypeRef getTypeRef() {
+    return findNotNullChildByClass(PonyTypeRef.class);
+  }
+
+  @Override
   @Nullable
   public PonyTypeparams getTypeparams() {
     return findChildByClass(PonyTypeparams.class);
@@ -67,12 +73,6 @@ public class PonyClassDefImpl extends ASTWrapperPsiElement implements PonyClassD
   @Nullable
   public PsiElement getString() {
     return findChildByType(STRING);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getTypeId() {
-    return findNotNullChildByType(TYPE_ID);
   }
 
 }

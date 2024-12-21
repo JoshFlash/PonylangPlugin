@@ -6,6 +6,7 @@
   psiImplClassSuffix="Impl"
   psiPackage="com.github.joshflash.ponylangplugin.language.psi"
   psiImplPackage="com.github.joshflash.ponylangplugin.language.psi.impl"
+  psiImplUtilClass="com.github.joshflash.ponylangplugin.language.psi.impl.PonyPsiImplUtil"
 
   elementTypeHolderClass="com.github.joshflash.ponylangplugin.language.psi.PonyTypes"
   elementTypeClass="com.github.joshflash.ponylangplugin.language.psi.PonyElementType"
@@ -139,8 +140,10 @@
     id="regexp:[a-z_][a-zA-Z0-9_]*"
     digit="regexp:[0-9]+"
     string = "regexp:(\"(\\[abefnrtv0\"\\]|[^\"\\])*\")"
-    line_comment="regexp://.*"
     gencap = 'regexp:#(read|send|share|alias|any)'
+    line_comment="regexp://.*"
+    begin_comment="/*"
+    end_comment="*/"
   ]
 }
 
@@ -150,7 +153,9 @@ usestmt ::= USE [id EQUALS] (string | use_ffi) [IF infix] ;
 
 use_ffi ::= AT (id | string) typeargs LP [params] RP [QM] ;
 
-class_def ::= declaration [annotatedids] [AT] [cap] type_id [typeparams] [IS type] [string] members ;
+class_def ::= declaration [annotatedids] [AT] [cap] type_ref [typeparams] [IS type] [string] members ;
+
+type_ref ::= type_id
 
 declaration ::= (TYPEDEF | INTERFACE | TRAIT | PRIMITIVE | STRUCT | CLASS | ACTOR) ;
 
@@ -341,7 +346,6 @@ lambdacapture ::= id [COLON type] [EQUALS infix] ;
 lambdaparams ::= lambdaparam (COMMA lambdaparam)* ;
 
 lambdaparam ::= id [COLON type] [EQUALS infix] ;
-lambdaparam ::= id [COLON type] [EQUALS infix] ;
 
 positional ::= rawseq (COMMA rawseq)* ;
 
@@ -373,7 +377,7 @@ isecttype ::= AMP type ;
 
 uniontype ::= PIPE type ;
 
-nominal ::= type_id [DOT id] [typeargs] [cap | gencap] [CARET | BANG] ;
+nominal ::= type_ref [DOT id] [typeargs] [cap | gencap] [CARET | BANG] ;
 
 cap ::= ISO | REF | TRN | VAL | BOX | TAG ;
 

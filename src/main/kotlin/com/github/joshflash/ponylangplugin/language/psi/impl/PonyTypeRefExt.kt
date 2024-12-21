@@ -4,8 +4,8 @@ import com.github.joshflash.ponylangplugin.language.PonyTypeReference
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiReference
 
-class PonyNominalExt(node: ASTNode) : PonyNominalImpl(node) {
+class PonyTypeRefExt(node: ASTNode) : PonyTypeRefImpl(node) {
     override fun getReference(): PsiReference {
-        return PonyTypeReference(this.typeId);
+        return PonyTypeReference(this);
     }
 }

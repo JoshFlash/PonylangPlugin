@@ -29,7 +29,7 @@ class PonyParserDefinition : ParserDefinition {
 
     override fun getCommentTokens(): TokenSet = PonyTokenSets.COMMENTS
 
-    override fun getStringLiteralElements(): TokenSet = TokenSet.create(PonyTypes.STRING)
+    override fun getStringLiteralElements(): TokenSet = PonyTokenSets.STRINGS
 
     override fun createElement(p0: ASTNode): PsiElement {
         PonyTypesExt.Factory.createElement(p0)?.let { return it }

@@ -795,7 +795,7 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // declaration [annotatedids] [AT] [cap] type_id [typeparams] [IS type] [string] members
+  // declaration [annotatedids] [AT] [cap] type_ref [typeparams] [IS type] [string] members
   public static boolean class_def(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "class_def")) return false;
     boolean r;
@@ -804,7 +804,7 @@ public class PonyParser implements PsiParser, LightPsiParser {
     r = r && class_def_1(b, l + 1);
     r = r && class_def_2(b, l + 1);
     r = r && class_def_3(b, l + 1);
-    r = r && consumeToken(b, TYPE_ID);
+    r = r && type_ref(b, l + 1);
     r = r && class_def_5(b, l + 1);
     r = r && class_def_6(b, l + 1);
     r = r && class_def_7(b, l + 1);
@@ -3013,13 +3013,13 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // type_id [DOT id] [typeargs] [cap | gencap] [CARET | BANG]
+  // type_ref [DOT id] [typeargs] [cap | gencap] [CARET | BANG]
   public static boolean nominal(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "nominal")) return false;
     if (!nextTokenIs(b, TYPE_ID)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, TYPE_ID);
+    r = type_ref(b, l + 1);
     r = r && nominal_1(b, l + 1);
     r = r && nominal_2(b, l + 1);
     r = r && nominal_3(b, l + 1);
@@ -3913,6 +3913,18 @@ public class PonyParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, TYPE_ARROW);
     r = r && type(b, l + 1);
     exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // type_id
+  public static boolean type_ref(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_ref")) return false;
+    if (!nextTokenIs(b, TYPE_ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, TYPE_ID);
+    exit_section_(b, m, TYPE_REF, r);
     return r;
   }
 
