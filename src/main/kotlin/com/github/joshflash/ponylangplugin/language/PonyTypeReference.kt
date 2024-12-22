@@ -17,7 +17,7 @@ class PonyTypeReference(typeRef: PonyTypeRef) : PsiReferenceBase<PonyTypeRef>(ty
         }
 
         val startDir = element.containingFile?.containingDirectory ?: return null
-        val classDefs = collectAllClassDefs(startDir)
+        val classDefs = PonyUtil.findClassDefsInDirectory(startDir, includeSubdirectories = true)
         for (child in classDefs) {
             if (child.typeRef.text == element.text) {
                 return child.typeRef
@@ -26,20 +26,4 @@ class PonyTypeReference(typeRef: PonyTypeRef) : PsiReferenceBase<PonyTypeRef>(ty
 
         return null
     }
-
-    private fun collectAllClassDefs(directory: PsiDirectory) : MutableList<PonyClassDef> {
-        val result = mutableListOf<PonyClassDef>()
-        directory.files
-            .filterIsInstance<PsiFile>()
-            .forEach { file ->
-                result.addAll(PsiTreeUtil.findChildrenOfType(file, PonyClassDef::class.java))
-            }
-
-        directory.subdirectories.forEach { subDir ->
-            result.addAll(collectAllClassDefs(subDir))
-        }
-
-        return result
-    }
-
 }

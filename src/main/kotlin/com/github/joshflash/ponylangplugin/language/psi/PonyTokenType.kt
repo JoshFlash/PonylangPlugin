@@ -4,5 +4,5 @@ import com.github.joshflash.ponylangplugin.language.PonyLanguage
 import com.intellij.psi.tree.IElementType
 
 class PonyTokenType(debugName: String) : IElementType(debugName, PonyLanguage) {
-    override fun toString(): String = "PonyTokenType.${super.toString()}"
+    override fun toString(): String = "${super.toString()}"
 }
