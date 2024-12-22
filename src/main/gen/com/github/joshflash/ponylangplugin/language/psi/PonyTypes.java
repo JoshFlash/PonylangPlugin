@@ -26,6 +26,7 @@ public interface PonyTypes {
   IElementType CASEPOSTFIX = new PonyElementType("CASEPOSTFIX");
   IElementType CHAIN_ID = new PonyElementType("CHAIN_ID");
   IElementType CLASS_DEF = new PonyElementType("CLASS_DEF");
+  IElementType COMMENT = new PonyElementType("COMMENT");
   IElementType CONSTRUCT = new PonyElementType("CONSTRUCT");
   IElementType DECLARATION = new PonyElementType("DECLARATION");
   IElementType DOT_ID = new PonyElementType("DOT_ID");
@@ -111,7 +112,7 @@ public interface PonyTypes {
   IElementType AT = new PonyTokenType("@");
   IElementType BANG = new PonyTokenType("!");
   IElementType BE = new PonyTokenType("be");
-  IElementType BEGIN_COMMENT = new PonyTokenType("/*");
+  IElementType BLOCK_COMMENT = new PonyTokenType("block_comment");
   IElementType BOX = new PonyTokenType("box");
   IElementType BREAK = new PonyTokenType("break");
   IElementType CARET = new PonyTokenType("^");
@@ -135,7 +136,6 @@ public interface PonyTypes {
   IElementType ELSEIF = new PonyTokenType("elseif");
   IElementType EMBED = new PonyTokenType("embed");
   IElementType END = new PonyTokenType("end");
-  IElementType END_COMMENT = new PonyTokenType("*/");
   IElementType EQ = new PonyTokenType("==");
   IElementType EQUALS = new PonyTokenType("=");
   IElementType EQ_UNSAFE = new PonyTokenType("==~");
@@ -283,6 +283,9 @@ public interface PonyTypes {
       }
       else if (type == CLASS_DEF) {
         return new PonyClassDefImpl(node);
+      }
+      else if (type == COMMENT) {
+        return new PonyCommentImpl(node);
       }
       else if (type == CONSTRUCT) {
         return new PonyConstructImpl(node);

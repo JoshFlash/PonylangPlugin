@@ -32,6 +32,7 @@ DIGIT=[0-9]+
 STRING=(\"(\\[abefnrtv0\"\\]|[^\"\\])*\")
 GENCAP=#(read|send|share|alias|any)
 LINE_COMMENT="//".*
+BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
 
 %%
 <YYINITIAL> {
@@ -155,8 +156,6 @@ LINE_COMMENT="//".*
   "%%?"                     { return MOD_PARTIAL; }
   "true"                    { return TRUE; }
   "false"                   { return FALSE; }
-  "/*"                      { return BEGIN_COMMENT; }
-  "*/"                      { return END_COMMENT; }
 
   {NEWLINE}                 { return NEWLINE; }
   {TYPE_ID}                 { return TYPE_ID; }
@@ -165,6 +164,7 @@ LINE_COMMENT="//".*
   {STRING}                  { return STRING; }
   {GENCAP}                  { return GENCAP; }
   {LINE_COMMENT}            { return LINE_COMMENT; }
+  {BLOCK_COMMENT}           { return BLOCK_COMMENT; }
 
 }
 

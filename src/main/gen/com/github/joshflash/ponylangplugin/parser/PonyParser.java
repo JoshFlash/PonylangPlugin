@@ -4,7 +4,7 @@ package com.github.joshflash.ponylangplugin.parser;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import static com.github.joshflash.ponylangplugin.language.psi.PonyTypes.*;
-import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
+import static com.github.joshflash.ponylangplugin.parser.PonyParserUtil.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.tree.TokenSet;
@@ -864,6 +864,19 @@ public class PonyParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "class_def_7")) return false;
     consumeToken(b, STRING);
     return true;
+  }
+
+  /* ********************************************************** */
+  // line_comment | block_comment
+  public static boolean comment(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "comment")) return false;
+    if (!nextTokenIs(b, "<comment>", BLOCK_COMMENT, LINE_COMMENT)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, COMMENT, "<comment>");
+    r = consumeToken(b, LINE_COMMENT);
+    if (!r) r = consumeToken(b, BLOCK_COMMENT);
+    exit_section_(b, l, m, r, false, null);
+    return r;
   }
 
   /* ********************************************************** */

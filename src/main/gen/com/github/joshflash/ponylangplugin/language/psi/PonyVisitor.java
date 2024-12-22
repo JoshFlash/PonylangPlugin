@@ -79,6 +79,10 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitComment(@NotNull PonyComment o) {
+    visitPsiElement(o);
+  }
+
   public void visitConstruct(@NotNull PonyConstruct o) {
     visitPsiElement(o);
   }

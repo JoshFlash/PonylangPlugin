@@ -1,5 +1,6 @@
 {
   parserClass="com.github.joshflash.ponylangplugin.parser.PonyParser"
+  parserUtilClass="com.github.joshflash.ponylangplugin.parser.PonyParserUtil"
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
   psiClassPrefix="Pony"
@@ -139,11 +140,10 @@
     type_id="regexp:[A-Z][a-zA-Z0-9_]*"
     id="regexp:[a-z_][a-zA-Z0-9_]*"
     digit="regexp:[0-9]+"
-    string = "regexp:(\"(\\[abefnrtv0\"\\]|[^\"\\])*\")"
-    gencap = 'regexp:#(read|send|share|alias|any)'
+    string="regexp:(\"(\\[abefnrtv0\"\\]|[^\"\\])*\")"
+    gencap="regexp:#(read|send|share|alias|any)"
     line_comment="regexp://.*"
-    begin_comment="/*"
-    end_comment="*/"
+    block_comment="regexp:/\*([^*]|\*+[^*/])*(\*+/)?"
   ]
 }
 
@@ -421,3 +421,5 @@ hexletter ::=
     "a" | "b" | "c" | "d" | "e" | "f" ;
 
 bindigit ::= "0" | "1" ;
+
+comment ::= line_comment | block_comment
