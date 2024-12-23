@@ -25,7 +25,7 @@ import static com.github.joshflash.ponylangplugin.language.psi.PonyTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
-NEWLINE=\\n[ \\tr]*
+GENERIC_ID=[A-Z]
 TYPE_ID=[A-Z][a-zA-Z0-9_]*
 ID=[a-z_][a-zA-Z0-9_]*
 DIGIT=[0-9]+
@@ -156,8 +156,9 @@ BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
   "%%?"                     { return MOD_PARTIAL; }
   "true"                    { return TRUE; }
   "false"                   { return FALSE; }
+  "newline"                 { return NEWLINE; }
 
-  {NEWLINE}                 { return NEWLINE; }
+  {GENERIC_ID}              { return GENERIC_ID; }
   {TYPE_ID}                 { return TYPE_ID; }
   {ID}                      { return ID; }
   {DIGIT}                   { return DIGIT; }

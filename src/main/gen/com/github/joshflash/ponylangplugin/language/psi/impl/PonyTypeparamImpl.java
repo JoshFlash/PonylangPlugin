@@ -29,20 +29,26 @@ public class PonyTypeparamImpl extends ASTWrapperPsiElement implements PonyTypep
 
   @Override
   @Nullable
+  public PonyGenericType getGenericType() {
+    return findChildByClass(PonyGenericType.class);
+  }
+
+  @Override
+  @Nullable
   public PonyType getType() {
     return findChildByClass(PonyType.class);
   }
 
   @Override
   @Nullable
-  public PonyTypearg getTypearg() {
-    return findChildByClass(PonyTypearg.class);
+  public PonyTypeRef getTypeRef() {
+    return findChildByClass(PonyTypeRef.class);
   }
 
   @Override
-  @NotNull
-  public PsiElement getId() {
-    return findNotNullChildByType(ID);
+  @Nullable
+  public PonyTypearg getTypearg() {
+    return findChildByClass(PonyTypearg.class);
   }
 
 }

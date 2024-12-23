@@ -94,7 +94,7 @@ object PonyUtil {
         val results = ArrayList<T>()
         val virtualFiles = FileTypeIndex.getFiles(PonyFileType.INSTANCE, GlobalSearchScope.allScope(project))
         for (virtualFile in virtualFiles) {
-            val ponyFile: PonyFile? = PsiManager.getInstance(project).findFile(virtualFile!!) as? PonyFile ?: continue
+            val ponyFile: PonyFile = PsiManager.getInstance(project).findFile(virtualFile!!) as? PonyFile ?: continue
             results.addAll(PsiTreeUtil.collectElementsOfType(ponyFile, T::class.java))
         }
         return results

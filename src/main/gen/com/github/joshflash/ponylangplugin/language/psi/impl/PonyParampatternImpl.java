@@ -39,10 +39,4 @@ public class PonyParampatternImpl extends ASTWrapperPsiElement implements PonyPa
     return findChildByClass(PonyPostfix.class);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getNewline() {
-    return findChildByType(NEWLINE);
-  }
-
 }

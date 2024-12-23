@@ -38,6 +38,7 @@ public interface PonyTypes {
   IElementType FIELD = new PonyElementType("FIELD");
   IElementType FLOAT = new PonyElementType("FLOAT");
   IElementType FORLOOP = new PonyElementType("FORLOOP");
+  IElementType GENERIC_TYPE = new PonyElementType("GENERIC_TYPE");
   IElementType HEXDIGIT = new PonyElementType("HEXDIGIT");
   IElementType HEXLETTER = new PonyElementType("HEXLETTER");
   IElementType IDSEQ = new PonyElementType("IDSEQ");
@@ -144,6 +145,7 @@ public interface PonyTypes {
   IElementType FOR = new PonyTokenType("for");
   IElementType FUN = new PonyTokenType("fun");
   IElementType GENCAP = new PonyTokenType("gencap");
+  IElementType GENERIC_ID = new PonyTokenType("generic_id");
   IElementType GEQ = new PonyTokenType(">=");
   IElementType GEQ_UNSAFE = new PonyTokenType(">=~");
   IElementType GT = new PonyTokenType(">");
@@ -319,6 +321,9 @@ public interface PonyTypes {
       }
       else if (type == FORLOOP) {
         return new PonyForloopImpl(node);
+      }
+      else if (type == GENERIC_TYPE) {
+        return new PonyGenericTypeImpl(node);
       }
       else if (type == HEXDIGIT) {
         return new PonyHexdigitImpl(node);

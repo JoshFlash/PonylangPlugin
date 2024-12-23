@@ -13,7 +13,4 @@ public interface PonyParampattern extends PsiElement {
   @Nullable
   PonyPostfix getPostfix();
 
-  @Nullable
-  PsiElement getNewline();
-
 }

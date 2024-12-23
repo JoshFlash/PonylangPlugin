@@ -69,10 +69,4 @@ public class PonyNextatomImpl extends ASTWrapperPsiElement implements PonyNextat
     return findChildByClass(PonyWhileloop.class);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getNewline() {
-    return findChildByType(NEWLINE);
-  }
-
 }

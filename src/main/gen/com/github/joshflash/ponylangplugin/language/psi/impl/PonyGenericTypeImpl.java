@@ -11,14 +11,14 @@ import static com.github.joshflash.ponylangplugin.language.psi.PonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.joshflash.ponylangplugin.language.psi.*;
 
-public class PonyCaseparampatternImpl extends ASTWrapperPsiElement implements PonyCaseparampattern {
+public class PonyGenericTypeImpl extends ASTWrapperPsiElement implements PonyGenericType {
 
-  public PonyCaseparampatternImpl(@NotNull ASTNode node) {
+  public PonyGenericTypeImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PonyVisitor visitor) {
-    visitor.visitCaseparampattern(this);
+    visitor.visitGenericType(this);
   }
 
   @Override
@@ -28,15 +28,9 @@ public class PonyCaseparampatternImpl extends ASTWrapperPsiElement implements Po
   }
 
   @Override
-  @Nullable
-  public PonyCaseparampattern getCaseparampattern() {
-    return findChildByClass(PonyCaseparampattern.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyCasepostfix getCasepostfix() {
-    return findChildByClass(PonyCasepostfix.class);
+  @NotNull
+  public PsiElement getGenericId() {
+    return findNotNullChildByType(GENERIC_ID);
   }
 
 }

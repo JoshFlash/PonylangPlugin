@@ -13,7 +13,4 @@ public interface PonyNextparampattern extends PsiElement {
   @Nullable
   PonyParampattern getParampattern();
 
-  @Nullable
-  PsiElement getNewline();
-
 }

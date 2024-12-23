@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PonyCaseparampattern extends PsiElement {
+public interface PonyGenericType extends PsiElement {
 
-  @Nullable
-  PonyCaseparampattern getCaseparampattern();
-
-  @Nullable
-  PonyCasepostfix getCasepostfix();
+  @NotNull
+  PsiElement getGenericId();
 
 }

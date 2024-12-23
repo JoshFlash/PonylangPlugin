@@ -28,7 +28,4 @@ public interface PonyNextatom extends PsiElement {
   @Nullable
   PonyWhileloop getWhileloop();
 
-  @Nullable
-  PsiElement getNewline();
-
 }

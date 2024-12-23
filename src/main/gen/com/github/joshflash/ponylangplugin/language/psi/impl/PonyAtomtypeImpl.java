@@ -41,6 +41,12 @@ public class PonyAtomtypeImpl extends ASTWrapperPsiElement implements PonyAtomty
 
   @Override
   @Nullable
+  public PonyGenericType getGenericType() {
+    return findChildByClass(PonyGenericType.class);
+  }
+
+  @Override
+  @Nullable
   public PonyInfixtype getInfixtype() {
     return findChildByClass(PonyInfixtype.class);
   }

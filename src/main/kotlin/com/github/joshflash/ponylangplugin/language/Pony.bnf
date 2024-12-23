@@ -136,7 +136,7 @@
   // lexemes
     true="true"
     false="false"
-    newline="regexp:\\n[ \\tr]*"
+    generic_id="regexp:[A-Z]"
     type_id="regexp:[A-Z][a-zA-Z0-9_]*"
     id="regexp:[a-z_][a-zA-Z0-9_]*"
     digit="regexp:[0-9]+"
@@ -156,6 +156,8 @@ use_ffi ::= AT (id | string) typeargs LP [params] RP [QM] ;
 class_def ::= declaration [annotatedids] [AT] [cap] type_ref [typeparams] [IS type] [string] members ;
 
 type_ref ::= type_id
+
+generic_type ::= generic_id [CARET | BANG]
 
 declaration ::= (TYPEDEF | INTERFACE | TRAIT | PRIMITIVE | STRUCT | CLASS | ACTOR) ;
 
@@ -271,15 +273,15 @@ pattern ::=
   | parampattern ;
 
 nextparampattern ::=
-    (NOT | ADDRESSOF | newline SUB | newline SUB_UNSAFE | DIGESTOF) parampattern
+    (NOT | ADDRESSOF | "\n" SUB | newline SUB_UNSAFE | DIGESTOF) parampattern
   | nextpostfix ;
 
 caseparampattern ::=
-    (NOT | ADDRESSOF | [newline] SUB | [newline] SUB_UNSAFE | DIGESTOF) caseparampattern
+    (NOT | ADDRESSOF | ["\n"] SUB | [newline] SUB_UNSAFE | DIGESTOF) caseparampattern
   | casepostfix ;
 
 parampattern ::=
-    (NOT | ADDRESSOF | [newline] SUB | [newline] SUB_UNSAFE | DIGESTOF) parampattern
+    (NOT | ADDRESSOF | ["\n"] SUB | [newline] SUB_UNSAFE | DIGESTOF) parampattern
   | postfix ;
 
 nextpostfix ::= nextatom postfixelem* ;
@@ -303,8 +305,8 @@ nextatom ::=
   | ifblock
   | whileloop
   | forloop
-  | newline LP rawseq [tuple] RP
-  | newline LBK [AS type COLON] [rawseq] RBK ;
+  | "\n" LP rawseq [tuple] RP
+  | "\n" LBK [AS type COLON] [rawseq] RBK ;
 
 caseatom ::=
     particle
@@ -322,7 +324,8 @@ atom ::=
   | LBK [AS type COLON] [rawseq] RBK ;
 
 particle ::=
-    id
+    id ["'"]
+  | type_ref
   | THIS
   | literal
   | OBJECT [annotatedids] [cap] [IS type] members END
@@ -357,6 +360,7 @@ type ::= atomtype [TYPE_ARROW type] ;
 
 atomtype ::=
     THIS
+  | generic_type
   | cap
   | LP infixtype [tupletype] RP
   | nominal
@@ -377,7 +381,7 @@ isecttype ::= AMP type ;
 
 uniontype ::= PIPE type ;
 
-nominal ::= type_ref [DOT id] [typeargs] [cap | gencap] [CARET | BANG] ;
+nominal ::= [id DOT] type_ref [typeargs] [cap | gencap] [CARET | BANG] ;
 
 cap ::= ISO | REF | TRN | VAL | BOX | TAG ;
 
@@ -387,7 +391,7 @@ typeparams ::= LBK typeparam (COMMA typeparam)* RBK ;
 
 params ::= (param | ELIPSIS) (COMMA (param | ELIPSIS))* ;
 
-typeparam ::= id [COLON type] [EQUALS typearg] ;
+typeparam ::= (type_ref | generic_type) [COLON type] [EQUALS typearg] ;
 
 typearg ::=
     type
@@ -401,7 +405,7 @@ literal ::=
   | float
   | string ;
 
-param ::= id COLON type [EQUALS infix] ;
+param ::= id ["'"] COLON type [EQUALS infix] ;
 
 annotatedids ::= "\\" id (COMMA id)* "\\" ;
 

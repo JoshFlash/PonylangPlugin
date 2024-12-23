@@ -38,6 +38,9 @@ public interface PonyParticle extends PsiElement {
   PonyType getType();
 
   @Nullable
+  PonyTypeRef getTypeRef();
+
+  @Nullable
   PonyTypeargs getTypeargs();
 
   @Nullable

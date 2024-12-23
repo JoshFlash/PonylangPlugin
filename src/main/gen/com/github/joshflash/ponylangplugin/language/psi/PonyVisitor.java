@@ -127,6 +127,10 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitGenericType(@NotNull PonyGenericType o) {
+    visitPsiElement(o);
+  }
+
   public void visitHexdigit(@NotNull PonyHexdigit o) {
     visitPsiElement(o);
   }
