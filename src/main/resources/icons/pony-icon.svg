@@ -1,8 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-    <!-- Circle background -->
-    <circle cx="8" cy="8" r="7" fill="#0077CC"/>
-    
-    <!-- Simple house silhouette -->
-    <path d="M4 11V7L8 4L12 7V11H9V8H7V11H4Z" 
-          fill="black"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1.03412,0,0,1.03312,-5.37637,-4.37544)">
+        <path d="M250.919,67.397L250.919,189.46C250.919,223.144 223.599,250.491 189.947,250.491L67.767,250.491C34.115,250.491 6.795,223.144 6.795,189.46L6.795,67.397C6.795,33.713 34.115,6.366 67.767,6.366L189.947,6.366C223.599,6.366 250.919,33.713 250.919,67.397Z" style="fill:rgb(61,63,61);"/>
+    </g>
+    <g transform="matrix(1.5357,0,0,0.865688,21.7223,31.3011)">
+        <g transform="matrix(290.016,0,0,290.016,24.9869,225.228)">
+            <path d="M0.099,-0.316L0.106,-0.316C0.15,-0.316 0.184,-0.336 0.21,-0.377C0.236,-0.418 0.249,-0.474 0.249,-0.545C0.249,-0.607 0.239,-0.653 0.22,-0.682C0.201,-0.711 0.17,-0.726 0.129,-0.726L0.127,-0.726L0.099,-0.316ZM0.002,-0L0.063,-0.039L0.063,-0.707L0.011,-0.743L0.122,-0.743C0.175,-0.743 0.218,-0.723 0.25,-0.684C0.282,-0.644 0.298,-0.592 0.298,-0.527C0.298,-0.461 0.279,-0.407 0.241,-0.364C0.203,-0.32 0.155,-0.299 0.098,-0.299L0.079,-0L0.002,-0Z" style="fill:rgb(186,165,116);fill-rule:nonzero;"/>
+        </g>
+    </g>
 </svg>
