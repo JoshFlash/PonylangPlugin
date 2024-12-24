@@ -7,7 +7,6 @@
   psiImplClassSuffix="Impl"
   psiPackage="com.github.joshflash.ponylangplugin.language.psi"
   psiImplPackage="com.github.joshflash.ponylangplugin.language.psi.impl"
-  psiImplUtilClass="com.github.joshflash.ponylangplugin.language.psi.impl.PonyPsiImplUtil"
 
   elementTypeHolderClass="com.github.joshflash.ponylangplugin.language.psi.PonyTypes"
   elementTypeClass="com.github.joshflash.ponylangplugin.language.psi.PonyElementType"
