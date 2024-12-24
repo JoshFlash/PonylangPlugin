@@ -29,6 +29,6 @@ public interface PonyClassDef extends PsiElement {
   PonyTypeparams getTypeparams();
 
   @Nullable
-  PsiElement getString();
+  PsiElement getDocString();
 
 }

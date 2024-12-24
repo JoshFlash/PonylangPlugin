@@ -29,6 +29,7 @@ GENERIC_ID=[A-Z]
 TYPE_ID=[A-Z][a-zA-Z0-9_]*
 ID=[a-z_][a-zA-Z0-9_]*
 DIGIT=[0-9]+
+DOC_STRING=(\"\"\")([^\"]|\"\"?[^\"])*(\"\"\")?
 STRING=(\"(\\[abefnrtv0\"\\]|[^\"\\])*\")
 GENCAP=#(read|send|share|alias|any)
 LINE_COMMENT="//".*
@@ -162,6 +163,7 @@ BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
   {TYPE_ID}                 { return TYPE_ID; }
   {ID}                      { return ID; }
   {DIGIT}                   { return DIGIT; }
+  {DOC_STRING}              { return DOC_STRING; }
   {STRING}                  { return STRING; }
   {GENCAP}                  { return GENCAP; }
   {LINE_COMMENT}            { return LINE_COMMENT; }

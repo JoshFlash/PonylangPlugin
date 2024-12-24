@@ -71,8 +71,8 @@ public class PonyClassDefImpl extends ASTWrapperPsiElement implements PonyClassD
 
   @Override
   @Nullable
-  public PsiElement getString() {
-    return findChildByType(STRING);
+  public PsiElement getDocString() {
+    return findChildByType(DOC_STRING);
   }
 
 }

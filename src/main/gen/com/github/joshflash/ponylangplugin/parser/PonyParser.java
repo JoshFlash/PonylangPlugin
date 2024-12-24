@@ -797,7 +797,7 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // declaration [annotatedids] [AT] [cap] type_ref [typeparams] [IS type] [string] members
+  // declaration [annotatedids] [AT] [cap] type_ref [typeparams] [IS type] [doc_string] members
   public static boolean class_def(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "class_def")) return false;
     boolean r;
@@ -861,10 +861,10 @@ public class PonyParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [string]
+  // [doc_string]
   private static boolean class_def_7(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "class_def_7")) return false;
-    consumeToken(b, STRING);
+    consumeToken(b, DOC_STRING);
     return true;
   }
 
@@ -1534,7 +1534,7 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // binding id COLON type [EQUALS infix] [string]
+  // binding id COLON type [EQUALS infix] [doc_string]
   public static boolean field(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "field")) return false;
     boolean r;
@@ -1566,10 +1566,10 @@ public class PonyParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [string]
+  // [doc_string]
   private static boolean field_5(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "field_5")) return false;
-    consumeToken(b, STRING);
+    consumeToken(b, DOC_STRING);
     return true;
   }
 
@@ -2581,7 +2581,7 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (FUN | BE | NEW) [annotatedids] [cap | AT] id [typeparams] LP [params] RP [COLON type] [QM] [string] [ARROW rawseq]
+  // (FUN | BE | NEW) [annotatedids] [cap | AT] id [typeparams] LP [params] RP [COLON type] [QM] [ARROW rawseq] [doc_string]
   public static boolean method(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "method")) return false;
     boolean r;
@@ -2674,23 +2674,16 @@ public class PonyParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // [string]
+  // [ARROW rawseq]
   private static boolean method_10(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "method_10")) return false;
-    consumeToken(b, STRING);
-    return true;
-  }
-
-  // [ARROW rawseq]
-  private static boolean method_11(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "method_11")) return false;
-    method_11_0(b, l + 1);
+    method_10_0(b, l + 1);
     return true;
   }
 
   // ARROW rawseq
-  private static boolean method_11_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "method_11_0")) return false;
+  private static boolean method_10_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "method_10_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, ARROW);
@@ -2699,8 +2692,15 @@ public class PonyParser implements PsiParser, LightPsiParser {
     return r;
   }
 
+  // [doc_string]
+  private static boolean method_11(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "method_11")) return false;
+    consumeToken(b, DOC_STRING);
+    return true;
+  }
+
   /* ********************************************************** */
-  // [string] usestmt* class_def*
+  // [doc_string] usestmt* class_def*
   static boolean module(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "module")) return false;
     boolean r;
@@ -2712,10 +2712,10 @@ public class PonyParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [string]
+  // [doc_string]
   private static boolean module_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "module_0")) return false;
-    consumeToken(b, STRING);
+    consumeToken(b, DOC_STRING);
     return true;
   }
 

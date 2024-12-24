@@ -140,6 +140,7 @@
     type_id="regexp:[A-Z][a-zA-Z0-9_]*"
     id="regexp:[a-z_][a-zA-Z0-9_]*"
     digit="regexp:[0-9]+"
+    doc_string="regexp:(\"\"\")([^\"]|\"\"?[^\"])*(\"\"\")?"
     string="regexp:(\"(\\[abefnrtv0\"\\]|[^\"\\])*\")"
     gencap="regexp:#(read|send|share|alias|any)"
     line_comment="regexp://.*"
@@ -147,27 +148,27 @@
   ]
 }
 
-module ::= [string] usestmt* class_def* ;
+module ::= [doc_string] usestmt* class_def* ;
 
 usestmt ::= USE [id EQUALS] (string | use_ffi) [IF infix] ;
 
 use_ffi ::= AT (id | string) typeargs LP [params] RP [QM] ;
 
-class_def ::= declaration [annotatedids] [AT] [cap] type_ref [typeparams] [IS type] [string] members ;
+class_def ::= declaration [annotatedids] [AT] [cap] type_ref [typeparams] [IS type] [doc_string] members ;
 
-type_ref ::= type_id
+type_ref ::= type_id ;
 
-generic_type ::= generic_id [CARET | BANG]
+generic_type ::= generic_id [CARET | BANG] ;
 
 declaration ::= (TYPEDEF | INTERFACE | TRAIT | PRIMITIVE | STRUCT | CLASS | ACTOR) ;
 
 members ::= field* method* ;
 
-field ::= binding id COLON type [EQUALS infix] [string] ;
+field ::= binding id COLON type [EQUALS infix] [doc_string] ;
 
-binding ::= (VAR | LET | EMBED)
+binding ::= (VAR | LET | EMBED) ;
 
-method ::= (FUN | BE | NEW) [annotatedids] [cap | AT] id [typeparams] LP [params] RP [COLON type] [QM] [string] [ARROW rawseq] ;
+method ::= (FUN | BE | NEW) [annotatedids] [cap | AT] id [typeparams] LP [params] RP [COLON type] [QM] [ARROW rawseq] [doc_string] ;
 
 annotatedrawseq ::= [annotatedids] (exprseq | jump) ;
 
@@ -191,25 +192,25 @@ nextinfix ::= nextterm infixop*;
 
 infix ::= term infixop* ;
 
-infixop ::= binop | isop | AS type
+infixop ::= binop | isop | AS type ;
 
 isop ::= (IS | ISNT) term ;
 
 safeop ::=
     AND | OR  | XOR | ADD | SUB | MUL
   | DIV | REM | MOD | SHL | SHR | EQ
-  | NEQ | LT  | LEQ | GEQ | GT
+  | NEQ | LT  | LEQ | GEQ | GT ;
 
 unsafeop ::=
     ADD_UNSAFE | SUB_UNSAFE | MUL_UNSAFE
   | DIV_UNSAFE | REM_UNSAFE | MOD_UNSAFE
   | SHL_UNSAFE | SHR_UNSAFE | EQ_UNSAFE
   | NEQ_UNSAFE | LT_UNSAFE  | LEQ_UNSAFE
-  | GT_UNSAFE  | GEQ_UNSAFE
+  | GT_UNSAFE  | GEQ_UNSAFE ;
 
 partialop ::=
     ADD_PARTIAL | SUB_PARTIAL | MUL_PARTIAL
-  | DIV_PARTIAL | REM_PARTIAL | MOD_PARTIAL
+  | DIV_PARTIAL | REM_PARTIAL | MOD_PARTIAL ;
 
 binop ::=
    (safeop | unsafeop | partialop) [QM] term ;
@@ -426,4 +427,4 @@ hexletter ::=
 
 bindigit ::= "0" | "1" ;
 
-comment ::= line_comment | block_comment
+comment ::= line_comment | block_comment | doc_string ;

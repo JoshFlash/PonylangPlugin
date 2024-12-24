@@ -64,15 +64,15 @@ public class PonyMethodImpl extends ASTWrapperPsiElement implements PonyMethod {
   }
 
   @Override
-  @NotNull
-  public PsiElement getId() {
-    return findNotNullChildByType(ID);
+  @Nullable
+  public PsiElement getDocString() {
+    return findChildByType(DOC_STRING);
   }
 
   @Override
-  @Nullable
-  public PsiElement getString() {
-    return findChildByType(STRING);
+  @NotNull
+  public PsiElement getId() {
+    return findNotNullChildByType(ID);
   }
 
 }

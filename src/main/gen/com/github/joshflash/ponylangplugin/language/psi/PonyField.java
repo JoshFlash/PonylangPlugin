@@ -16,10 +16,10 @@ public interface PonyField extends PsiElement {
   @NotNull
   PonyType getType();
 
+  @Nullable
+  PsiElement getDocString();
+
   @NotNull
   PsiElement getId();
-
-  @Nullable
-  PsiElement getString();
 
 }

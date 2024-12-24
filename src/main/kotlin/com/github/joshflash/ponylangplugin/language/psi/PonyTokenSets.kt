@@ -33,7 +33,7 @@ interface PonyTokenSets {
         )
 
         val COMMENTS: TokenSet = TokenSet.create(
-            LINE_COMMENT, BLOCK_COMMENT
+            LINE_COMMENT, BLOCK_COMMENT, DOC_STRING
         )
 
         val NUMBERS: TokenSet = TokenSet.create(

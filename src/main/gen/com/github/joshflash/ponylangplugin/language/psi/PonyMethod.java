@@ -25,10 +25,10 @@ public interface PonyMethod extends PsiElement {
   @Nullable
   PonyTypeparams getTypeparams();
 
+  @Nullable
+  PsiElement getDocString();
+
   @NotNull
   PsiElement getId();
-
-  @Nullable
-  PsiElement getString();
 
 }
