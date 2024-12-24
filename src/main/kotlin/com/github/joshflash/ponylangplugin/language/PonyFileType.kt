@@ -12,5 +12,5 @@ class PonyFileType : LanguageFileType(PonyLanguage) {
     override fun getName(): String = "Pony"
     override fun getDescription(): String = "Pony"
     override fun getDefaultExtension(): String = "pony"
-    override fun getIcon(): Icon? = PonyIcons.FILE
+    override fun getIcon(): Icon = PonyIcons.FILE
 }

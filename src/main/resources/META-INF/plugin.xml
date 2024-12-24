@@ -10,6 +10,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow factoryClass="com.github.joshflash.ponylangplugin.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <postStartupActivity implementation="com.github.joshflash.ponylangplugin.listeners.PonylangStartupActivity" />
         <fileType
                 name="Pony"
                 implementationClass="com.github.joshflash.ponylangplugin.language.PonyFileType"
@@ -34,6 +35,6 @@
     </extensions>
 
     <applicationListeners>
-        <listener class="com.github.joshflash.ponylangplugin.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
+        <listener class="com.github.joshflash.ponylangplugin.listeners.PonylangApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
     </applicationListeners>
 </idea-plugin>
