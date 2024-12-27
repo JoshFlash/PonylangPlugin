@@ -26,8 +26,8 @@ EOL=\R
 WHITE_SPACE=\s+
 
 GENERIC_ID=[A-Z]
-TYPE_ID=[A-Z][a-zA-Z0-9_]*
-ID=[a-z_][a-zA-Z0-9_]*
+TYPE_ID=_?[A-Z][a-zA-Z0-9_]*
+ID=_?[a-z][a-zA-Z0-9_]*'?
 DIGIT=[0-9]+
 DOC_STRING=(\"\"\")([^\"]|\"\"?[^\"])*(\"\"\")?
 STRING=(\"(\\[abefnrtv0\"\\]|[^\"\\])*\")

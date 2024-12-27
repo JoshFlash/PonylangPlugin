@@ -35,6 +35,12 @@ public class PonyCommentImpl extends ASTWrapperPsiElement implements PonyComment
 
   @Override
   @Nullable
+  public PsiElement getDocString() {
+    return findChildByType(DOC_STRING);
+  }
+
+  @Override
+  @Nullable
   public PsiElement getLineComment() {
     return findChildByType(LINE_COMMENT);
   }

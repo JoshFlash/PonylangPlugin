@@ -136,8 +136,8 @@
     true="true"
     false="false"
     generic_id="regexp:[A-Z]"
-    type_id="regexp:[A-Z][a-zA-Z0-9_]*"
-    id="regexp:[a-z_][a-zA-Z0-9_]*"
+    type_id="regexp:_?[A-Z][a-zA-Z0-9_]*"
+    id="regexp:_?[a-z][a-zA-Z0-9_]*'?"
     digit="regexp:[0-9]+"
     doc_string="regexp:(\"\"\")([^\"]|\"\"?[^\"])*(\"\"\")?"
     string="regexp:(\"(\\[abefnrtv0\"\\]|[^\"\\])*\")"
@@ -324,7 +324,7 @@ atom ::=
   | LBK [AS type COLON] [rawseq] RBK ;
 
 particle ::=
-    id ["'"]
+    id
   | type_ref
   | THIS
   | literal
@@ -405,7 +405,7 @@ literal ::=
   | float
   | string ;
 
-param ::= id ["'"] COLON type [EQUALS infix] ;
+param ::= id COLON type [EQUALS infix] ;
 
 annotatedids ::= "\\" id (COMMA id)* "\\" ;
 

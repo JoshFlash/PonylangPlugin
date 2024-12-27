@@ -11,6 +11,9 @@ public interface PonyComment extends PsiElement {
   PsiElement getBlockComment();
 
   @Nullable
+  PsiElement getDocString();
+
+  @Nullable
   PsiElement getLineComment();
 
 }

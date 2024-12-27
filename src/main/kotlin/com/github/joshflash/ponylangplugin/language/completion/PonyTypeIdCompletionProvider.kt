@@ -2,7 +2,6 @@ package com.github.joshflash.ponylangplugin.language.completion
 
 import com.github.joshflash.ponylangplugin.language.PonyLanguage
 import com.github.joshflash.ponylangplugin.language.PonyUtil
-import com.github.joshflash.ponylangplugin.language.psi.BuiltInTypes
 import com.github.joshflash.ponylangplugin.language.psi.PonyTypes
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -32,9 +31,6 @@ object PonyTypeIdCompletionProvider : PonyCompletionProviderBase() {
                 .withPresentableText(className)
                 .withTailText(" from " + classDef.containingFile.name, true)
             results.addElement(lookupElement)
-        }
-        BuiltInTypes.INSTRINSIC.forEach { tokenType ->
-            results.addElement(LookupElementBuilder.create(tokenType))
         }
     }
 
