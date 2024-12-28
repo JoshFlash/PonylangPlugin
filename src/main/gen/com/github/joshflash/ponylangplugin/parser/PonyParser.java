@@ -2530,8 +2530,8 @@ public class PonyParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // true
   //   | false
-  //   | int
   //   | float
+  //   | int
   //   | string
   public static boolean literal(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "literal")) return false;
@@ -2539,8 +2539,8 @@ public class PonyParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, LITERAL, "<literal>");
     r = consumeToken(b, TRUE);
     if (!r) r = consumeToken(b, FALSE);
-    if (!r) r = int_$(b, l + 1);
     if (!r) r = float_$(b, l + 1);
+    if (!r) r = int_$(b, l + 1);
     if (!r) r = consumeToken(b, STRING);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -2581,7 +2581,7 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (FUN | BE | NEW) [annotatedids] [cap | AT] id [typeparams] LP [params] RP [COLON type] [QM] [ARROW rawseq] [doc_string]
+  // (FUN | BE | NEW) [annotatedids] [cap | AT] id [typeparams] LP [params] RP [COLON type] [QM] [ARROW [doc_string] rawseq]
   public static boolean method(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "method")) return false;
     boolean r;
@@ -2597,7 +2597,6 @@ public class PonyParser implements PsiParser, LightPsiParser {
     r = r && method_8(b, l + 1);
     r = r && method_9(b, l + 1);
     r = r && method_10(b, l + 1);
-    r = r && method_11(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -2674,27 +2673,28 @@ public class PonyParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // [ARROW rawseq]
+  // [ARROW [doc_string] rawseq]
   private static boolean method_10(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "method_10")) return false;
     method_10_0(b, l + 1);
     return true;
   }
 
-  // ARROW rawseq
+  // ARROW [doc_string] rawseq
   private static boolean method_10_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "method_10_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, ARROW);
+    r = r && method_10_0_1(b, l + 1);
     r = r && rawseq(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // [doc_string]
-  private static boolean method_11(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "method_11")) return false;
+  private static boolean method_10_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "method_10_0_1")) return false;
     consumeToken(b, DOC_STRING);
     return true;
   }

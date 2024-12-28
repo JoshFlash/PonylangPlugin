@@ -167,7 +167,7 @@ field ::= binding id COLON type [EQUALS infix] [doc_string] ;
 
 binding ::= (VAR | LET | EMBED) ;
 
-method ::= (FUN | BE | NEW) [annotatedids] [cap | AT] id [typeparams] LP [params] RP [COLON type] [QM] [ARROW rawseq] [doc_string] ;
+method ::= (FUN | BE | NEW) [annotatedids] [cap | AT] id [typeparams] LP [params] RP [COLON type] [QM] [ARROW [doc_string] rawseq] ;
 
 annotatedrawseq ::= [annotatedids] (exprseq | jump) ;
 
@@ -401,8 +401,8 @@ typearg ::=
 literal ::=
     true
   | false
-  | int
   | float
+  | int
   | string ;
 
 param ::= id COLON type [EQUALS infix] ;

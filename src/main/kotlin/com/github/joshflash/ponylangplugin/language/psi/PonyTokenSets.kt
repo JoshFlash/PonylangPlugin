@@ -10,7 +10,7 @@ interface PonyTokenSets {
             CONSUME, CONTINUE, DIGESTOF, DO, ELSE, ELSEIF, EMBED, END, ERROR,
             FALSE, FOR, FUN, IF, IFDEF, IFTYPE, IN, INTERFACE, IS, ISNT,
             ISO, LET, MATCH, NEW, OBJECT, PRIMITIVE, RECOVER, REF, REPEAT,
-            RETURN, SOURCELOC, STRUCT, TAG, THEN, THIS, TRAIT, TRN, TRUE, TRY,
+            RETURN, SOURCELOC, STRUCT, TAG, THEN, TRAIT, TRN, TRUE, TRY,
             TYPEDEF, UNTIL, USE, VAL, VAR, WHERE, WHILE, WITH
         )
 
@@ -40,10 +40,12 @@ interface PonyTokenSets {
             INT, FLOAT
         )
 
-        val TYPES: TokenSet = TokenSet.create()
+        val TYPES: TokenSet = TokenSet.create(
+            TYPE_ID, GENERIC_ID
+        )
 
         val IDENTIFIERS: TokenSet = TokenSet.create(
-            ID
+            ID, THIS
         )
 
     }

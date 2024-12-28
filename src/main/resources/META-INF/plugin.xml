@@ -32,9 +32,7 @@
         <psi.referenceContributor
                 language="Pony"
                 implementation="com.github.joshflash.ponylangplugin.language.PonyReferenceContributor"/>
+        <fileBasedIndex
+                implementation="com.github.joshflash.ponylangplugin.language.indexing.PonyTypeReferenceIndex" />
     </extensions>
-
-    <applicationListeners>
-        <listener class="com.github.joshflash.ponylangplugin.listeners.PonylangApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
-    </applicationListeners>
 </idea-plugin>
