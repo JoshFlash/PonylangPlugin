@@ -4,6 +4,7 @@ import com.github.joshflash.ponylangplugin.language.psi.PonyClassDef
 import com.github.joshflash.ponylangplugin.language.psi.PonyFile
 import com.github.joshflash.ponylangplugin.language.psi.PonyTypeRef
 import com.github.joshflash.ponylangplugin.language.indexing.PonyTypeReferenceIndex
+import com.github.joshflash.ponylangplugin.services.PonylangProjectService
 import com.intellij.openapi.project.DumbService
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
@@ -44,6 +45,12 @@ class PonyTypeReference(typeRef: PonyTypeRef) : PsiReferenceBase<PonyTypeRef>(ty
             }
         }
 
+        val projectService = project.getService(PonylangProjectService::class.java)
+        val stdLibIndex = projectService.stdLibTypeIndexStorage
+        if (stdLibIndex.read(key).size() > 0) {
+            return element.typeId
+        }
+
         return null
     }
 
@@ -63,6 +70,6 @@ class PonyTypeReference(typeRef: PonyTypeRef) : PsiReferenceBase<PonyTypeRef>(ty
             }
         }
 
-        return null
+        return element.typeId
     }
 }
