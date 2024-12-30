@@ -9,7 +9,7 @@ import com.intellij.util.PsiErrorElementUtil
 import com.github.joshflash.ponylangplugin.services.PonylangProjectService
 
 @TestDataPath("\$CONTENT_ROOT/src/test/testData")
-class MyPluginTest : BasePlatformTestCase() {
+class PonylangPluginTest : BasePlatformTestCase() {
 
     fun testXMLFile() {
         val psiFile = myFixture.configureByText(XmlFileType.INSTANCE, "<foo>bar</foo>")
@@ -32,7 +32,7 @@ class MyPluginTest : BasePlatformTestCase() {
     fun testProjectService() {
         val projectService = project.service<PonylangProjectService>()
 
-        assertNotSame(projectService.getRandomNumber(), projectService.getRandomNumber())
+        assertFalse(projectService.stdLibIndexStorage.keysCountApproximately() == 0)
     }
 
     override fun getTestDataPath() = "src/test/testData/rename"
