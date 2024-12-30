@@ -27,15 +27,11 @@ class PonyTypeReference(typeRef: PonyTypeRef) : PsiReferenceBase<PonyTypeRef>(ty
         }
 
         val key = element.typeId.text
+
         val index = FileBasedIndex.getInstance()
-
-        val filesWithKey = index.getContainingFiles(
-            PonyTypeReferenceIndex.INDEX_ID,
-            key,
-            GlobalSearchScope.allScope(project)
-        )
-
-        for (vFile in filesWithKey) {
+        val indexId = PonyTypeReferenceIndex.INDEX_ID
+        val vFilesWithKey = index.getContainingFiles(indexId, key, GlobalSearchScope.allScope(project))
+        for (vFile in vFilesWithKey) {
             val psiFile = PsiManager.getInstance(project).findFile(vFile) as? PonyFile ?: continue
             val classDefs = PsiTreeUtil.collectElementsOfType(psiFile, PonyClassDef::class.java)
             for (classDef in classDefs) {
@@ -45,10 +41,15 @@ class PonyTypeReference(typeRef: PonyTypeRef) : PsiReferenceBase<PonyTypeRef>(ty
             }
         }
 
-        val projectService = project.getService(PonylangProjectService::class.java)
-        val stdLibIndex = projectService.stdLibTypeIndexStorage
-        if (stdLibIndex.read(key).size() > 0) {
-            return element.typeId
+        val stdLibIndex = project.getService(PonylangProjectService::class.java).stdLibIndexStorage
+        val stdLibFilesWithKey = stdLibIndex.read(key).valueIterator
+        for (ponyFile in stdLibFilesWithKey) {
+            val classDefs = PsiTreeUtil.collectElementsOfType(ponyFile, PonyClassDef::class.java)
+            for (classDef in classDefs) {
+                if (classDef.typeRef.typeId.text == key) {
+                    return classDef.typeRef
+                }
+            }
         }
 
         return null

@@ -18,11 +18,11 @@ import com.intellij.util.io.EnumeratorStringDescriptor
 @Service(Service.Level.PROJECT)
 class PonylangProjectService(project: Project) {
 
-    val stdLibTypeIndexStorage: InMemoryIndexStorage<String, Void>
+    val stdLibIndexStorage: InMemoryIndexStorage<String, PonyFile>
 
     init {
         thisLogger().info(PonylangPluginBundle.message("projectService", project.name))
-        stdLibTypeIndexStorage = InMemoryIndexStorage(
+        stdLibIndexStorage = InMemoryIndexStorage(
             EnumeratorStringDescriptor.INSTANCE
         )
         createPonyStdLibIndex(project)
@@ -44,7 +44,7 @@ class PonylangProjectService(project: Project) {
         ApplicationManager.getApplication().runReadAction {
             val classDefs = PsiTreeUtil.collectElementsOfType(ponyFile, PonyClassDef::class.java)
             for (classDef in classDefs) {
-                stdLibTypeIndexStorage.addValue(classDef.typeRef.typeId.text, ponyFile.hashCode(), null)
+                stdLibIndexStorage.addValue(classDef.typeRef.typeId.text, ponyFile.hashCode(), ponyFile)
             }
         }
     }
