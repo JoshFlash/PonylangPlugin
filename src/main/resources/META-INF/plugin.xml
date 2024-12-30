@@ -9,14 +9,16 @@
     <resource-bundle>messages.PonylangPluginBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.joshflash.ponylangplugin.toolWindow.CorralToolWindowFactory" id="CorralToolWindow"/>
-        <postStartupActivity implementation="com.github.joshflash.ponylangplugin.listeners.PonylangStartupActivity" />
+        <postStartupActivity
+                implementation="com.github.joshflash.ponylangplugin.listeners.PonylangStartupActivity" />
         <fileType
                 name="Pony"
                 implementationClass="com.github.joshflash.ponylangplugin.language.PonyFileType"
                 fieldName="INSTANCE"
                 language="Pony"
                 extensions="pony"/>
+        <fileBasedIndex
+                implementation="com.github.joshflash.ponylangplugin.language.indexing.PonyTypeReferenceIndex" />
         <lang.parserDefinition
                 language="Pony"
                 implementationClass="com.github.joshflash.ponylangplugin.language.PonyParserDefinition"/>
@@ -32,7 +34,8 @@
         <psi.referenceContributor
                 language="Pony"
                 implementation="com.github.joshflash.ponylangplugin.language.PonyReferenceContributor"/>
-        <fileBasedIndex
-                implementation="com.github.joshflash.ponylangplugin.language.indexing.PonyTypeReferenceIndex" />
+        <toolWindow
+                id="CorralToolWindow"
+                factoryClass="com.github.joshflash.ponylangplugin.toolWindow.CorralToolWindowFactory" />
     </extensions>
 </idea-plugin>
