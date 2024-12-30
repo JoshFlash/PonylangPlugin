@@ -273,15 +273,15 @@ pattern ::=
   | parampattern ;
 
 nextparampattern ::=
-    (NOT | ADDRESSOF | "\n" SUB | newline SUB_UNSAFE | DIGESTOF) parampattern
+    (NOT | ADDRESSOF | SUB | SUB_UNSAFE | DIGESTOF) parampattern
   | nextpostfix ;
 
 caseparampattern ::=
-    (NOT | ADDRESSOF | ["\n"] SUB | [newline] SUB_UNSAFE | DIGESTOF) caseparampattern
+    (NOT | ADDRESSOF | SUB | SUB_UNSAFE | DIGESTOF) caseparampattern
   | casepostfix ;
 
 parampattern ::=
-    (NOT | ADDRESSOF | ["\n"] SUB | [newline] SUB_UNSAFE | DIGESTOF) parampattern
+    (NOT | ADDRESSOF | SUB | SUB_UNSAFE | DIGESTOF) parampattern
   | postfix ;
 
 nextpostfix ::= nextatom postfixelem* ;
@@ -305,8 +305,8 @@ nextatom ::=
   | ifblock
   | whileloop
   | forloop
-  | "\n" LP rawseq [tuple] RP
-  | "\n" LBK [AS type COLON] [rawseq] RBK ;
+  | LP rawseq [tuple] RP
+  | LBK [AS type COLON] [rawseq] RBK ;
 
 caseatom ::=
     particle
@@ -326,8 +326,9 @@ atom ::=
 particle ::=
     id
   | type_ref
-  | THIS
+  | generic_type
   | literal
+  | THIS
   | OBJECT [annotatedids] [cap] [IS type] members END
   | LBC [annotatedids] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
   | RCVR [annotatedids] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]

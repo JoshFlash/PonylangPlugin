@@ -14,6 +14,9 @@ public interface PonyParticle extends PsiElement {
   PonyCap getCap();
 
   @Nullable
+  PonyGenericType getGenericType();
+
+  @Nullable
   PonyLambdacaptures getLambdacaptures();
 
   @Nullable

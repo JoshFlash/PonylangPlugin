@@ -41,6 +41,12 @@ public class PonyParticleImpl extends ASTWrapperPsiElement implements PonyPartic
 
   @Override
   @Nullable
+  public PonyGenericType getGenericType() {
+    return findChildByClass(PonyGenericType.class);
+  }
+
+  @Override
+  @Nullable
   public PonyLambdacaptures getLambdacaptures() {
     return findChildByClass(PonyLambdacaptures.class);
   }

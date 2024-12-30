@@ -181,7 +181,6 @@ public interface PonyTypes {
   IElementType NEQ = new PonyTokenType("!=");
   IElementType NEQ_UNSAFE = new PonyTokenType("!=~");
   IElementType NEW = new PonyTokenType("new");
-  IElementType NEWLINE = new PonyTokenType("newline");
   IElementType NOT = new PonyTokenType("not");
   IElementType OBJECT = new PonyTokenType("object");
   IElementType OR = new PonyTokenType("or");

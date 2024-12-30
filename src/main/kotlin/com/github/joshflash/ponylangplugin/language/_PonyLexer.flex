@@ -157,7 +157,6 @@ BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
   "%%?"                     { return MOD_PARTIAL; }
   "true"                    { return TRUE; }
   "false"                   { return FALSE; }
-  "newline"                 { return NEWLINE; }
 
   {GENERIC_ID}              { return GENERIC_ID; }
   {TYPE_ID}                 { return TYPE_ID; }
