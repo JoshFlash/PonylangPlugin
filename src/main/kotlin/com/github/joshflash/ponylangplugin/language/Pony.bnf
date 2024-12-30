@@ -151,7 +151,7 @@ module ::= [doc_string] usestmt* class_def* ;
 
 usestmt ::= USE [id EQUALS] (string | use_ffi) [IF infix] ;
 
-use_ffi ::= AT (id | string) typeargs LP [params] RP [QM] ;
+use_ffi ::= AT (id | type_id | string) typeargs LP [params] RP [QM] ;
 
 class_def ::= declaration [annotatedids] [AT] [cap] type_ref [typeparams] [IS type] [doc_string] members ;
 

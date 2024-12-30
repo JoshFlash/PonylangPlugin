@@ -4188,7 +4188,7 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // AT (id | string) typeargs LP [params] RP [QM]
+  // AT (id | type_id | string) typeargs LP [params] RP [QM]
   public static boolean use_ffi(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "use_ffi")) return false;
     if (!nextTokenIs(b, AT)) return false;
@@ -4205,11 +4205,12 @@ public class PonyParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // id | string
+  // id | type_id | string
   private static boolean use_ffi_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "use_ffi_1")) return false;
     boolean r;
     r = consumeToken(b, ID);
+    if (!r) r = consumeToken(b, TYPE_ID);
     if (!r) r = consumeToken(b, STRING);
     return r;
   }

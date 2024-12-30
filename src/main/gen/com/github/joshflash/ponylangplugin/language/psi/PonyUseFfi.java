@@ -19,4 +19,7 @@ public interface PonyUseFfi extends PsiElement {
   @Nullable
   PsiElement getString();
 
+  @Nullable
+  PsiElement getTypeId();
+
 }

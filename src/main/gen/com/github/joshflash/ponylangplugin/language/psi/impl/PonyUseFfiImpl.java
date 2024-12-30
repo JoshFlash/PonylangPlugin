@@ -51,4 +51,10 @@ public class PonyUseFfiImpl extends ASTWrapperPsiElement implements PonyUseFfi {
     return findChildByType(STRING);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getTypeId() {
+    return findChildByType(TYPE_ID);
+  }
+
 }
