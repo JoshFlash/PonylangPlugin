@@ -4,6 +4,8 @@ import com.github.joshflash.ponylangplugin.language.psi.PonyClassDef
 import com.github.joshflash.ponylangplugin.language.psi.PonyFile
 import com.github.joshflash.ponylangplugin.language.psi.PonyTypeRef
 import com.github.joshflash.ponylangplugin.language.indexing.PonyTypeReferenceIndex
+import com.github.joshflash.ponylangplugin.language.psi.PonyMethod
+import com.github.joshflash.ponylangplugin.language.psi.PonyTypeparams
 import com.github.joshflash.ponylangplugin.services.PonylangProjectService
 import com.intellij.openapi.project.DumbService
 import com.intellij.openapi.util.TextRange
@@ -19,15 +21,17 @@ class PonyTypeReference(typeRef: PonyTypeRef) : PsiReferenceBase<PonyTypeRef>(ty
         val project = element.project
         if (DumbService.isDumb(project)) return dumbResolve()
 
+        val key = element.typeId.text
+
+        // resolve a type's own definition
         val parentClassDef = PsiTreeUtil.getParentOfType(element, PonyClassDef::class.java)
         if (parentClassDef != null) {
-            if (parentClassDef.typeRef.typeId.text == element.typeId.text) {
+            if (parentClassDef.typeRef.typeId.text == key) {
                 return parentClassDef.typeRef
             }
         }
 
-        val key = element.typeId.text
-
+        // resolve from indexes
         val index = FileBasedIndex.getInstance()
         val indexId = PonyTypeReferenceIndex.INDEX_ID
         val vFilesWithKey = index.getContainingFiles(indexId, key, GlobalSearchScope.allScope(project))
@@ -48,6 +52,26 @@ class PonyTypeReference(typeRef: PonyTypeRef) : PsiReferenceBase<PonyTypeRef>(ty
             for (classDef in classDefs) {
                 if (classDef.typeRef.typeId.text == key) {
                     return classDef.typeRef
+                }
+            }
+        }
+
+        // resolve generic types
+        val parentMethod = PsiTreeUtil.getParentOfType(element, PonyMethod::class.java)
+        val methodTypeParams = PsiTreeUtil.getChildOfType(parentMethod, PonyTypeparams::class.java)
+        if (methodTypeParams != null) {
+            for (typeParam in methodTypeParams.typeparamList) {
+                if (typeParam.typeRef.typeId.text == key) {
+                    return typeParam.typeRef
+                }
+            }
+        }
+
+        val classTypeParams = PsiTreeUtil.getChildOfType(parentClassDef, PonyTypeparams::class.java)
+        if (classTypeParams != null) {
+            for (typeParam in classTypeParams.typeparamList) {
+                if (typeParam.typeRef.typeId.text == key) {
+                    return typeParam.typeRef
                 }
             }
         }
