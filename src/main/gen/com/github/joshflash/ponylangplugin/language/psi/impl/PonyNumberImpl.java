@@ -11,20 +11,32 @@ import static com.github.joshflash.ponylangplugin.language.psi.PonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.joshflash.ponylangplugin.language.psi.*;
 
-public class PonyBindigitImpl extends ASTWrapperPsiElement implements PonyBindigit {
+public class PonyNumberImpl extends ASTWrapperPsiElement implements PonyNumber {
 
-  public PonyBindigitImpl(@NotNull ASTNode node) {
+  public PonyNumberImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PonyVisitor visitor) {
-    visitor.visitBindigit(this);
+    visitor.visitNumber(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof PonyVisitor) accept((PonyVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getFloat() {
+    return findChildByType(FLOAT);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getInt() {
+    return findChildByType(INT);
   }
 
 }

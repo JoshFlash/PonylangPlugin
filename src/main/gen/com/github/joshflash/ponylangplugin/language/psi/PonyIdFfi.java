@@ -5,6 +5,15 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PonyExponent extends PsiElement {
+public interface PonyIdFfi extends PsiElement {
+
+  @Nullable
+  PonyStringliteral getStringliteral();
+
+  @Nullable
+  PsiElement getId();
+
+  @Nullable
+  PsiElement getTypeId();
 
 }

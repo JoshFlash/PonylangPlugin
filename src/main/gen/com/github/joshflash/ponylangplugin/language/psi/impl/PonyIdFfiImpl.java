@@ -11,20 +11,38 @@ import static com.github.joshflash.ponylangplugin.language.psi.PonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.joshflash.ponylangplugin.language.psi.*;
 
-public class PonyHexletterImpl extends ASTWrapperPsiElement implements PonyHexletter {
+public class PonyIdFfiImpl extends ASTWrapperPsiElement implements PonyIdFfi {
 
-  public PonyHexletterImpl(@NotNull ASTNode node) {
+  public PonyIdFfiImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PonyVisitor visitor) {
-    visitor.visitHexletter(this);
+    visitor.visitIdFfi(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof PonyVisitor) accept((PonyVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @Nullable
+  public PonyStringliteral getStringliteral() {
+    return findChildByClass(PonyStringliteral.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getId() {
+    return findChildByType(ID);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getTypeId() {
+    return findChildByType(TYPE_ID);
   }
 
 }

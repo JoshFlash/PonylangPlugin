@@ -29,14 +29,8 @@ public class PonyLiteralImpl extends ASTWrapperPsiElement implements PonyLiteral
 
   @Override
   @Nullable
-  public PonyFloat getFloat() {
-    return findChildByClass(PonyFloat.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyInt getInt() {
-    return findChildByClass(PonyInt.class);
+  public PonyNumber getNumber() {
+    return findChildByClass(PonyNumber.class);
   }
 
   @Override

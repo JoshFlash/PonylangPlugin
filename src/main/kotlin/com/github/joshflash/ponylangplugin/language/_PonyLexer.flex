@@ -25,10 +25,11 @@ import static com.github.joshflash.ponylangplugin.language.psi.PonyTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
+FLOAT=([0-9]([0-9]|_)*(\.[0-9]([0-9]|_)*)?([eE][+-]?[0-9]([0-9]|_)*)?)
+INT=(0x[0-9a-fA-F]([0-9a-fA-F]|_)*)|(0b[01]([01]|_)*)
 TYPE_ID=_?[A-Z][a-zA-Z0-9_]*
-ID=(_[a-z]|[a-z])[a-zA-Z0-9_]*'?
+ID=(_[a-z]|[a-z])[a-zA-Z0-9_]*'*
 TUPLE_ID=_[1-9][0-9]?
-DIGIT=[0-9]+
 DOC_STRING=(\"\"\")([^\"]|\"\"?[^\"])*(\"\"\")?
 STRING=(\"(\\[abefnrtuvx0'?\"\\]|[^\"\\])*\")
 CHAR=('(\\[abefnrtv0'\\]|[^'\\])')
@@ -117,6 +118,7 @@ BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
   "&"                       { return AMP; }
   "#"                       { return HASH; }
   "..."                     { return ELIPSIS; }
+  "_"                       { return SCORE; }
   "<:"                      { return ISA; }
   "and"                     { return AND; }
   "or"                      { return OR; }
@@ -159,10 +161,11 @@ BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
   "true"                    { return TRUE; }
   "false"                   { return FALSE; }
 
+  {FLOAT}                   { return FLOAT; }
+  {INT}                     { return INT; }
   {TYPE_ID}                 { return TYPE_ID; }
   {ID}                      { return ID; }
   {TUPLE_ID}                { return TUPLE_ID; }
-  {DIGIT}                   { return DIGIT; }
   {DOC_STRING}              { return DOC_STRING; }
   {STRING}                  { return STRING; }
   {CHAR}                    { return CHAR; }

@@ -39,4 +39,10 @@ public class PonyExprseqImpl extends ASTWrapperPsiElement implements PonyExprseq
     return findChildByClass(PonyNosemi.class);
   }
 
+  @Override
+  @Nullable
+  public PonySemiexpr getSemiexpr() {
+    return findChildByClass(PonySemiexpr.class);
+  }
+
 }

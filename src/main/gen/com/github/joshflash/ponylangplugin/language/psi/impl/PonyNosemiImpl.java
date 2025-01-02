@@ -39,10 +39,4 @@ public class PonyNosemiImpl extends ASTWrapperPsiElement implements PonyNosemi {
     return findChildByClass(PonyNextexprseq.class);
   }
 
-  @Override
-  @Nullable
-  public PonySemiexpr getSemiexpr() {
-    return findChildByClass(PonySemiexpr.class);
-  }
-
 }

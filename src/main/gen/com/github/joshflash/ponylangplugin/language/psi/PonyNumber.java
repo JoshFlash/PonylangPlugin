@@ -5,9 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PonyFloat extends PsiElement {
+public interface PonyNumber extends PsiElement {
 
   @Nullable
-  PonyExponent getExponent();
+  PsiElement getFloat();
+
+  @Nullable
+  PsiElement getInt();
 
 }

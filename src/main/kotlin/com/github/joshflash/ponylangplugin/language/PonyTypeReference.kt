@@ -57,7 +57,7 @@ class PonyTypeReference(typeRef: PonyTypeRef) : PsiReferenceBase<PonyTypeRef>(ty
         }
 
         // resolve generic types
-        val parentMethod = PsiTreeUtil.getParentOfType(element, PonyMethod::class.java)
+        val parentMethod = PsiTreeUtil.getTopmostParentOfType(element, PonyMethod::class.java)
         val methodTypeParams = PsiTreeUtil.getChildOfType(parentMethod, PonyTypeparams::class.java)
         if (methodTypeParams != null) {
             for (typeParam in methodTypeParams.typeparamList) {

@@ -92,6 +92,7 @@
     AMP="&"
     HASH="#"
     ELIPSIS="..."
+    SCORE="_"
   // operators
     ISA="<:"
     AND="and"
@@ -135,10 +136,11 @@
   // lexemes
     true="true"
     false="false"
+    float="regexp:([0-9]([0-9]|_)*(\.[0-9]([0-9]|_)*)?([eE][+-]?[0-9]([0-9]|_)*)?)"
+    int="regexp:(0x[0-9a-fA-F]([0-9a-fA-F]|_)*)|(0b[01]([01]|_)*)"
     type_id="regexp:_?[A-Z][a-zA-Z0-9_]*"
-    id="regexp:(_[a-z]|[a-z])[a-zA-Z0-9_]*'?"
+    id="regexp:(_[a-z]|[a-z])[a-zA-Z0-9_]*'*"
     tuple_id="regexp:_[1-9][0-9]?"
-    digit="regexp:[0-9]+"
     doc_string="regexp:(\"\"\")([^\"]|\"\"?[^\"])*(\"\"\")?"
     string="regexp:(\"(\\[abefnrtuvx0'?\"\\]|[^\"\\])*\")"
     char="regexp:('(\\[abefnrtv0'\\]|[^'\\])')"
@@ -152,13 +154,15 @@ module ::= [doc_string] usestmt* class_def* ;
 
 usestmt ::= USE [id EQUALS] (stringliteral | use_ffi) [IF infix] ;
 
-use_ffi ::= AT (id | type_id | stringliteral) typeargs LP [params] RP [QM] ;
+use_ffi ::= AT id_ffi typeargs LP [params] RP [QM] ;
 
 class_def ::= declaration [annotatedids] [AT] [cap] type_ref [typeparams] [IS type] [doc_string] members ;
 
 type_ref ::= type_id ;
 
-id_ref ::= id | "_" ;
+id_ref ::= id | SCORE ;
+
+id_ffi ::= SCORE* (id | type_id | stringliteral)
 
 declaration ::= (TYPEDEF | INTERFACE | TRAIT | PRIMITIVE | STRUCT | CLASS | ACTOR) ;
 
@@ -174,11 +178,11 @@ annotatedrawseq ::= [annotatedids] (exprseq | jump) ;
 
 rawseq ::= exprseq | jump ;
 
-exprseq ::= assignment [nosemi] ;
+exprseq ::= assignment [semiexpr | nosemi] ;
 
-nosemi ::= jump | nextexprseq [semiexpr | jump] ;
+nosemi ::= jump | nextexprseq ;
 
-nextexprseq ::= nextassignment+ ;
+nextexprseq ::= nextassignment [semiexpr | nosemi] ;
 
 semiexpr ::= SEMI (exprseq | jump) ;
 
@@ -334,7 +338,7 @@ particle ::=
   | OBJECT [annotatedids] [cap] [IS type] members END
   | LBC [annotatedids] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
   | RCVR [annotatedids] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
-  | AT (id | type_id | stringliteral) [typeargs] LP [positional] [named] RP [QM]
+  | AT id_ffi [typeargs] LP [positional] [named] RP [QM]
   | SOURCELOC ;
 
 whileloop ::= WHILE [annotatedids] rawseq DO rawseq [ELSE annotatedrawseq] END ;
@@ -403,8 +407,7 @@ typearg ::=
 literal ::=
     true
   | false
-  | float
-  | int
+  | number
   | stringliteral ;
 
 stringliteral ::= (string | char) ;
@@ -413,21 +416,6 @@ param ::= id COLON type [EQUALS infix] ;
 
 annotatedids ::= "\\" id (COMMA id)* "\\" ;
 
-int ::=
-    digit         (digit    | "_")*
-  | "0x" hexdigit (hexdigit | "_")*
-  | "0b" bindigit (bindigit | "_")* ;
-
-float ::= digit (digit | "_")* DOT digit (digit | "_")* [exponent] ;
-
-exponent ::= ("e" | "E") [ADD | SUB] digit (digit | "_")* ;
-
-hexdigit ::= digit | hexletter ;
-
-hexletter ::=
-    "A" | "B" | "C" | "D" | "E" | "F"
-    "a" | "b" | "c" | "d" | "e" | "f" ;
-
-bindigit ::= "0" | "1" ;
+number ::= float | int
 
 comment ::= line_comment | block_comment | doc_string ;

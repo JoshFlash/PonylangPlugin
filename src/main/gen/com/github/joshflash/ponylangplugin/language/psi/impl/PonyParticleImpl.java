@@ -41,6 +41,12 @@ public class PonyParticleImpl extends ASTWrapperPsiElement implements PonyPartic
 
   @Override
   @Nullable
+  public PonyIdFfi getIdFfi() {
+    return findChildByClass(PonyIdFfi.class);
+  }
+
+  @Override
+  @Nullable
   public PonyIdRef getIdRef() {
     return findChildByClass(PonyIdRef.class);
   }
@@ -89,12 +95,6 @@ public class PonyParticleImpl extends ASTWrapperPsiElement implements PonyPartic
 
   @Override
   @Nullable
-  public PonyStringliteral getStringliteral() {
-    return findChildByClass(PonyStringliteral.class);
-  }
-
-  @Override
-  @Nullable
   public PonyType getType() {
     return findChildByClass(PonyType.class);
   }
@@ -121,12 +121,6 @@ public class PonyParticleImpl extends ASTWrapperPsiElement implements PonyPartic
   @Nullable
   public PsiElement getId() {
     return findChildByType(ID);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getTypeId() {
-    return findChildByType(TYPE_ID);
   }
 
 }

@@ -7,19 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface PonyUseFfi extends PsiElement {
 
+  @NotNull
+  PonyIdFfi getIdFfi();
+
   @Nullable
   PonyParams getParams();
 
-  @Nullable
-  PonyStringliteral getStringliteral();
-
   @NotNull
   PonyTypeargs getTypeargs();
-
-  @Nullable
-  PsiElement getId();
-
-  @Nullable
-  PsiElement getTypeId();
 
 }

@@ -13,4 +13,7 @@ public interface PonyExprseq extends PsiElement {
   @Nullable
   PonyNosemi getNosemi();
 
+  @Nullable
+  PonySemiexpr getSemiexpr();
+
 }
