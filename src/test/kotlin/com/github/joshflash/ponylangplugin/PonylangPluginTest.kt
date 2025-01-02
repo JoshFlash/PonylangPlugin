@@ -32,7 +32,7 @@ class PonylangPluginTest : BasePlatformTestCase() {
     fun testProjectService() {
         val projectService = project.service<PonylangProjectService>()
 
-        assertFalse(projectService.stdLibIndexStorage.keysCountApproximately() == 0)
+        assertFalse(projectService.stdLibIndexStorage.keyCount() == 0)
     }
 
     override fun getTestDataPath() = "src/test/testData/rename"

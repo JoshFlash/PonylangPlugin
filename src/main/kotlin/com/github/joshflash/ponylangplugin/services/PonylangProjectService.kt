@@ -9,20 +9,20 @@ import com.github.joshflash.ponylangplugin.language.psi.PonyClassDef
 import com.github.joshflash.ponylangplugin.language.psi.PonyFile
 import com.github.joshflash.ponylangplugin.listeners.PonylangStartupActivity
 import com.github.joshflash.ponylangplugin.ponysourcelist.PonyFileList
+import com.github.joshflash.ponylangplugin.util.VirtualIndexStorage
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.psi.PsiFileFactory
 import com.intellij.psi.util.PsiTreeUtil
-import com.intellij.util.indexing.memory.InMemoryIndexStorage
 import com.intellij.util.io.EnumeratorStringDescriptor
 
 @Service(Service.Level.PROJECT)
 class PonylangProjectService(project: Project) {
 
-    val stdLibIndexStorage: InMemoryIndexStorage<String, PonyFile>
+    val stdLibIndexStorage: VirtualIndexStorage<String, PonyFile>
 
     init {
         thisLogger().info(PonylangPluginBundle.message("projectService", project.name))
-        stdLibIndexStorage = InMemoryIndexStorage(
+        stdLibIndexStorage = VirtualIndexStorage(
             EnumeratorStringDescriptor.INSTANCE
         )
         createPonyStdLibIndex(project)
@@ -44,7 +44,7 @@ class PonylangProjectService(project: Project) {
         ApplicationManager.getApplication().runReadAction {
             val classDefs = PsiTreeUtil.collectElementsOfType(ponyFile, PonyClassDef::class.java)
             for (classDef in classDefs) {
-                stdLibIndexStorage.addValue(classDef.typeRef.typeId.text, ponyFile.hashCode(), ponyFile)
+                stdLibIndexStorage.addValue(classDef.typeRef.typeId.text, ponyFile)
             }
         }
     }
