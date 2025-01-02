@@ -7,7 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface PonyDotId extends PsiElement {
 
-  @NotNull
+  @Nullable
   PsiElement getId();
+
+  @Nullable
+  PsiElement getTupleId();
 
 }

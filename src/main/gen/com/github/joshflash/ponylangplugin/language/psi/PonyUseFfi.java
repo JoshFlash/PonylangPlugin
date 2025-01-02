@@ -10,14 +10,14 @@ public interface PonyUseFfi extends PsiElement {
   @Nullable
   PonyParams getParams();
 
+  @Nullable
+  PonyStringliteral getStringliteral();
+
   @NotNull
   PonyTypeargs getTypeargs();
 
   @Nullable
   PsiElement getId();
-
-  @Nullable
-  PsiElement getString();
 
   @Nullable
   PsiElement getTypeId();

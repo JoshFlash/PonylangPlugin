@@ -11,12 +11,12 @@ public interface PonyPattern extends PsiElement {
   PonyBinding getBinding();
 
   @Nullable
+  PonyIdRef getIdRef();
+
+  @Nullable
   PonyParampattern getParampattern();
 
   @Nullable
   PonyType getType();
-
-  @Nullable
-  PsiElement getId();
 
 }

@@ -5,18 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PonyCasepattern extends PsiElement {
+public interface PonyStringliteral extends PsiElement {
 
   @Nullable
-  PonyBinding getBinding();
+  PsiElement getChar();
 
   @Nullable
-  PonyCaseparampattern getCaseparampattern();
-
-  @Nullable
-  PonyIdRef getIdRef();
-
-  @Nullable
-  PonyType getType();
+  PsiElement getString();
 
 }

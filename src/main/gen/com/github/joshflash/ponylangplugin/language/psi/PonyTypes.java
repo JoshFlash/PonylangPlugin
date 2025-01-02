@@ -30,6 +30,7 @@ public interface PonyTypes {
   IElementType CONSTRUCT = new PonyElementType("CONSTRUCT");
   IElementType DECLARATION = new PonyElementType("DECLARATION");
   IElementType DOT_ID = new PonyElementType("DOT_ID");
+  IElementType DOT_TYPEREF = new PonyElementType("DOT_TYPEREF");
   IElementType ELIF = new PonyElementType("ELIF");
   IElementType ELIFDEF = new PonyElementType("ELIFDEF");
   IElementType ELIFTYPE = new PonyElementType("ELIFTYPE");
@@ -38,11 +39,11 @@ public interface PonyTypes {
   IElementType FIELD = new PonyElementType("FIELD");
   IElementType FLOAT = new PonyElementType("FLOAT");
   IElementType FORLOOP = new PonyElementType("FORLOOP");
-  IElementType GENERIC_TYPE = new PonyElementType("GENERIC_TYPE");
   IElementType HEXDIGIT = new PonyElementType("HEXDIGIT");
   IElementType HEXLETTER = new PonyElementType("HEXLETTER");
   IElementType IDSEQ = new PonyElementType("IDSEQ");
   IElementType IDSEQ_IN_SEQ = new PonyElementType("IDSEQ_IN_SEQ");
+  IElementType ID_REF = new PonyElementType("ID_REF");
   IElementType IFBLOCK = new PonyElementType("IFBLOCK");
   IElementType INFIX = new PonyElementType("INFIX");
   IElementType INFIXOP = new PonyElementType("INFIXOP");
@@ -84,6 +85,7 @@ public interface PonyTypes {
   IElementType RAWSEQ = new PonyElementType("RAWSEQ");
   IElementType SAFEOP = new PonyElementType("SAFEOP");
   IElementType SEMIEXPR = new PonyElementType("SEMIEXPR");
+  IElementType STRINGLITERAL = new PonyElementType("STRINGLITERAL");
   IElementType TERM = new PonyElementType("TERM");
   IElementType TILDE_ID = new PonyElementType("TILDE_ID");
   IElementType TUPLE = new PonyElementType("TUPLE");
@@ -118,6 +120,7 @@ public interface PonyTypes {
   IElementType BREAK = new PonyTokenType("break");
   IElementType CARET = new PonyTokenType("^");
   IElementType CHAIN = new PonyTokenType(".>");
+  IElementType CHAR = new PonyTokenType("char");
   IElementType CLASS = new PonyTokenType("class");
   IElementType COLON = new PonyTokenType(":");
   IElementType COMMA = new PonyTokenType(",");
@@ -146,7 +149,6 @@ public interface PonyTypes {
   IElementType FOR = new PonyTokenType("for");
   IElementType FUN = new PonyTokenType("fun");
   IElementType GENCAP = new PonyTokenType("gencap");
-  IElementType GENERIC_ID = new PonyTokenType("generic_id");
   IElementType GEQ = new PonyTokenType(">=");
   IElementType GEQ_UNSAFE = new PonyTokenType(">=~");
   IElementType GT = new PonyTokenType(">");
@@ -217,6 +219,7 @@ public interface PonyTypes {
   IElementType TRN = new PonyTokenType("trn");
   IElementType TRUE = new PonyTokenType("true");
   IElementType TRY = new PonyTokenType("try");
+  IElementType TUPLE_ID = new PonyTokenType("tuple_id");
   IElementType TYPEDEF = new PonyTokenType("type");
   IElementType TYPE_ARROW = new PonyTokenType("->");
   IElementType TYPE_ID = new PonyTokenType("type_id");
@@ -298,6 +301,9 @@ public interface PonyTypes {
       else if (type == DOT_ID) {
         return new PonyDotIdImpl(node);
       }
+      else if (type == DOT_TYPEREF) {
+        return new PonyDotTyperefImpl(node);
+      }
       else if (type == ELIF) {
         return new PonyElifImpl(node);
       }
@@ -322,9 +328,6 @@ public interface PonyTypes {
       else if (type == FORLOOP) {
         return new PonyForloopImpl(node);
       }
-      else if (type == GENERIC_TYPE) {
-        return new PonyGenericTypeImpl(node);
-      }
       else if (type == HEXDIGIT) {
         return new PonyHexdigitImpl(node);
       }
@@ -336,6 +339,9 @@ public interface PonyTypes {
       }
       else if (type == IDSEQ_IN_SEQ) {
         return new PonyIdseqInSeqImpl(node);
+      }
+      else if (type == ID_REF) {
+        return new PonyIdRefImpl(node);
       }
       else if (type == IFBLOCK) {
         return new PonyIfblockImpl(node);
@@ -459,6 +465,9 @@ public interface PonyTypes {
       }
       else if (type == SEMIEXPR) {
         return new PonySemiexprImpl(node);
+      }
+      else if (type == STRINGLITERAL) {
+        return new PonyStringliteralImpl(node);
       }
       else if (type == TERM) {
         return new PonyTermImpl(node);

@@ -41,14 +41,14 @@ public class PonyCasepatternImpl extends ASTWrapperPsiElement implements PonyCas
 
   @Override
   @Nullable
-  public PonyType getType() {
-    return findChildByClass(PonyType.class);
+  public PonyIdRef getIdRef() {
+    return findChildByClass(PonyIdRef.class);
   }
 
   @Override
   @Nullable
-  public PsiElement getId() {
-    return findChildByType(ID);
+  public PonyType getType() {
+    return findChildByClass(PonyType.class);
   }
 
 }

@@ -34,6 +34,12 @@ public class PonyUseFfiImpl extends ASTWrapperPsiElement implements PonyUseFfi {
   }
 
   @Override
+  @Nullable
+  public PonyStringliteral getStringliteral() {
+    return findChildByClass(PonyStringliteral.class);
+  }
+
+  @Override
   @NotNull
   public PonyTypeargs getTypeargs() {
     return findNotNullChildByClass(PonyTypeargs.class);
@@ -43,12 +49,6 @@ public class PonyUseFfiImpl extends ASTWrapperPsiElement implements PonyUseFfi {
   @Nullable
   public PsiElement getId() {
     return findChildByType(ID);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getString() {
-    return findChildByType(STRING);
   }
 
   @Override

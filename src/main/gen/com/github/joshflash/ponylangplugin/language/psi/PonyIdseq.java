@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface PonyIdseq extends PsiElement {
 
+  @Nullable
+  PonyIdRef getIdRef();
+
   @NotNull
   List<PonyIdseqInSeq> getIdseqInSeqList();
-
-  @Nullable
-  PsiElement getId();
 
 }

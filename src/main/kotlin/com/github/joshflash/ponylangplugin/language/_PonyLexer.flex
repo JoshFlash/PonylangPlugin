@@ -25,12 +25,13 @@ import static com.github.joshflash.ponylangplugin.language.psi.PonyTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
-GENERIC_ID=[A-Z]
 TYPE_ID=_?[A-Z][a-zA-Z0-9_]*
-ID=_?[a-z][a-zA-Z0-9_]*'?
+ID=(_[a-z]|[a-z])[a-zA-Z0-9_]*'?
+TUPLE_ID=_[1-9][0-9]?
 DIGIT=[0-9]+
 DOC_STRING=(\"\"\")([^\"]|\"\"?[^\"])*(\"\"\")?
-STRING=(\"(\\[abefnrtv0\"\\]|[^\"\\])*\")
+STRING=(\"(\\[abefnrtuvx0'?\"\\]|[^\"\\])*\")
+CHAR=('(\\[abefnrtv0'\\]|[^'\\])')
 GENCAP=#(read|send|share|alias|any)
 LINE_COMMENT="//".*
 BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
@@ -158,12 +159,13 @@ BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
   "true"                    { return TRUE; }
   "false"                   { return FALSE; }
 
-  {GENERIC_ID}              { return GENERIC_ID; }
   {TYPE_ID}                 { return TYPE_ID; }
   {ID}                      { return ID; }
+  {TUPLE_ID}                { return TUPLE_ID; }
   {DIGIT}                   { return DIGIT; }
   {DOC_STRING}              { return DOC_STRING; }
   {STRING}                  { return STRING; }
+  {CHAR}                    { return CHAR; }
   {GENCAP}                  { return GENCAP; }
   {LINE_COMMENT}            { return LINE_COMMENT; }
   {BLOCK_COMMENT}           { return BLOCK_COMMENT; }

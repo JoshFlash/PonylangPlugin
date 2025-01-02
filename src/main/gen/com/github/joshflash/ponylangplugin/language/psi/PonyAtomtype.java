@@ -14,9 +14,6 @@ public interface PonyAtomtype extends PsiElement {
   PonyCap getCap();
 
   @Nullable
-  PonyGenericType getGenericType();
-
-  @Nullable
   PonyInfixtype getInfixtype();
 
   @Nullable

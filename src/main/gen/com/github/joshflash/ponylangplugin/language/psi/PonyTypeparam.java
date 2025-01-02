@@ -8,12 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface PonyTypeparam extends PsiElement {
 
   @Nullable
-  PonyGenericType getGenericType();
-
-  @Nullable
   PonyType getType();
 
-  @Nullable
+  @NotNull
   PonyTypeRef getTypeRef();
 
   @Nullable

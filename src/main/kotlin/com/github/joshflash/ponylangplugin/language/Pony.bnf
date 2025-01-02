@@ -135,12 +135,13 @@
   // lexemes
     true="true"
     false="false"
-    generic_id="regexp:[A-Z]"
     type_id="regexp:_?[A-Z][a-zA-Z0-9_]*"
-    id="regexp:_?[a-z][a-zA-Z0-9_]*'?"
+    id="regexp:(_[a-z]|[a-z])[a-zA-Z0-9_]*'?"
+    tuple_id="regexp:_[1-9][0-9]?"
     digit="regexp:[0-9]+"
     doc_string="regexp:(\"\"\")([^\"]|\"\"?[^\"])*(\"\"\")?"
-    string="regexp:(\"(\\[abefnrtv0\"\\]|[^\"\\])*\")"
+    string="regexp:(\"(\\[abefnrtuvx0'?\"\\]|[^\"\\])*\")"
+    char="regexp:('(\\[abefnrtv0'\\]|[^'\\])')"
     gencap="regexp:#(read|send|share|alias|any)"
     line_comment="regexp://.*"
     block_comment="regexp:/\*([^*]|\*+[^*/])*(\*+/)?"
@@ -149,15 +150,15 @@
 
 module ::= [doc_string] usestmt* class_def* ;
 
-usestmt ::= USE [id EQUALS] (string | use_ffi) [IF infix] ;
+usestmt ::= USE [id EQUALS] (stringliteral | use_ffi) [IF infix] ;
 
-use_ffi ::= AT (id | type_id | string) typeargs LP [params] RP [QM] ;
+use_ffi ::= AT (id | type_id | stringliteral) typeargs LP [params] RP [QM] ;
 
 class_def ::= declaration [annotatedids] [AT] [cap] type_ref [typeparams] [IS type] [doc_string] members ;
 
 type_ref ::= type_id ;
 
-generic_type ::= generic_id [CARET | BANG] ;
+id_ref ::= id | "_" ;
 
 declaration ::= (TYPEDEF | INTERFACE | TRAIT | PRIMITIVE | STRUCT | CLASS | ACTOR) ;
 
@@ -175,7 +176,7 @@ rawseq ::= exprseq | jump ;
 
 exprseq ::= assignment [nosemi] ;
 
-nosemi ::= jump | nextexprseq [semiexpr | jump ] ;
+nosemi ::= jump | nextexprseq [semiexpr | jump] ;
 
 nextexprseq ::= nextassignment+ ;
 
@@ -253,23 +254,23 @@ elif ::=
     ELSEIF [annotatedids] rawseq THEN rawseq [elif | (ELSE annotatedrawseq)] ;
 
 idseq ::=
-    id
+    id_ref
   | LP idseq_in_seq (COMMA idseq_in_seq)* RP ;
 
 idseq_in_seq ::=
-    id
+    id_ref
   | LP idseq_in_seq (COMMA idseq_in_seq)* RP ;
 
 nextpattern ::=
-    binding id [COLON type]
+    binding id_ref [COLON type]
   | nextparampattern ;
 
 casepattern ::=
-    binding id [COLON type]
+    binding id_ref [COLON type]
   | caseparampattern ;
 
 pattern ::=
-    binding id [COLON type]
+    binding id_ref [COLON type]
   | parampattern ;
 
 nextparampattern ::=
@@ -290,7 +291,7 @@ casepostfix ::= caseatom postfixelem* ;
 
 postfix ::= atom postfixelem* ;
 
-postfixelem ::= dot_id | tilde_id | chain_id | typeargs | call ;
+postfixelem ::= dot_id | tilde_id | chain_id | dot_typeref | typeargs | call ;
 
 call ::= LP [positional] [named] RP [QM] ;
 
@@ -298,7 +299,9 @@ chain_id ::= CHAIN id ;
 
 tilde_id ::= TILDE id ;
 
-dot_id ::= DOT id ;
+dot_id ::= DOT (id | tuple_id) ;
+
+dot_typeref ::= DOT type_ref ;
 
 nextatom ::=
     particle
@@ -324,15 +327,14 @@ atom ::=
   | LBK [AS type COLON] [rawseq] RBK ;
 
 particle ::=
-    id
+    id_ref
   | type_ref
-  | generic_type
   | literal
   | THIS
   | OBJECT [annotatedids] [cap] [IS type] members END
   | LBC [annotatedids] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
   | RCVR [annotatedids] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
-  | AT (id | string) [typeargs] LP [positional] [named] RP [QM]
+  | AT (id | type_id | stringliteral) [typeargs] LP [positional] [named] RP [QM]
   | SOURCELOC ;
 
 whileloop ::= WHILE [annotatedids] rawseq DO rawseq [ELSE annotatedrawseq] END ;
@@ -361,7 +363,6 @@ type ::= atomtype [TYPE_ARROW type] ;
 
 atomtype ::=
     THIS
-  | generic_type
   | cap
   | LP infixtype [tupletype] RP
   | nominal
@@ -392,7 +393,7 @@ typeparams ::= LBK typeparam (COMMA typeparam)* RBK ;
 
 params ::= (param | ELIPSIS) (COMMA (param | ELIPSIS))* ;
 
-typeparam ::= (type_ref | generic_type) [COLON type] [EQUALS typearg] ;
+typeparam ::= (type_ref) [COLON type] [EQUALS typearg] ;
 
 typearg ::=
     type
@@ -404,7 +405,9 @@ literal ::=
   | false
   | float
   | int
-  | string ;
+  | stringliteral ;
+
+stringliteral ::= (string | char) ;
 
 param ::= id COLON type [EQUALS infix] ;
 
@@ -415,7 +418,7 @@ int ::=
   | "0x" hexdigit (hexdigit | "_")*
   | "0b" bindigit (bindigit | "_")* ;
 
-float ::= digit (digit | "_")* [DOT digit (digit | "_")*] [exponent] ;
+float ::= digit (digit | "_")* DOT digit (digit | "_")* [exponent] ;
 
 exponent ::= ("e" | "E") [ADD | SUB] digit (digit | "_")* ;
 

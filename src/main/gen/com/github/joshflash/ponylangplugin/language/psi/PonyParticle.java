@@ -14,7 +14,7 @@ public interface PonyParticle extends PsiElement {
   PonyCap getCap();
 
   @Nullable
-  PonyGenericType getGenericType();
+  PonyIdRef getIdRef();
 
   @Nullable
   PonyLambdacaptures getLambdacaptures();
@@ -38,6 +38,9 @@ public interface PonyParticle extends PsiElement {
   PonyRawseq getRawseq();
 
   @Nullable
+  PonyStringliteral getStringliteral();
+
+  @Nullable
   PonyType getType();
 
   @Nullable
@@ -53,6 +56,6 @@ public interface PonyParticle extends PsiElement {
   PsiElement getId();
 
   @Nullable
-  PsiElement getString();
+  PsiElement getTypeId();
 
 }

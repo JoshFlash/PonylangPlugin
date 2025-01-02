@@ -28,9 +28,15 @@ public class PonyDotIdImpl extends ASTWrapperPsiElement implements PonyDotId {
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PsiElement getId() {
-    return findNotNullChildByType(ID);
+    return findChildByType(ID);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getTupleId() {
+    return findChildByType(TUPLE_ID);
   }
 
 }

@@ -95,6 +95,10 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDotTyperef(@NotNull PonyDotTyperef o) {
+    visitPsiElement(o);
+  }
+
   public void visitElif(@NotNull PonyElif o) {
     visitPsiElement(o);
   }
@@ -127,15 +131,15 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitGenericType(@NotNull PonyGenericType o) {
-    visitPsiElement(o);
-  }
-
   public void visitHexdigit(@NotNull PonyHexdigit o) {
     visitPsiElement(o);
   }
 
   public void visitHexletter(@NotNull PonyHexletter o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIdRef(@NotNull PonyIdRef o) {
     visitPsiElement(o);
   }
 
@@ -308,6 +312,10 @@ public class PonyVisitor extends PsiElementVisitor {
   }
 
   public void visitSemiexpr(@NotNull PonySemiexpr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStringliteral(@NotNull PonyStringliteral o) {
     visitPsiElement(o);
   }
 

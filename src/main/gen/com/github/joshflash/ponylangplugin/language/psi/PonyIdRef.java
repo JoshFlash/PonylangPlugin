@@ -5,18 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PonyCasepattern extends PsiElement {
+public interface PonyIdRef extends PsiElement {
 
   @Nullable
-  PonyBinding getBinding();
-
-  @Nullable
-  PonyCaseparampattern getCaseparampattern();
-
-  @Nullable
-  PonyIdRef getIdRef();
-
-  @Nullable
-  PonyType getType();
+  PsiElement getId();
 
 }

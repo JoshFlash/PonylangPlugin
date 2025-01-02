@@ -29,7 +29,7 @@ interface PonyTokenSets {
         )
 
         val STRINGS: TokenSet = TokenSet.create(
-            STRING
+            STRING, CHAR
         )
 
         val COMMENTS: TokenSet = TokenSet.create(
@@ -41,7 +41,7 @@ interface PonyTokenSets {
         )
 
         val TYPES: TokenSet = TokenSet.create(
-            TYPE_ID, GENERIC_ID
+            TYPE_ID,
         )
 
         val IDENTIFIERS: TokenSet = TokenSet.create(
