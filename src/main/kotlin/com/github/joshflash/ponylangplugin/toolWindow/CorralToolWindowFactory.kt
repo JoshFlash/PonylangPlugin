@@ -27,12 +27,11 @@ class CorralToolWindowFactory : ToolWindowFactory {
 
     override fun shouldBeAvailable(project: Project) = true
 
-    class CorralToolWindow(toolWindow: ToolWindow) {
-
-        private val service = toolWindow.project.service<PonylangProjectService>()
+    class CorralToolWindow(private val toolWindow: ToolWindow) {
 
         fun getContent() = JBPanel<JBPanel<*>>().apply {
             val label = JBLabel(PonylangPluginBundle.message("corralTodoLabel", "?"))
+            val service = toolWindow.project.getService(PonylangProjectService::class.java)
 
             add(label)
             add(JButton(PonylangPluginBundle.message("TODO")).apply {
