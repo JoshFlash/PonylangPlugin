@@ -177,8 +177,12 @@ tasks.register("generatePonyFileList") {
     inputs.dir(resourceDir)
 
     // Where we'll place the generated .kt file
-    val outputDir = file("/src/main/gen/com/github/joshflash/ponylangplugin/ponysourcelist")
+    val outputDir = file("src/main/gen/com/github/joshflash/ponylangplugin/ponysourcelist")
     outputs.dir(outputDir)
+
+    onlyIf {
+        !outputDir.exists() || outputDir.listFiles()?.isEmpty() == true
+    }
 
     doLast {
         // Gather .pony files relative to pony-source/
