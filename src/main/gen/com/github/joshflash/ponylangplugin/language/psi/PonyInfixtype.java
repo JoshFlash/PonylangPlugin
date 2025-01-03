@@ -10,7 +10,7 @@ public interface PonyInfixtype extends PsiElement {
   @NotNull
   List<PonyIsecttype> getIsecttypeList();
 
-  @NotNull
+  @Nullable
   PonyType getType();
 
   @NotNull

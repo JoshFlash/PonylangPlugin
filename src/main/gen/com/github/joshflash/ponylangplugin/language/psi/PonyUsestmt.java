@@ -11,12 +11,12 @@ public interface PonyUsestmt extends PsiElement {
   PonyInfix getInfix();
 
   @Nullable
-  PonyStringliteral getStringliteral();
-
-  @Nullable
   PonyUseFfi getUseFfi();
 
   @Nullable
   PsiElement getId();
+
+  @Nullable
+  PsiElement getString();
 
 }

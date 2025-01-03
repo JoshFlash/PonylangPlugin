@@ -34,9 +34,9 @@ public class PonyInfixtypeImpl extends ASTWrapperPsiElement implements PonyInfix
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PonyType getType() {
-    return findNotNullChildByClass(PonyType.class);
+    return findChildByClass(PonyType.class);
   }
 
   @Override

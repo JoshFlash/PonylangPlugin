@@ -29,14 +29,14 @@ public class PonyIdFfiImpl extends ASTWrapperPsiElement implements PonyIdFfi {
 
   @Override
   @Nullable
-  public PonyStringliteral getStringliteral() {
-    return findChildByClass(PonyStringliteral.class);
+  public PsiElement getId() {
+    return findChildByType(ID);
   }
 
   @Override
   @Nullable
-  public PsiElement getId() {
-    return findChildByType(ID);
+  public PsiElement getString() {
+    return findChildByType(STRING);
   }
 
   @Override

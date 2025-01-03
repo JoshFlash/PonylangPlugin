@@ -34,6 +34,12 @@ public class PonyBarelambdatypeImpl extends ASTWrapperPsiElement implements Pony
   }
 
   @Override
+  @Nullable
+  public PonyIdRef getIdRef() {
+    return findChildByClass(PonyIdRef.class);
+  }
+
+  @Override
   @NotNull
   public List<PonyType> getTypeList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyType.class);
@@ -49,12 +55,6 @@ public class PonyBarelambdatypeImpl extends ASTWrapperPsiElement implements Pony
   @Nullable
   public PsiElement getGencap() {
     return findChildByType(GENCAP);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getId() {
-    return findChildByType(ID);
   }
 
 }

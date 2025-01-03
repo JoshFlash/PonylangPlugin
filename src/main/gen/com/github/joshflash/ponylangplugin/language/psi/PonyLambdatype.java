@@ -10,6 +10,9 @@ public interface PonyLambdatype extends PsiElement {
   @NotNull
   List<PonyCap> getCapList();
 
+  @Nullable
+  PonyIdRef getIdRef();
+
   @NotNull
   List<PonyType> getTypeList();
 
@@ -18,8 +21,5 @@ public interface PonyLambdatype extends PsiElement {
 
   @Nullable
   PsiElement getGencap();
-
-  @Nullable
-  PsiElement getId();
 
 }

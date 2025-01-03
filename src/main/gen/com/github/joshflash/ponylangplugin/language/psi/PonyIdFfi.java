@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 public interface PonyIdFfi extends PsiElement {
 
   @Nullable
-  PonyStringliteral getStringliteral();
+  PsiElement getId();
 
   @Nullable
-  PsiElement getId();
+  PsiElement getString();
 
   @Nullable
   PsiElement getTypeId();

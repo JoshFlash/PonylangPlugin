@@ -29,11 +29,11 @@ interface PonyTokenSets {
         )
 
         val STRINGS: TokenSet = TokenSet.create(
-            STRING, CHAR
+            STRING, CHAR, DOC_STRING
         )
 
         val COMMENTS: TokenSet = TokenSet.create(
-            LINE_COMMENT, BLOCK_COMMENT, DOC_STRING
+            LINE_COMMENT, BLOCK_COMMENT
         )
 
         val NUMBERS: TokenSet = TokenSet.create(

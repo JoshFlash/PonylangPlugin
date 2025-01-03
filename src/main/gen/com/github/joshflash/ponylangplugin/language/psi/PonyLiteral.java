@@ -13,4 +13,7 @@ public interface PonyLiteral extends PsiElement {
   @Nullable
   PonyStringliteral getStringliteral();
 
+  @Nullable
+  PsiElement getChar();
+
 }

@@ -1,3 +1,4 @@
+//noinspection SpellCheckingInspectionForFile
 {
   parserClass="com.github.joshflash.ponylangplugin.parser.PonyParser"
   parserUtilClass="com.github.joshflash.ponylangplugin.parser.PonyParserUtil"
@@ -143,7 +144,7 @@
     tuple_id="regexp:_[1-9][0-9]?"
     doc_string="regexp:(\"\"\")([^\"]|\"\"?[^\"])*(\"\"\")?"
     string="regexp:(\"(\\[abefnrtuvx0'?\"\\]|[^\"\\])*\")"
-    char="regexp:('(\\[abefnrtv0'\\]|[^'\\])')"
+    char="regexp:('(\\[abefnrtv0'?\\]|[^'\\])')"
     gencap="regexp:#(read|send|share|alias|any)"
     line_comment="regexp://.*"
     block_comment="regexp:/\*([^*]|\*+[^*/])*(\*+/)?"
@@ -152,7 +153,7 @@
 
 module ::= [doc_string] usestmt* class_def* ;
 
-usestmt ::= USE [id EQUALS] (stringliteral | use_ffi) [IF infix] ;
+usestmt ::= USE [id EQUALS] (string | use_ffi) [IF infix] ;
 
 use_ffi ::= AT id_ffi typeargs LP [params] RP [QM] ;
 
@@ -162,7 +163,7 @@ type_ref ::= type_id ;
 
 id_ref ::= id | SCORE ;
 
-id_ffi ::= SCORE* (id | type_id | stringliteral)
+id_ffi ::= SCORE* (id | type_id | string) ;
 
 declaration ::= (TYPEDEF | INTERFACE | TRAIT | PRIMITIVE | STRUCT | CLASS | ACTOR) ;
 
@@ -172,7 +173,7 @@ field ::= binding id COLON type [EQUALS infix] [doc_string] ;
 
 binding ::= (VAR | LET | EMBED) ;
 
-method ::= (FUN | BE | NEW) [annotatedids] [cap | AT] id [typeparams] LP [params] RP [COLON type] [QM] [ARROW [doc_string] rawseq] ;
+method ::= (FUN | BE | NEW) [annotatedids] [cap | AT] id [typeparams] LP [params] RP [COLON type] [QM] [ARROW] [doc_string] [rawseq] ;
 
 annotatedrawseq ::= [annotatedids] (exprseq | jump) ;
 
@@ -351,11 +352,11 @@ tuple ::= COMMA rawseq (COMMA rawseq)* ;
 
 lambdacaptures ::= LP (lambdacapture | THIS) (COMMA (lambdacapture | THIS))* RP ;
 
-lambdacapture ::= id [COLON type] [EQUALS infix] ;
+lambdacapture ::= id_ref [COLON type] [EQUALS infix] ;
 
 lambdaparams ::= lambdaparam (COMMA lambdaparam)* ;
 
-lambdaparam ::= id [COLON type] [EQUALS infix] ;
+lambdaparam ::= id_ref [COLON type] [EQUALS infix] ;
 
 positional ::= rawseq (COMMA rawseq)* ;
 
@@ -374,14 +375,14 @@ atomtype ::=
   | barelambdatype ;
 
 barelambdatype ::=
-    RCVR [cap] [id] [typeparams] LP [type (COMMA type)*] RP [COLON type] [QM] RBC [cap | gencap] [CARET | BANG] ;
+    RCVR [cap] [id_ref] [typeparams] LP [type (COMMA type)*] RP [COLON type] [QM] RBC [cap | gencap] [CARET | BANG] ;
 
 lambdatype ::=
-    LBC [cap] [id] [typeparams] LP [type (COMMA type)*] RP [COLON type] [QM] RBC [cap | gencap] [CARET | BANG] ;
+    LBC [cap] [id_ref] [typeparams] LP [type (COMMA type)*] RP [COLON type] [QM] RBC [cap | gencap] [CARET | BANG] ;
 
 tupletype ::= COMMA infixtype (COMMA infixtype)* ;
 
-infixtype ::= type (uniontype | isecttype)* ;
+infixtype ::= (type | SCORE) (uniontype | isecttype)* ;
 
 isecttype ::= AMP type ;
 
@@ -407,15 +408,16 @@ typearg ::=
 literal ::=
     true
   | false
+  | char
   | number
   | stringliteral ;
 
-stringliteral ::= (string | char) ;
+stringliteral ::= string | doc_string ;
 
 param ::= id COLON type [EQUALS infix] ;
 
 annotatedids ::= "\\" id (COMMA id)* "\\" ;
 
-number ::= float | int
+number ::= float | int ;
 
 comment ::= line_comment | block_comment | doc_string ;

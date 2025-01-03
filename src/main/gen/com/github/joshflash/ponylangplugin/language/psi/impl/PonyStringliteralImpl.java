@@ -29,8 +29,8 @@ public class PonyStringliteralImpl extends ASTWrapperPsiElement implements PonyS
 
   @Override
   @Nullable
-  public PsiElement getChar() {
-    return findChildByType(CHAR);
+  public PsiElement getDocString() {
+    return findChildByType(DOC_STRING);
   }
 
   @Override
