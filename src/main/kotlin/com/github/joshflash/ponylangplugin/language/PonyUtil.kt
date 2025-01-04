@@ -1,16 +1,49 @@
 package com.github.joshflash.ponylangplugin.language
 
-import com.github.joshflash.ponylangplugin.language.psi.PonyClassDef
-import com.github.joshflash.ponylangplugin.language.psi.PonyField
-import com.github.joshflash.ponylangplugin.language.psi.PonyFile
+import com.github.joshflash.ponylangplugin.language.indexing.PonyTypeReferenceIndex
+import com.github.joshflash.ponylangplugin.language.psi.*
+import com.github.joshflash.ponylangplugin.services.PonylangProjectService
 import com.intellij.openapi.project.Project
 import com.intellij.psi.*
 import com.intellij.psi.search.FileTypeIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.PsiTreeUtil
+import com.intellij.util.indexing.FileBasedIndex
 import java.util.*
 
 object PonyUtil {
+    private val fileIndex
+        get() = FileBasedIndex.getInstance()
+
+    private val typeRefIndexId
+        get() = PonyTypeReferenceIndex.INDEX_ID
+
+    private fun getStdLibIndex(project: Project)
+        = project.getService(PonylangProjectService::class.java).stdLibIndexStorage
+
+    private fun getPonySourceFileForType(typeId: String, project: Project): PonyFile? {
+        val vFilesWithKey = fileIndex.getContainingFiles(typeRefIndexId, typeId, GlobalSearchScope.allScope(project))
+        val psiManager = PsiManager.getInstance(project)
+        for (vFile in vFilesWithKey) {
+            val ponyFile = psiManager.findFile(vFile) as? PonyFile ?: continue
+            return ponyFile
+        }
+
+        return getStdLibIndex(project).getValue(typeId)
+    }
+
+    fun resolveTypeReference(typeId: String, project: Project): PonyTypeRef? {
+        val sourceFile = getPonySourceFileForType(typeId, project) ?: return null
+        val classDefs = PsiTreeUtil.collectElementsOfType(sourceFile, PonyClassDef::class.java)
+        for (classDef in classDefs) {
+            if (classDef.typeRef.typeId.text == typeId) {
+                return classDef.typeRef
+            }
+        }
+
+        return null
+    }
+
     fun findFieldsInProject(project: Project): List<PonyField> {
         return findInProject<PonyField>(project)
             .filterNot { it.id.text.startsWith('_') }

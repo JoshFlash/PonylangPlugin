@@ -13,6 +13,8 @@ class SingleValueContainer<V>(var value: V?) : ValueContainer<V>(), Cloneable {
 
     override fun size(): Int = 1
 
+    fun getSingleValue(): V? = value
+
     fun removeValue() {
         removeAssociatedValue(value.hashCode())
     }

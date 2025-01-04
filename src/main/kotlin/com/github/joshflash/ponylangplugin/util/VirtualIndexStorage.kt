@@ -27,6 +27,10 @@ class VirtualIndexStorage<K, V>(keyDescriptor: KeyDescriptor<K>) : Flushable, Cl
         return valueMap[k]!!
     }
 
+    fun getValue(k: K): V? {
+        return valueMap[k]?.getSingleValue()
+    }
+
     fun clearCaches() {
     }
 
