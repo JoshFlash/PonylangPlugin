@@ -18,18 +18,21 @@ object PonyUtil {
     private val typeRefIndexId
         get() = PonyTypeReferenceIndex.INDEX_ID
 
-    private fun getStdLibIndex(project: Project)
-        = project.getService(PonylangProjectService::class.java).stdLibIndexStorage
+    private fun Project.getStdLibIndex() =
+        this.getService(PonylangProjectService::class.java).stdLibIndexStorage
+
+    private fun Project.globalScope() =
+        GlobalSearchScope.allScope(this)
 
     private fun getPonySourceFileForType(typeId: String, project: Project): PonyFile? {
-        val vFilesWithKey = fileIndex.getContainingFiles(typeRefIndexId, typeId, GlobalSearchScope.allScope(project))
+        val vFilesWithKey = fileIndex.getContainingFiles(typeRefIndexId, typeId, project.globalScope())
         val psiManager = PsiManager.getInstance(project)
         for (vFile in vFilesWithKey) {
             val ponyFile = psiManager.findFile(vFile) as? PonyFile ?: continue
             return ponyFile
         }
 
-        return getStdLibIndex(project).getValue(typeId)
+        return project.getStdLibIndex().getValue(typeId)
     }
 
     fun resolveTypeReference(typeId: String, project: Project): PonyTypeRef? {
@@ -42,6 +45,38 @@ object PonyUtil {
         }
 
         return null
+    }
+
+    fun findAllClassDefSource(project: Project): Map<String, String> {
+        val typeIdToSourceFile = mutableMapOf<String, String>()
+        val stdLibFiles = project.getStdLibIndex().getMap()
+        for (file in stdLibFiles) {
+            val sourceFile = file.value.value?.containingFile?.name ?: continue
+            typeIdToSourceFile[file.key] = sourceFile
+        }
+
+        fileIndex.processAllKeys(typeRefIndexId, { key ->
+            processIndexValuesForKey(fileIndex, project, key, typeIdToSourceFile)
+            true
+        }, project)
+
+        return typeIdToSourceFile
+    }
+
+    private fun processIndexValuesForKey(
+        fileBasedIndex: FileBasedIndex,
+        project: Project,
+        key: String,
+        typeIdsToSourceFiles: MutableMap<String, String>
+    ) {
+        fileBasedIndex.processValues(
+            typeRefIndexId, key, null,
+            { _, fileName ->
+                typeIdsToSourceFiles[key] = fileName
+                true
+            },
+            project.globalScope()
+        )
     }
 
     fun findFieldsInProject(project: Project): List<PonyField> {

@@ -11,6 +11,12 @@ class VirtualIndexStorage<K, V>(keyDescriptor: KeyDescriptor<K>) : Flushable, Cl
     private val valueMap: MutableMap<K, SingleValueContainer<V>> =
         ConcurrentCollectionFactory.createConcurrentMap(IndexStorageUtil.adaptKeyDescriptorToStrategy(keyDescriptor))
 
+    private fun <K, V> MutableMap<K, V>.asReadOnlyMap(): Map<K, V> {
+        return this
+    }
+
+    fun getMap() = valueMap.asReadOnlyMap()
+
     fun addValue(k: K, v: V) {
         valueMap.computeIfAbsent(k) { SingleValueContainer(v) }
     }
