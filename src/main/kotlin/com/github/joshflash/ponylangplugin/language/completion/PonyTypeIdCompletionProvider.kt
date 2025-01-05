@@ -16,7 +16,11 @@ object PonyTypeIdCompletionProvider : PonyCompletionProviderBase() {
         PlatformPatterns.psiElement()
             .withLanguage(PonyLanguage)
             .inside(PlatformPatterns.psiElement(PonyTypes.TYPE_REF))
-            .inside(PlatformPatterns.psiElement(PonyTypes.NOMINAL))
+            .inside(PlatformPatterns.or(
+                PlatformPatterns.psiElement(PonyTypes.NOMINAL),
+                PlatformPatterns.psiElement(PonyTypes.PARTICLE)
+            ))
+
 
     override fun addCompletions(
         parameters: CompletionParameters,
@@ -24,12 +28,11 @@ object PonyTypeIdCompletionProvider : PonyCompletionProviderBase() {
         results: CompletionResultSet
     ) {
         val psiFile = parameters.originalFile
-        val classDefs = PonyUtil.findClassDefsInProject(psiFile.project)
-        classDefs.forEach { classDef ->
-            val className = classDef.typeRef.typeId.text
-            val lookupElement = LookupElementBuilder.create(className)
-                .withPresentableText(className)
-                .withTailText(" from " + classDef.containingFile.name, true)
+        val classDefSource = PonyUtil.findAllClassDefSource(psiFile.project)
+        classDefSource.forEach { (typeId, sourceFile) ->
+            val lookupElement = LookupElementBuilder.create(typeId)
+                .withPresentableText(typeId)
+                .withTailText(" from $sourceFile", true)
             results.addElement(lookupElement)
         }
     }
