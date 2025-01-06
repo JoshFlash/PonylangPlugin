@@ -8,22 +8,10 @@ import com.intellij.psi.PsiElement;
 public interface PonyConstruct extends PsiElement {
 
   @Nullable
-  PonyAnnotatedids getAnnotatedids();
-
-  @Nullable
-  PonyAnnotatedrawseq getAnnotatedrawseq();
-
-  @Nullable
   PonyCap getCap();
 
-  @NotNull
-  List<PonyCaseexpr> getCaseexprList();
-
   @Nullable
-  PonyElifdef getElifdef();
-
-  @Nullable
-  PonyEliftype getEliftype();
+  PonyControlblock getControlblock();
 
   @Nullable
   PonyForloop getForloop();
@@ -32,24 +20,18 @@ public interface PonyConstruct extends PsiElement {
   PonyIfblock getIfblock();
 
   @Nullable
-  PonyInfix getInfix();
-
-  @Nullable
-  PonyIstype getIstype();
+  PonyMatchblock getMatchblock();
 
   @Nullable
   PonyPostfix getPostfix();
 
   @Nullable
-  PonyRawseq getRawseq();
-
-  @Nullable
   PonyTerm getTerm();
 
   @Nullable
-  PonyWhileloop getWhileloop();
+  PonyTryblock getTryblock();
 
-  @NotNull
-  List<PonyWithelem> getWithelemList();
+  @Nullable
+  PonyWhileloop getWhileloop();
 
 }

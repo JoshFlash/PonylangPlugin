@@ -232,15 +232,18 @@ construct ::=
     ifblock
   | whileloop
   | forloop
-  | IFDEF [annotatedids] infix THEN rawseq [elifdef | (ELSE annotatedrawseq)] END
-  | IFTYPE [annotatedids] istype [eliftype | (ELSE annotatedrawseq)] END
-  | MATCH [annotatedids] rawseq caseexpr* [ELSE annotatedrawseq] END
-  | REPEAT [annotatedids] rawseq UNTIL annotatedrawseq [ELSE annotatedrawseq] END
-  | WITH [annotatedids] withelem (COMMA withelem)* DO rawseq END
-  | TRY [annotatedids] rawseq [ELSE annotatedrawseq] [THEN annotatedrawseq] END
-  | RECOVER [annotatedids] [cap] rawseq END
+  | matchblock
+  | tryblock
+  | controlblock
   | CONSUME [cap] term
   | HASH postfix ;
+
+controlblock ::=
+    IFDEF [annotatedids] infix THEN rawseq [elifdef | (ELSE annotatedrawseq)] END
+  | IFTYPE [annotatedids] istype [eliftype | (ELSE annotatedrawseq)] END
+  | REPEAT [annotatedids] rawseq UNTIL annotatedrawseq [ELSE annotatedrawseq] END
+  | WITH [annotatedids] withelem (COMMA withelem)* DO rawseq END
+  | RECOVER [annotatedids] [cap] rawseq END ;
 
 withelem ::= idseq EQUALS rawseq ;
 
@@ -341,6 +344,10 @@ particle ::=
   | RCVR [annotatedids] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
   | AT id_ffi [typeargs] LP [positional] [named] RP [QM]
   | SOURCELOC ;
+
+tryblock ::= TRY [annotatedids] rawseq [ELSE annotatedrawseq] [THEN annotatedrawseq] END
+
+matchblock ::= MATCH [annotatedids] rawseq caseexpr* [ELSE annotatedrawseq] END
 
 whileloop ::= WHILE [annotatedids] rawseq DO rawseq [ELSE annotatedrawseq] END ;
 

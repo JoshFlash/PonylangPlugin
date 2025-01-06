@@ -11,14 +11,14 @@ import static com.github.joshflash.ponylangplugin.language.psi.PonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.joshflash.ponylangplugin.language.psi.*;
 
-public class PonyConstructImpl extends ASTWrapperPsiElement implements PonyConstruct {
+public class PonyControlblockImpl extends ASTWrapperPsiElement implements PonyControlblock {
 
-  public PonyConstructImpl(@NotNull ASTNode node) {
+  public PonyControlblockImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PonyVisitor visitor) {
-    visitor.visitConstruct(this);
+    visitor.visitControlblock(this);
   }
 
   @Override
@@ -29,56 +29,56 @@ public class PonyConstructImpl extends ASTWrapperPsiElement implements PonyConst
 
   @Override
   @Nullable
+  public PonyAnnotatedids getAnnotatedids() {
+    return findChildByClass(PonyAnnotatedids.class);
+  }
+
+  @Override
+  @Nullable
+  public PonyAnnotatedrawseq getAnnotatedrawseq() {
+    return findChildByClass(PonyAnnotatedrawseq.class);
+  }
+
+  @Override
+  @Nullable
   public PonyCap getCap() {
     return findChildByClass(PonyCap.class);
   }
 
   @Override
   @Nullable
-  public PonyControlblock getControlblock() {
-    return findChildByClass(PonyControlblock.class);
+  public PonyElifdef getElifdef() {
+    return findChildByClass(PonyElifdef.class);
   }
 
   @Override
   @Nullable
-  public PonyForloop getForloop() {
-    return findChildByClass(PonyForloop.class);
+  public PonyEliftype getEliftype() {
+    return findChildByClass(PonyEliftype.class);
   }
 
   @Override
   @Nullable
-  public PonyIfblock getIfblock() {
-    return findChildByClass(PonyIfblock.class);
+  public PonyInfix getInfix() {
+    return findChildByClass(PonyInfix.class);
   }
 
   @Override
   @Nullable
-  public PonyMatchblock getMatchblock() {
-    return findChildByClass(PonyMatchblock.class);
+  public PonyIstype getIstype() {
+    return findChildByClass(PonyIstype.class);
   }
 
   @Override
   @Nullable
-  public PonyPostfix getPostfix() {
-    return findChildByClass(PonyPostfix.class);
+  public PonyRawseq getRawseq() {
+    return findChildByClass(PonyRawseq.class);
   }
 
   @Override
-  @Nullable
-  public PonyTerm getTerm() {
-    return findChildByClass(PonyTerm.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyTryblock getTryblock() {
-    return findChildByClass(PonyTryblock.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyWhileloop getWhileloop() {
-    return findChildByClass(PonyWhileloop.class);
+  @NotNull
+  public List<PonyWithelem> getWithelemList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyWithelem.class);
   }
 
 }

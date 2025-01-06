@@ -11,18 +11,28 @@ import com.intellij.patterns.PlatformPatterns
 import com.intellij.psi.PsiElement
 import com.intellij.util.ProcessingContext
 
-object PonyKeywordCompletionProvider : PonyCompletionProviderBase() {
+object PonyControlKeywordCompletionProvider : PonyCompletionProviderBase() {
     override val context: ElementPattern<out PsiElement> =
         PlatformPatterns.psiElement()
             .withLanguage(PonyLanguage)
-            .inside(PlatformPatterns.psiElement(PonyTypes.CONSTRUCT))
+            .insideSequence(true,
+                PlatformPatterns.psiElement(PonyTypes.CONSTRUCT),
+                PlatformPatterns.or(
+                    PlatformPatterns.psiElement(PonyTypes.IFBLOCK),
+                    PlatformPatterns.psiElement(PonyTypes.WHILELOOP),
+                    PlatformPatterns.psiElement(PonyTypes.FORLOOP),
+                    PlatformPatterns.psiElement(PonyTypes.MATCHBLOCK),
+                    PlatformPatterns.psiElement(PonyTypes.TRYBLOCK),
+                    PlatformPatterns.psiElement(PonyTypes.CONTROLBLOCK),
+                )
+            )
 
     override fun addCompletions(
         parameters: CompletionParameters,
         processingContext: ProcessingContext,
         results: CompletionResultSet
     ) {
-        PonyTokenSets.KEYWORDS.types.forEach { tokenType ->
+        PonyTokenSets.KW_CONTROL.types.forEach { tokenType ->
             val tokenName = tokenType.toString()
             results.addElement(LookupElementBuilder.create(tokenName))
         }

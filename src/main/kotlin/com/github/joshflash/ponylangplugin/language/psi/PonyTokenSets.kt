@@ -8,10 +8,15 @@ interface PonyTokenSets {
         val KEYWORDS: TokenSet = TokenSet.create(
             ACTOR, ADDRESSOF, AS, BE, BOX, BREAK, CLASS, COMP_ERR, COMP_INT,
             CONSUME, CONTINUE, DIGESTOF, DO, ELSE, ELSEIF, EMBED, END, ERROR,
-            FALSE, FOR, FUN, IF, IFDEF, IFTYPE, IN, INTERFACE, IS, ISNT,
+            FOR, FUN, IF, IFDEF, IFTYPE, IN, INTERFACE, IS, ISNT,
             ISO, LET, MATCH, NEW, OBJECT, PRIMITIVE, RECOVER, REF, REPEAT,
-            RETURN, SOURCELOC, STRUCT, TAG, THEN, TRAIT, TRN, TRUE, TRY,
+            RETURN, SOURCELOC, STRUCT, TAG, THEN, TRAIT, TRN, TRY,
             TYPEDEF, UNTIL, USE, VAL, VAR, WHERE, WHILE, WITH
+        )
+
+        val KW_CONTROL: TokenSet = TokenSet.create(
+            IF, THEN, TRY, ELSE, ELSEIF, WHILE, FOR, IN, DO, MATCH,
+            IFDEF, IFTYPE, REPEAT, UNTIL, WITH, RECOVER, CONSUME, END,
         )
 
         val OPERATORS: TokenSet = TokenSet.create(
@@ -37,7 +42,7 @@ interface PonyTokenSets {
         )
 
         val NUMBERS: TokenSet = TokenSet.create(
-            INT, FLOAT
+            INT, FLOAT, TRUE, FALSE
         )
 
         val TYPES: TokenSet = TokenSet.create(

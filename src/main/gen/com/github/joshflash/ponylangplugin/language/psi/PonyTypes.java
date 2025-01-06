@@ -27,6 +27,7 @@ public interface PonyTypes {
   IElementType CLASS_DEF = new PonyElementType("CLASS_DEF");
   IElementType COMMENT = new PonyElementType("COMMENT");
   IElementType CONSTRUCT = new PonyElementType("CONSTRUCT");
+  IElementType CONTROLBLOCK = new PonyElementType("CONTROLBLOCK");
   IElementType DECLARATION = new PonyElementType("DECLARATION");
   IElementType DOT_ID = new PonyElementType("DOT_ID");
   IElementType DOT_TYPEREF = new PonyElementType("DOT_TYPEREF");
@@ -54,6 +55,7 @@ public interface PonyTypes {
   IElementType LAMBDAPARAMS = new PonyElementType("LAMBDAPARAMS");
   IElementType LAMBDATYPE = new PonyElementType("LAMBDATYPE");
   IElementType LITERAL = new PonyElementType("LITERAL");
+  IElementType MATCHBLOCK = new PonyElementType("MATCHBLOCK");
   IElementType MEMBERS = new PonyElementType("MEMBERS");
   IElementType METHOD = new PonyElementType("METHOD");
   IElementType NAMED = new PonyElementType("NAMED");
@@ -84,6 +86,7 @@ public interface PonyTypes {
   IElementType STRINGLITERAL = new PonyElementType("STRINGLITERAL");
   IElementType TERM = new PonyElementType("TERM");
   IElementType TILDE_ID = new PonyElementType("TILDE_ID");
+  IElementType TRYBLOCK = new PonyElementType("TRYBLOCK");
   IElementType TUPLE = new PonyElementType("TUPLE");
   IElementType TUPLETYPE = new PonyElementType("TUPLETYPE");
   IElementType TYPE = new PonyElementType("TYPE");
@@ -290,6 +293,9 @@ public interface PonyTypes {
       else if (type == CONSTRUCT) {
         return new PonyConstructImpl(node);
       }
+      else if (type == CONTROLBLOCK) {
+        return new PonyControlblockImpl(node);
+      }
       else if (type == DECLARATION) {
         return new PonyDeclarationImpl(node);
       }
@@ -370,6 +376,9 @@ public interface PonyTypes {
       }
       else if (type == LITERAL) {
         return new PonyLiteralImpl(node);
+      }
+      else if (type == MATCHBLOCK) {
+        return new PonyMatchblockImpl(node);
       }
       else if (type == MEMBERS) {
         return new PonyMembersImpl(node);
@@ -460,6 +469,9 @@ public interface PonyTypes {
       }
       else if (type == TILDE_ID) {
         return new PonyTildeIdImpl(node);
+      }
+      else if (type == TRYBLOCK) {
+        return new PonyTryblockImpl(node);
       }
       else if (type == TUPLE) {
         return new PonyTupleImpl(node);

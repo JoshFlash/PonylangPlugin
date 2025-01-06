@@ -83,6 +83,10 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitControlblock(@NotNull PonyControlblock o) {
+    visitPsiElement(o);
+  }
+
   public void visitDeclaration(@NotNull PonyDeclaration o) {
     visitPsiElement(o);
   }
@@ -188,6 +192,10 @@ public class PonyVisitor extends PsiElementVisitor {
   }
 
   public void visitLiteral(@NotNull PonyLiteral o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMatchblock(@NotNull PonyMatchblock o) {
     visitPsiElement(o);
   }
 
@@ -308,6 +316,10 @@ public class PonyVisitor extends PsiElementVisitor {
   }
 
   public void visitTildeId(@NotNull PonyTildeId o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTryblock(@NotNull PonyTryblock o) {
     visitPsiElement(o);
   }
 
