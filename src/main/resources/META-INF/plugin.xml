@@ -25,9 +25,12 @@
         <lang.syntaxHighlighterFactory
                 language="Pony"
                 implementationClass="com.github.joshflash.ponylangplugin.language.PonySyntaxHighlighterFactory"/>
+        <lang.elementManipulator
+                implementationClass="com.github.joshflash.ponylangplugin.language.PonyIdRefManipulator"
+                forClass="com.github.joshflash.ponylangplugin.language.psi.impl.PonyIdRefExt"/>
         <annotator
                 language="Pony"
-                implementationClass="com.github.joshflash.ponylangplugin.language.PonyTypeAnnotator"/>
+                implementationClass="com.github.joshflash.ponylangplugin.language.PonyAnnotator"/>
         <completion.contributor
                 language="Pony"
                 implementationClass="com.github.joshflash.ponylangplugin.language.PonyCompletionContributor"/>

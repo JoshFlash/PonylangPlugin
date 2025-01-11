@@ -47,6 +47,10 @@ object PonyUtil {
         return null
     }
 
+    fun resolveIdentifierReference(refId: String, ): PonyIdRef? {
+        return null
+    }
+
     fun findAllClassDefSource(project: Project): Map<String, String> {
         val typeIdToSourceFile = mutableMapOf<String, String>()
         val stdLibFiles = project.getStdLibIndex().getMap()
