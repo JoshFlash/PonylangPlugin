@@ -8,13 +8,13 @@ import com.intellij.psi.PsiElement;
 public interface PonyUsestmt extends PsiElement {
 
   @Nullable
+  PonyIdRef getIdRef();
+
+  @Nullable
   PonyInfix getInfix();
 
   @Nullable
   PonyUseFfi getUseFfi();
-
-  @Nullable
-  PsiElement getId();
 
   @Nullable
   PsiElement getString();

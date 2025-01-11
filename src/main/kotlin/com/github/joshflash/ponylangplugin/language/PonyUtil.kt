@@ -81,7 +81,7 @@ object PonyUtil {
 
     fun findFieldsInProject(project: Project): List<PonyField> {
         return findInProject<PonyField>(project)
-            .filterNot { it.id.text.startsWith('_') }
+            .filterNot { it.idRef.text.startsWith('_') }
     }
 
     fun findFieldsInDirectory(
@@ -89,7 +89,7 @@ object PonyUtil {
         includeSubdirectories: Boolean = false
     ) : List<PonyField> {
         return findInDirectory<PonyField>(directory, includeSubdirectories)
-            .filterNot { it.id.text.startsWith('_') }
+            .filterNot { it.idRef.text.startsWith('_') }
     }
 
     fun findFieldsInFile(file: PsiFile) : List<PonyField> {

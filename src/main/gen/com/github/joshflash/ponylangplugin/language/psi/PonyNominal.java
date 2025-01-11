@@ -10,6 +10,9 @@ public interface PonyNominal extends PsiElement {
   @Nullable
   PonyCap getCap();
 
+  @Nullable
+  PonyIdRef getIdRef();
+
   @NotNull
   PonyTypeRef getTypeRef();
 
@@ -18,8 +21,5 @@ public interface PonyNominal extends PsiElement {
 
   @Nullable
   PsiElement getGencap();
-
-  @Nullable
-  PsiElement getId();
 
 }

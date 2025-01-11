@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface PonyDotId extends PsiElement {
 
   @Nullable
-  PsiElement getId();
+  PonyIdRef getIdRef();
 
   @Nullable
   PsiElement getTupleId();

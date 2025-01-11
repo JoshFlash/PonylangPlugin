@@ -52,7 +52,4 @@ public interface PonyParticle extends PsiElement {
   @Nullable
   PonyTypeparams getTypeparams();
 
-  @Nullable
-  PsiElement getId();
-
 }

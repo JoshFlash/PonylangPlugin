@@ -117,10 +117,4 @@ public class PonyParticleImpl extends ASTWrapperPsiElement implements PonyPartic
     return findChildByClass(PonyTypeparams.class);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getId() {
-    return findChildByType(ID);
-  }
-
 }

@@ -10,6 +10,9 @@ public interface PonyField extends PsiElement {
   @NotNull
   PonyBinding getBinding();
 
+  @NotNull
+  PonyIdRef getIdRef();
+
   @Nullable
   PonyInfix getInfix();
 
@@ -18,8 +21,5 @@ public interface PonyField extends PsiElement {
 
   @Nullable
   PsiElement getDocString();
-
-  @NotNull
-  PsiElement getId();
 
 }

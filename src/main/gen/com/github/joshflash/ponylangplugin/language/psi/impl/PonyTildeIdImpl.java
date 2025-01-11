@@ -29,8 +29,8 @@ public class PonyTildeIdImpl extends ASTWrapperPsiElement implements PonyTildeId
 
   @Override
   @NotNull
-  public PsiElement getId() {
-    return findNotNullChildByType(ID);
+  public PonyIdRef getIdRef() {
+    return findNotNullChildByClass(PonyIdRef.class);
   }
 
 }

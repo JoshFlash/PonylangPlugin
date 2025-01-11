@@ -29,8 +29,8 @@ public class PonyDotIdImpl extends ASTWrapperPsiElement implements PonyDotId {
 
   @Override
   @Nullable
-  public PsiElement getId() {
-    return findChildByType(ID);
+  public PonyIdRef getIdRef() {
+    return findChildByClass(PonyIdRef.class);
   }
 
   @Override

@@ -28,6 +28,12 @@ public class PonyParamImpl extends ASTWrapperPsiElement implements PonyParam {
   }
 
   @Override
+  @NotNull
+  public PonyIdRef getIdRef() {
+    return findNotNullChildByClass(PonyIdRef.class);
+  }
+
+  @Override
   @Nullable
   public PonyInfix getInfix() {
     return findChildByClass(PonyInfix.class);
@@ -37,12 +43,6 @@ public class PonyParamImpl extends ASTWrapperPsiElement implements PonyParam {
   @NotNull
   public PonyType getType() {
     return findNotNullChildByClass(PonyType.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getId() {
-    return findNotNullChildByType(ID);
   }
 
 }

@@ -29,14 +29,14 @@ public class PonyNamedargImpl extends ASTWrapperPsiElement implements PonyNameda
 
   @Override
   @NotNull
-  public PonyRawseq getRawseq() {
-    return findNotNullChildByClass(PonyRawseq.class);
+  public PonyIdRef getIdRef() {
+    return findNotNullChildByClass(PonyIdRef.class);
   }
 
   @Override
   @NotNull
-  public PsiElement getId() {
-    return findNotNullChildByType(ID);
+  public PonyRawseq getRawseq() {
+    return findNotNullChildByClass(PonyRawseq.class);
   }
 
 }

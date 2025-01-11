@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface PonyTildeId extends PsiElement {
 
   @NotNull
-  PsiElement getId();
+  PonyIdRef getIdRef();
 
 }

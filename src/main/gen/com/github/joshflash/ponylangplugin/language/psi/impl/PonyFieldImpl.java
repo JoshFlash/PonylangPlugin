@@ -34,6 +34,12 @@ public class PonyFieldImpl extends ASTWrapperPsiElement implements PonyField {
   }
 
   @Override
+  @NotNull
+  public PonyIdRef getIdRef() {
+    return findNotNullChildByClass(PonyIdRef.class);
+  }
+
+  @Override
   @Nullable
   public PonyInfix getInfix() {
     return findChildByClass(PonyInfix.class);
@@ -49,12 +55,6 @@ public class PonyFieldImpl extends ASTWrapperPsiElement implements PonyField {
   @Nullable
   public PsiElement getDocString() {
     return findChildByType(DOC_STRING);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getId() {
-    return findNotNullChildByType(ID);
   }
 
 }

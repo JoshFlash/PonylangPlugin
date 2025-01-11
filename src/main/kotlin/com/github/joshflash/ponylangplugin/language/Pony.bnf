@@ -153,7 +153,7 @@
 
 module ::= [doc_string] usestmt* class_def* ;
 
-usestmt ::= USE [id EQUALS] (string | use_ffi) [IF infix] ;
+usestmt ::= USE [id_ref EQUALS] (string | use_ffi) [IF infix] ;
 
 use_ffi ::= AT id_ffi typeargs LP [params] RP [QM] ;
 
@@ -169,11 +169,11 @@ declaration ::= (TYPEDEF | INTERFACE | TRAIT | PRIMITIVE | STRUCT | CLASS | ACTO
 
 members ::= field* method* ;
 
-field ::= binding id COLON type [EQUALS infix] [doc_string] ;
+field ::= binding id_ref COLON type [EQUALS infix] [doc_string] ;
 
 binding ::= (VAR | LET | EMBED) ;
 
-method ::= (FUN | BE | NEW) [annotatedids] [cap | AT] id [typeparams] LP [params] RP [COLON type] [QM] [ARROW] [doc_string] [rawseq] ;
+method ::= (FUN | BE | NEW) [annotatedids] [cap | AT] id_ref [typeparams] LP [params] RP [COLON type] [QM] [ARROW] [doc_string] [rawseq] ;
 
 annotatedrawseq ::= [annotatedids] (exprseq | jump) ;
 
@@ -303,11 +303,11 @@ postfixelem ::= dot_id | tilde_id | chain_id | dot_typeref | typeargs | call ;
 
 call ::= LP [positional] [named] RP [QM] ;
 
-chain_id ::= CHAIN id ;
+chain_id ::= CHAIN id_ref ;
 
-tilde_id ::= TILDE id ;
+tilde_id ::= TILDE id_ref ;
 
-dot_id ::= DOT (id | tuple_id) ;
+dot_id ::= DOT (id_ref | tuple_id) ;
 
 dot_typeref ::= DOT type_ref ;
 
@@ -340,8 +340,8 @@ particle ::=
   | literal
   | THIS
   | OBJECT [annotatedids] [cap] [IS type] members END
-  | LBC [annotatedids] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
-  | RCVR [annotatedids] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
+  | LBC [annotatedids] [cap] [id_ref] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
+  | RCVR [annotatedids] [cap] [id_ref] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
   | AT id_ffi [typeargs] LP [positional] [named] RP [QM]
   | SOURCELOC ;
 
@@ -369,7 +369,7 @@ positional ::= rawseq (COMMA rawseq)* ;
 
 named ::= WHERE namedarg (COMMA namedarg)* ;
 
-namedarg ::= id EQUALS rawseq ;
+namedarg ::= id_ref EQUALS rawseq ;
 
 type ::= atomtype [TYPE_ARROW type] ;
 
@@ -395,7 +395,7 @@ isecttype ::= AMP type ;
 
 uniontype ::= PIPE type ;
 
-nominal ::= [id DOT] type_ref [typeargs] [cap | gencap] [CARET | BANG] ;
+nominal ::= [id_ref DOT] type_ref [typeargs] [cap | gencap] [CARET | BANG] ;
 
 cap ::= ISO | REF | TRN | VAL | BOX | TAG ;
 
@@ -421,7 +421,7 @@ literal ::=
 
 stringliteral ::= string | doc_string ;
 
-param ::= id COLON type [EQUALS infix] ;
+param ::= id_ref COLON type [EQUALS infix] ;
 
 annotatedids ::= "\\" id (COMMA id)* "\\" ;
 
