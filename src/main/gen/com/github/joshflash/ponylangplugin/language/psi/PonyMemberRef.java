@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PonyNamedarg extends PsiElement {
+public interface PonyMemberRef extends PsiElement {
 
   @NotNull
-  PonyIdVar getIdVar();
-
-  @NotNull
-  PonyRawseq getRawseq();
+  PsiElement getId();
 
 }

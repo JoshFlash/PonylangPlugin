@@ -41,8 +41,8 @@ public class PonyMethodImpl extends ASTWrapperPsiElement implements PonyMethod {
 
   @Override
   @NotNull
-  public PonyIdRef getIdRef() {
-    return findNotNullChildByClass(PonyIdRef.class);
+  public PonyMemberRef getMemberRef() {
+    return findNotNullChildByClass(PonyMemberRef.class);
   }
 
   @Override

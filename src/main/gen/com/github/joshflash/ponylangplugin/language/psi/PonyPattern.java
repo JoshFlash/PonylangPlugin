@@ -11,7 +11,7 @@ public interface PonyPattern extends PsiElement {
   PonyBinding getBinding();
 
   @Nullable
-  PonyIdRef getIdRef();
+  PonyIdVar getIdVar();
 
   @Nullable
   PonyParampattern getParampattern();

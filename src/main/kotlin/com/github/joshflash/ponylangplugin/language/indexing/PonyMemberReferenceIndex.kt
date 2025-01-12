@@ -8,7 +8,7 @@ import com.intellij.util.io.KeyDescriptor
 import java.io.DataInput
 import java.io.DataOutput
 
-class PonyIdentifierReferenceIndex : FileBasedIndexExtension<String, String>() {
+class PonyMemberReferenceIndex : FileBasedIndexExtension<String, String>() {
 
     companion object {
         val INDEX_ID: ID<String, String> = ID.create("com.github.joshflash.ponylangplugin.idrefindex")
@@ -24,7 +24,7 @@ class PonyIdentifierReferenceIndex : FileBasedIndexExtension<String, String>() {
         return DefaultFileTypeSpecificInputFilter(PonyFileType.INSTANCE)
     }
 
-    override fun getIndexer(): DataIndexer<String, String, FileContent> = PonyIdRefDataIndexer()
+    override fun getIndexer(): DataIndexer<String, String, FileContent> = PonyMemberRefDataIndexer()
 
     override fun getKeyDescriptor(): KeyDescriptor<String> {
         return EnumeratorStringDescriptor.INSTANCE

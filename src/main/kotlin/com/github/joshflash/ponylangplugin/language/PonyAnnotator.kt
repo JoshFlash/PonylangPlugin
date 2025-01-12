@@ -10,7 +10,7 @@ class PonyAnnotator : Annotator {
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
         when (element) {
             is PonyTypeRef -> annotateTypeRef(element, holder)
-            is PonyIdRef -> annotateIdRef(element, holder)
+            is PonyIdVar -> annotateIdRef(element, holder)
         }
     }
 
@@ -23,8 +23,8 @@ class PonyAnnotator : Annotator {
         }
     }
 
-    private fun annotateIdRef(element: PonyIdRef, holder: AnnotationHolder) {
-        val resolved = PonyIdReference(element).resolve()
+    private fun annotateIdRef(element: PonyIdVar, holder: AnnotationHolder) {
+        val resolved = PonyMemberReference(element).resolve()
         if (resolved == null && element.id != null) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Cannot resolve reference to ${element.text}")
                 .range(element.id!!.textRange)

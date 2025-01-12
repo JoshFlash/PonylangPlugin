@@ -10,11 +10,11 @@ public interface PonyField extends PsiElement {
   @NotNull
   PonyBinding getBinding();
 
-  @NotNull
-  PonyIdRef getIdRef();
-
   @Nullable
   PonyInfix getInfix();
+
+  @NotNull
+  PonyMemberRef getMemberRef();
 
   @NotNull
   PonyType getType();

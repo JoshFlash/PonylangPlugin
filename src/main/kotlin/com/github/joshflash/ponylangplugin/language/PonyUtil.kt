@@ -1,5 +1,6 @@
 package com.github.joshflash.ponylangplugin.language
 
+import com.github.joshflash.ponylangplugin.language.indexing.PonyMemberReferenceIndex
 import com.github.joshflash.ponylangplugin.language.indexing.PonyTypeReferenceIndex
 import com.github.joshflash.ponylangplugin.language.psi.*
 import com.github.joshflash.ponylangplugin.services.PonylangProjectService
@@ -9,6 +10,7 @@ import com.intellij.psi.search.FileTypeIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.indexing.FileBasedIndex
+import com.intellij.util.indexing.ID
 import java.util.*
 
 object PonyUtil {
@@ -18,6 +20,9 @@ object PonyUtil {
     private val typeRefIndexId
         get() = PonyTypeReferenceIndex.INDEX_ID
 
+    private val memberRefIndexId
+        get() = PonyMemberReferenceIndex.INDEX_ID
+
     private fun Project.getStdLibIndex() =
         this.getService(PonylangProjectService::class.java).stdLibIndexStorage
 
@@ -25,14 +30,22 @@ object PonyUtil {
         GlobalSearchScope.allScope(this)
 
     private fun getPonySourceFileForType(typeId: String, project: Project): PonyFile? {
-        val vFilesWithKey = fileIndex.getContainingFiles(typeRefIndexId, typeId, project.globalScope())
+        return getPonySourceFileFromIndex(typeRefIndexId, typeId, project)
+    }
+
+    private fun ponySourceFileForMember(memberId: String, project: Project): PonyFile? {
+        return getPonySourceFileFromIndex(memberRefIndexId, memberId, project)
+    }
+
+    private fun getPonySourceFileFromIndex(index: ID<String, String>, id: String, project: Project): PonyFile? {
+        val vFilesWithKey = fileIndex.getContainingFiles(index, id, project.globalScope())
         val psiManager = PsiManager.getInstance(project)
         for (vFile in vFilesWithKey) {
             val ponyFile = psiManager.findFile(vFile) as? PonyFile ?: continue
             return ponyFile
         }
 
-        return project.getStdLibIndex().getValue(typeId)
+        return project.getStdLibIndex().getValue(id)
     }
 
     fun resolveTypeReference(typeId: String, project: Project): PonyTypeRef? {
@@ -47,7 +60,23 @@ object PonyUtil {
         return null
     }
 
-    fun resolveIdentifierReference(refId: String, ): PonyIdRef? {
+    fun resolveMemberReference(refId: String, project: Project): PonyMemberRef? {
+        val sourceFile = ponySourceFileForMember(refId, project) ?: return null
+
+        val methods = PsiTreeUtil.collectElementsOfType(sourceFile, PonyMethod::class.java)
+        for (method in methods) {
+            if (method.memberRef.id.text == refId) {
+                return method.memberRef
+            }
+        }
+
+        val fields = PsiTreeUtil.collectElementsOfType(sourceFile, PonyField::class.java)
+        for (field in fields) {
+            if (field.memberRef.id.text == refId) {
+                return field.memberRef
+            }
+        }
+
         return null
     }
 
@@ -85,7 +114,7 @@ object PonyUtil {
 
     fun findFieldsInProject(project: Project): List<PonyField> {
         return findInProject<PonyField>(project)
-            .filterNot { it.idRef.text.startsWith('_') }
+            .filterNot { it.memberRef.text.startsWith('_') }
     }
 
     fun findFieldsInDirectory(
@@ -93,7 +122,7 @@ object PonyUtil {
         includeSubdirectories: Boolean = false
     ) : List<PonyField> {
         return findInDirectory<PonyField>(directory, includeSubdirectories)
-            .filterNot { it.idRef.text.startsWith('_') }
+            .filterNot { it.memberRef.text.startsWith('_') }
     }
 
     fun findFieldsInFile(file: PsiFile) : List<PonyField> {

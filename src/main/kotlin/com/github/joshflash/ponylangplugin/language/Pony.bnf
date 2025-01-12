@@ -153,7 +153,7 @@
 
 module ::= [doc_string] usestmt* class_def* ;
 
-usestmt ::= USE [id_ref EQUALS] (string | use_ffi) [IF infix] ;
+usestmt ::= USE [id EQUALS] (string | use_ffi) [IF infix] ;
 
 use_ffi ::= AT id_ffi typeargs LP [params] RP [QM] ;
 
@@ -161,19 +161,21 @@ class_def ::= declaration [annotatedids] [AT] [cap] type_ref [typeparams] [IS ty
 
 type_ref ::= type_id ;
 
-id_ref ::= id | SCORE ;
+member_ref ::= id ;
 
 id_ffi ::= SCORE* (id | type_id | string) ;
+
+id_var ::= id | type_id | SCORE ;
 
 declaration ::= (TYPEDEF | INTERFACE | TRAIT | PRIMITIVE | STRUCT | CLASS | ACTOR) ;
 
 members ::= field* method* ;
 
-field ::= binding id_ref COLON type [EQUALS infix] [doc_string] ;
+field ::= binding member_ref COLON type [EQUALS infix] [doc_string] ;
 
 binding ::= (VAR | LET | EMBED) ;
 
-method ::= (FUN | BE | NEW) [annotatedids] [cap | AT] id_ref [typeparams] LP [params] RP [COLON type] [QM] [ARROW] [doc_string] [rawseq] ;
+method ::= (FUN | BE | NEW) [annotatedids] [cap | AT] member_ref [typeparams] LP [params] RP [COLON type] [QM] [ARROW] [doc_string] [rawseq] ;
 
 annotatedrawseq ::= [annotatedids] (exprseq | jump) ;
 
@@ -262,23 +264,23 @@ elif ::=
     ELSEIF [annotatedids] rawseq THEN rawseq [elif | (ELSE annotatedrawseq)] ;
 
 idseq ::=
-    id_ref
+    id_var
   | LP idseq_in_seq (COMMA idseq_in_seq)* RP ;
 
 idseq_in_seq ::=
-    id_ref
+    id_var
   | LP idseq_in_seq (COMMA idseq_in_seq)* RP ;
 
 nextpattern ::=
-    binding id_ref [COLON type]
+    binding id_var [COLON type]
   | nextparampattern ;
 
 casepattern ::=
-    binding id_ref [COLON type]
+    binding id_var [COLON type]
   | caseparampattern ;
 
 pattern ::=
-    binding id_ref [COLON type]
+    binding id_var [COLON type]
   | parampattern ;
 
 nextparampattern ::=
@@ -303,11 +305,11 @@ postfixelem ::= dot_id | tilde_id | chain_id | dot_typeref | typeargs | call ;
 
 call ::= LP [positional] [named] RP [QM] ;
 
-chain_id ::= CHAIN id_ref ;
+chain_id ::= CHAIN member_ref ;
 
-tilde_id ::= TILDE id_ref ;
+tilde_id ::= TILDE member_ref ;
 
-dot_id ::= DOT (id_ref | tuple_id) ;
+dot_id ::= DOT (member_ref | tuple_id) ;
 
 dot_typeref ::= DOT type_ref ;
 
@@ -335,13 +337,13 @@ atom ::=
   | LBK [AS type COLON] [rawseq] RBK ;
 
 particle ::=
-    id_ref
+    id_var
   | type_ref
   | literal
   | THIS
   | OBJECT [annotatedids] [cap] [IS type] members END
-  | LBC [annotatedids] [cap] [id_ref] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
-  | RCVR [annotatedids] [cap] [id_ref] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
+  | LBC [annotatedids] [cap] [id_var] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
+  | RCVR [annotatedids] [cap] [id_var] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
   | AT id_ffi [typeargs] LP [positional] [named] RP [QM]
   | SOURCELOC ;
 
@@ -359,17 +361,17 @@ tuple ::= COMMA rawseq (COMMA rawseq)* ;
 
 lambdacaptures ::= LP (lambdacapture | THIS) (COMMA (lambdacapture | THIS))* RP ;
 
-lambdacapture ::= id_ref [COLON type] [EQUALS infix] ;
+lambdacapture ::= id_var [COLON type] [EQUALS infix] ;
 
 lambdaparams ::= lambdaparam (COMMA lambdaparam)* ;
 
-lambdaparam ::= id_ref [COLON type] [EQUALS infix] ;
+lambdaparam ::= id_var [COLON type] [EQUALS infix] ;
 
 positional ::= rawseq (COMMA rawseq)* ;
 
 named ::= WHERE namedarg (COMMA namedarg)* ;
 
-namedarg ::= id_ref EQUALS rawseq ;
+namedarg ::= id_var EQUALS rawseq ;
 
 type ::= atomtype [TYPE_ARROW type] ;
 
@@ -382,10 +384,10 @@ atomtype ::=
   | barelambdatype ;
 
 barelambdatype ::=
-    RCVR [cap] [id_ref] [typeparams] LP [type (COMMA type)*] RP [COLON type] [QM] RBC [cap | gencap] [CARET | BANG] ;
+    RCVR [cap] [id_var] [typeparams] LP [type (COMMA type)*] RP [COLON type] [QM] RBC [cap | gencap] [CARET | BANG] ;
 
 lambdatype ::=
-    LBC [cap] [id_ref] [typeparams] LP [type (COMMA type)*] RP [COLON type] [QM] RBC [cap | gencap] [CARET | BANG] ;
+    LBC [cap] [id_var] [typeparams] LP [type (COMMA type)*] RP [COLON type] [QM] RBC [cap | gencap] [CARET | BANG] ;
 
 tupletype ::= COMMA infixtype (COMMA infixtype)* ;
 
@@ -395,7 +397,7 @@ isecttype ::= AMP type ;
 
 uniontype ::= PIPE type ;
 
-nominal ::= [id_ref DOT] type_ref [typeargs] [cap | gencap] [CARET | BANG] ;
+nominal ::= [id_var DOT] type_ref [typeargs] [cap | gencap] [CARET | BANG] ;
 
 cap ::= ISO | REF | TRN | VAL | BOX | TAG ;
 
@@ -421,7 +423,7 @@ literal ::=
 
 stringliteral ::= string | doc_string ;
 
-param ::= id_ref COLON type [EQUALS infix] ;
+param ::= id_var COLON type [EQUALS infix] ;
 
 annotatedids ::= "\\" id (COMMA id)* "\\" ;
 

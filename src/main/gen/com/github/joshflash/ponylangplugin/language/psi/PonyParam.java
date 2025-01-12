@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface PonyParam extends PsiElement {
 
   @NotNull
-  PonyIdRef getIdRef();
+  PonyIdVar getIdVar();
 
   @Nullable
   PonyInfix getInfix();

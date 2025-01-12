@@ -11,7 +11,7 @@ public interface PonyBarelambdatype extends PsiElement {
   List<PonyCap> getCapList();
 
   @Nullable
-  PonyIdRef getIdRef();
+  PonyIdVar getIdVar();
 
   @NotNull
   List<PonyType> getTypeList();

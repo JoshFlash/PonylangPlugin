@@ -6,7 +6,9 @@ import com.intellij.openapi.project.Project
 import com.github.joshflash.ponylangplugin.PonylangPluginBundle
 import com.github.joshflash.ponylangplugin.language.PonyLanguage
 import com.github.joshflash.ponylangplugin.language.psi.PonyClassDef
+import com.github.joshflash.ponylangplugin.language.psi.PonyField
 import com.github.joshflash.ponylangplugin.language.psi.PonyFile
+import com.github.joshflash.ponylangplugin.language.psi.PonyMethod
 import com.github.joshflash.ponylangplugin.listeners.PonylangStartupActivity
 import com.github.joshflash.ponylangplugin.ponysourcelist.PonyFileList
 import com.github.joshflash.ponylangplugin.util.VirtualIndexStorage
@@ -45,6 +47,14 @@ class PonylangProjectService(project: Project) {
             val classDefs = PsiTreeUtil.collectElementsOfType(ponyFile, PonyClassDef::class.java)
             for (classDef in classDefs) {
                 stdLibIndexStorage.addValue(classDef.typeRef.typeId.text, ponyFile)
+            }
+            val methods = PsiTreeUtil.collectElementsOfType(ponyFile, PonyMethod::class.java)
+            for (method in methods) {
+                stdLibIndexStorage.addValue(method.memberRef.id.text, ponyFile)
+            }
+            val fields = PsiTreeUtil.collectElementsOfType(ponyFile, PonyField::class.java)
+            for (field in fields) {
+                stdLibIndexStorage.addValue(field.memberRef.id.text, ponyFile)
             }
         }
     }

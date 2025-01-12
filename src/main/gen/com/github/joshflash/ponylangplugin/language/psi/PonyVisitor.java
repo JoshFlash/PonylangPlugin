@@ -127,7 +127,7 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitIdRef(@NotNull PonyIdRef o) {
+  public void visitIdVar(@NotNull PonyIdVar o) {
     visitPsiElement(o);
   }
 
@@ -196,6 +196,10 @@ public class PonyVisitor extends PsiElementVisitor {
   }
 
   public void visitMatchblock(@NotNull PonyMatchblock o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMemberRef(@NotNull PonyMemberRef o) {
     visitPsiElement(o);
   }
 

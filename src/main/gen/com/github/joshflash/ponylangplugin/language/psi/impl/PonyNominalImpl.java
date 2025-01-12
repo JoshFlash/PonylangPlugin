@@ -35,8 +35,8 @@ public class PonyNominalImpl extends ASTWrapperPsiElement implements PonyNominal
 
   @Override
   @Nullable
-  public PonyIdRef getIdRef() {
-    return findChildByClass(PonyIdRef.class);
+  public PonyIdVar getIdVar() {
+    return findChildByClass(PonyIdVar.class);
   }
 
   @Override

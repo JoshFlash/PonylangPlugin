@@ -47,8 +47,8 @@ public class PonyParticleImpl extends ASTWrapperPsiElement implements PonyPartic
 
   @Override
   @Nullable
-  public PonyIdRef getIdRef() {
-    return findChildByClass(PonyIdRef.class);
+  public PonyIdVar getIdVar() {
+    return findChildByClass(PonyIdVar.class);
   }
 
   @Override

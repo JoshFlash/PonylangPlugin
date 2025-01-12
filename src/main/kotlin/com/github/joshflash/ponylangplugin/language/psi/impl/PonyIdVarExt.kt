@@ -1,14 +1,14 @@
 package com.github.joshflash.ponylangplugin.language.psi.impl
 
-import com.github.joshflash.ponylangplugin.language.PonyIdReference
+import com.github.joshflash.ponylangplugin.language.PonyMemberReference
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiNameIdentifierOwner
 import com.intellij.psi.PsiReference
 
 
-class PonyIdRefExt(node: ASTNode): PonyIdRefImpl(node), PsiNameIdentifierOwner  {
-    override fun getReference(): PsiReference = PonyIdReference(this)
+class PonyIdVarExt(node: ASTNode): PonyIdVarImpl(node), PsiNameIdentifierOwner  {
+    override fun getReference(): PsiReference = PonyMemberReference(this)
 
     override fun setName(name: String): PsiElement {
         val newIdNode = PonyElements.Factory.createId(project, name)?.node ?: return this

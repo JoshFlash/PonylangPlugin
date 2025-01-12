@@ -29,8 +29,8 @@ public class PonyIdseqInSeqImpl extends ASTWrapperPsiElement implements PonyIdse
 
   @Override
   @Nullable
-  public PonyIdRef getIdRef() {
-    return findChildByClass(PonyIdRef.class);
+  public PonyIdVar getIdVar() {
+    return findChildByClass(PonyIdVar.class);
   }
 
   @Override

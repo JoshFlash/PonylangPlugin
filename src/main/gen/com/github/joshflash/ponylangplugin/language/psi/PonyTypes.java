@@ -40,7 +40,7 @@ public interface PonyTypes {
   IElementType IDSEQ = new PonyElementType("IDSEQ");
   IElementType IDSEQ_IN_SEQ = new PonyElementType("IDSEQ_IN_SEQ");
   IElementType ID_FFI = new PonyElementType("ID_FFI");
-  IElementType ID_REF = new PonyElementType("ID_REF");
+  IElementType ID_VAR = new PonyElementType("ID_VAR");
   IElementType IFBLOCK = new PonyElementType("IFBLOCK");
   IElementType INFIX = new PonyElementType("INFIX");
   IElementType INFIXOP = new PonyElementType("INFIXOP");
@@ -57,6 +57,7 @@ public interface PonyTypes {
   IElementType LITERAL = new PonyElementType("LITERAL");
   IElementType MATCHBLOCK = new PonyElementType("MATCHBLOCK");
   IElementType MEMBERS = new PonyElementType("MEMBERS");
+  IElementType MEMBER_REF = new PonyElementType("MEMBER_REF");
   IElementType METHOD = new PonyElementType("METHOD");
   IElementType NAMED = new PonyElementType("NAMED");
   IElementType NAMEDARG = new PonyElementType("NAMEDARG");
@@ -332,8 +333,8 @@ public interface PonyTypes {
       else if (type == ID_FFI) {
         return new PonyIdFfiImpl(node);
       }
-      else if (type == ID_REF) {
-        return new PonyIdRefImpl(node);
+      else if (type == ID_VAR) {
+        return new PonyIdVarImpl(node);
       }
       else if (type == IFBLOCK) {
         return new PonyIfblockImpl(node);
@@ -382,6 +383,9 @@ public interface PonyTypes {
       }
       else if (type == MEMBERS) {
         return new PonyMembersImpl(node);
+      }
+      else if (type == MEMBER_REF) {
+        return new PonyMemberRefImpl(node);
       }
       else if (type == METHOD) {
         return new PonyMethodImpl(node);

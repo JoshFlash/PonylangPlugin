@@ -34,15 +34,15 @@ public class PonyFieldImpl extends ASTWrapperPsiElement implements PonyField {
   }
 
   @Override
-  @NotNull
-  public PonyIdRef getIdRef() {
-    return findNotNullChildByClass(PonyIdRef.class);
-  }
-
-  @Override
   @Nullable
   public PonyInfix getInfix() {
     return findChildByClass(PonyInfix.class);
+  }
+
+  @Override
+  @NotNull
+  public PonyMemberRef getMemberRef() {
+    return findNotNullChildByClass(PonyMemberRef.class);
   }
 
   @Override

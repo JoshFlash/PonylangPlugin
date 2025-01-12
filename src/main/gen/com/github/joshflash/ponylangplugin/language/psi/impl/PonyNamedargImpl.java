@@ -29,8 +29,8 @@ public class PonyNamedargImpl extends ASTWrapperPsiElement implements PonyNameda
 
   @Override
   @NotNull
-  public PonyIdRef getIdRef() {
-    return findNotNullChildByClass(PonyIdRef.class);
+  public PonyIdVar getIdVar() {
+    return findNotNullChildByClass(PonyIdVar.class);
   }
 
   @Override

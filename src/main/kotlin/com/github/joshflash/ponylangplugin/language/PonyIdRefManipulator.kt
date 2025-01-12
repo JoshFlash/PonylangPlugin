@@ -1,11 +1,11 @@
 package com.github.joshflash.ponylangplugin.language
 
-import com.github.joshflash.ponylangplugin.language.psi.impl.PonyIdRefExt
+import com.github.joshflash.ponylangplugin.language.psi.impl.PonyIdVarExt
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.AbstractElementManipulator
 
-class PonyIdRefManipulator : AbstractElementManipulator<PonyIdRefExt>() {
-    override fun handleContentChange(element: PonyIdRefExt, range: TextRange, newContent: String): PonyIdRefExt {
+class PonyIdRefManipulator : AbstractElementManipulator<PonyIdVarExt>() {
+    override fun handleContentChange(element: PonyIdVarExt, range: TextRange, newContent: String): PonyIdVarExt {
         val oldText = element.text
         val updatedText = (oldText.substring(0, range.getStartOffset())
                 + newContent
@@ -14,7 +14,7 @@ class PonyIdRefManipulator : AbstractElementManipulator<PonyIdRefExt>() {
         return element
     }
 
-    override fun getRangeInElement(element: PonyIdRefExt): TextRange {
+    override fun getRangeInElement(element: PonyIdVarExt): TextRange {
         return TextRange.from(0, element.textLength)
     }
 }

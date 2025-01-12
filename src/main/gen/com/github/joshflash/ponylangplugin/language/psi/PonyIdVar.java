@@ -5,9 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PonyIdRef extends PsiElement {
+public interface PonyIdVar extends PsiElement {
 
   @Nullable
   PsiElement getId();
+
+  @Nullable
+  PsiElement getTypeId();
 
 }

@@ -29,8 +29,8 @@ public class PonyLambdacaptureImpl extends ASTWrapperPsiElement implements PonyL
 
   @Override
   @NotNull
-  public PonyIdRef getIdRef() {
-    return findNotNullChildByClass(PonyIdRef.class);
+  public PonyIdVar getIdVar() {
+    return findNotNullChildByClass(PonyIdVar.class);
   }
 
   @Override

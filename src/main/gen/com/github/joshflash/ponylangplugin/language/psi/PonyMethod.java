@@ -14,7 +14,7 @@ public interface PonyMethod extends PsiElement {
   PonyCap getCap();
 
   @NotNull
-  PonyIdRef getIdRef();
+  PonyMemberRef getMemberRef();
 
   @Nullable
   PonyParams getParams();
