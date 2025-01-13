@@ -29,8 +29,8 @@ public class PonyCasepostfixImpl extends ASTWrapperPsiElement implements PonyCas
 
   @Override
   @NotNull
-  public PonyCaseatom getCaseatom() {
-    return findNotNullChildByClass(PonyCaseatom.class);
+  public PonyAtom getAtom() {
+    return findNotNullChildByClass(PonyAtom.class);
   }
 
   @Override

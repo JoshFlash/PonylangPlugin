@@ -35,12 +35,6 @@ public class PonyAtomImpl extends ASTWrapperPsiElement implements PonyAtom {
 
   @Override
   @Nullable
-  public PonyIfblock getIfblock() {
-    return findChildByClass(PonyIfblock.class);
-  }
-
-  @Override
-  @Nullable
   public PonyParticle getParticle() {
     return findChildByClass(PonyParticle.class);
   }

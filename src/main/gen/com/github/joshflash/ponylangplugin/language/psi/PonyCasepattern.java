@@ -14,7 +14,7 @@ public interface PonyCasepattern extends PsiElement {
   PonyCaseparampattern getCaseparampattern();
 
   @Nullable
-  PonyIdVar getIdVar();
+  PonyPatternRef getPatternRef();
 
   @Nullable
   PonyType getType();

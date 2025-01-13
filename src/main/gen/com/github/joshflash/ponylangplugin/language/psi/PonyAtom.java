@@ -11,9 +11,6 @@ public interface PonyAtom extends PsiElement {
   PonyForloop getForloop();
 
   @Nullable
-  PonyIfblock getIfblock();
-
-  @Nullable
   PonyParticle getParticle();
 
   @Nullable

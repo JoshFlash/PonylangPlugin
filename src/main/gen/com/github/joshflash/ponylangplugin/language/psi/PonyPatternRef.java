@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PonyNextinfix extends PsiElement {
+public interface PonyPatternRef extends PsiElement {
 
   @NotNull
-  List<PonyInfixop> getInfixopList();
-
-  @NotNull
-  PonyNextterm getNextterm();
+  PsiElement getId();
 
 }

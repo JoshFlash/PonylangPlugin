@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface PonyCasepostfix extends PsiElement {
 
   @NotNull
-  PonyCaseatom getCaseatom();
+  PonyAtom getAtom();
 
   @NotNull
   List<PonyPostfixelem> getPostfixelemList();

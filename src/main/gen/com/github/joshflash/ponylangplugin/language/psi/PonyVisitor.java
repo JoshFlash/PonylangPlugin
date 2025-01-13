@@ -47,10 +47,6 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitCaseatom(@NotNull PonyCaseatom o) {
-    visitPsiElement(o);
-  }
-
   public void visitCaseexpr(@NotNull PonyCaseexpr o) {
     visitPsiElement(o);
   }
@@ -219,35 +215,7 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitNextassignment(@NotNull PonyNextassignment o) {
-    visitPsiElement(o);
-  }
-
-  public void visitNextatom(@NotNull PonyNextatom o) {
-    visitPsiElement(o);
-  }
-
   public void visitNextexprseq(@NotNull PonyNextexprseq o) {
-    visitPsiElement(o);
-  }
-
-  public void visitNextinfix(@NotNull PonyNextinfix o) {
-    visitPsiElement(o);
-  }
-
-  public void visitNextparampattern(@NotNull PonyNextparampattern o) {
-    visitPsiElement(o);
-  }
-
-  public void visitNextpattern(@NotNull PonyNextpattern o) {
-    visitPsiElement(o);
-  }
-
-  public void visitNextpostfix(@NotNull PonyNextpostfix o) {
-    visitPsiElement(o);
-  }
-
-  public void visitNextterm(@NotNull PonyNextterm o) {
     visitPsiElement(o);
   }
 
@@ -264,6 +232,10 @@ public class PonyVisitor extends PsiElementVisitor {
   }
 
   public void visitParam(@NotNull PonyParam o) {
+    visitPsiElement(o);
+  }
+
+  public void visitParamRef(@NotNull PonyParamRef o) {
     visitPsiElement(o);
   }
 
@@ -284,6 +256,10 @@ public class PonyVisitor extends PsiElementVisitor {
   }
 
   public void visitPattern(@NotNull PonyPattern o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPatternRef(@NotNull PonyPatternRef o) {
     visitPsiElement(o);
   }
 

@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PonyNextassignment extends PsiElement {
-
-  @Nullable
-  PonyAssignment getAssignment();
+public interface PonyParamRef extends PsiElement {
 
   @NotNull
-  PonyNextinfix getNextinfix();
+  PsiElement getId();
 
 }

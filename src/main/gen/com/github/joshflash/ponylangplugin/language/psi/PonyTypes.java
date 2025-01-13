@@ -18,7 +18,6 @@ public interface PonyTypes {
   IElementType BINOP = new PonyElementType("BINOP");
   IElementType CALL = new PonyElementType("CALL");
   IElementType CAP = new PonyElementType("CAP");
-  IElementType CASEATOM = new PonyElementType("CASEATOM");
   IElementType CASEEXPR = new PonyElementType("CASEEXPR");
   IElementType CASEPARAMPATTERN = new PonyElementType("CASEPARAMPATTERN");
   IElementType CASEPATTERN = new PonyElementType("CASEPATTERN");
@@ -61,23 +60,18 @@ public interface PonyTypes {
   IElementType METHOD = new PonyElementType("METHOD");
   IElementType NAMED = new PonyElementType("NAMED");
   IElementType NAMEDARG = new PonyElementType("NAMEDARG");
-  IElementType NEXTASSIGNMENT = new PonyElementType("NEXTASSIGNMENT");
-  IElementType NEXTATOM = new PonyElementType("NEXTATOM");
   IElementType NEXTEXPRSEQ = new PonyElementType("NEXTEXPRSEQ");
-  IElementType NEXTINFIX = new PonyElementType("NEXTINFIX");
-  IElementType NEXTPARAMPATTERN = new PonyElementType("NEXTPARAMPATTERN");
-  IElementType NEXTPATTERN = new PonyElementType("NEXTPATTERN");
-  IElementType NEXTPOSTFIX = new PonyElementType("NEXTPOSTFIX");
-  IElementType NEXTTERM = new PonyElementType("NEXTTERM");
   IElementType NOMINAL = new PonyElementType("NOMINAL");
   IElementType NOSEMI = new PonyElementType("NOSEMI");
   IElementType NUMBER = new PonyElementType("NUMBER");
   IElementType PARAM = new PonyElementType("PARAM");
   IElementType PARAMPATTERN = new PonyElementType("PARAMPATTERN");
   IElementType PARAMS = new PonyElementType("PARAMS");
+  IElementType PARAM_REF = new PonyElementType("PARAM_REF");
   IElementType PARTIALOP = new PonyElementType("PARTIALOP");
   IElementType PARTICLE = new PonyElementType("PARTICLE");
   IElementType PATTERN = new PonyElementType("PATTERN");
+  IElementType PATTERN_REF = new PonyElementType("PATTERN_REF");
   IElementType POSITIONAL = new PonyElementType("POSITIONAL");
   IElementType POSTFIX = new PonyElementType("POSTFIX");
   IElementType POSTFIXELEM = new PonyElementType("POSTFIXELEM");
@@ -267,9 +261,6 @@ public interface PonyTypes {
       else if (type == CAP) {
         return new PonyCapImpl(node);
       }
-      else if (type == CASEATOM) {
-        return new PonyCaseatomImpl(node);
-      }
       else if (type == CASEEXPR) {
         return new PonyCaseexprImpl(node);
       }
@@ -396,29 +387,8 @@ public interface PonyTypes {
       else if (type == NAMEDARG) {
         return new PonyNamedargImpl(node);
       }
-      else if (type == NEXTASSIGNMENT) {
-        return new PonyNextassignmentImpl(node);
-      }
-      else if (type == NEXTATOM) {
-        return new PonyNextatomImpl(node);
-      }
       else if (type == NEXTEXPRSEQ) {
         return new PonyNextexprseqImpl(node);
-      }
-      else if (type == NEXTINFIX) {
-        return new PonyNextinfixImpl(node);
-      }
-      else if (type == NEXTPARAMPATTERN) {
-        return new PonyNextparampatternImpl(node);
-      }
-      else if (type == NEXTPATTERN) {
-        return new PonyNextpatternImpl(node);
-      }
-      else if (type == NEXTPOSTFIX) {
-        return new PonyNextpostfixImpl(node);
-      }
-      else if (type == NEXTTERM) {
-        return new PonyNexttermImpl(node);
       }
       else if (type == NOMINAL) {
         return new PonyNominalImpl(node);
@@ -438,6 +408,9 @@ public interface PonyTypes {
       else if (type == PARAMS) {
         return new PonyParamsImpl(node);
       }
+      else if (type == PARAM_REF) {
+        return new PonyParamRefImpl(node);
+      }
       else if (type == PARTIALOP) {
         return new PonyPartialopImpl(node);
       }
@@ -446,6 +419,9 @@ public interface PonyTypes {
       }
       else if (type == PATTERN) {
         return new PonyPatternImpl(node);
+      }
+      else if (type == PATTERN_REF) {
+        return new PonyPatternRefImpl(node);
       }
       else if (type == POSITIONAL) {
         return new PonyPositionalImpl(node);

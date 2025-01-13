@@ -7,11 +7,11 @@ import com.intellij.psi.PsiElement;
 
 public interface PonyParam extends PsiElement {
 
-  @NotNull
-  PonyIdVar getIdVar();
-
   @Nullable
   PonyInfix getInfix();
+
+  @NotNull
+  PonyParamRef getParamRef();
 
   @NotNull
   PonyType getType();

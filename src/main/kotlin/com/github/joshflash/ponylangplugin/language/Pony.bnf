@@ -185,17 +185,13 @@ exprseq ::= assignment [semiexpr | nosemi] ;
 
 nosemi ::= jump | nextexprseq ;
 
-nextexprseq ::= nextassignment [semiexpr | nosemi] ;
+nextexprseq ::= assignment [semiexpr | nosemi] ;
 
 semiexpr ::= SEMI (exprseq | jump) ;
 
 jump ::= (RETURN | BREAK | CONTINUE | ERROR | COMP_INT | COMP_ERR) [rawseq] ;
 
-nextassignment ::= nextinfix [EQUALS assignment] ;
-
 assignment ::= infix [EQUALS assignment] ;
-
-nextinfix ::= nextterm infixop*;
 
 infix ::= term infixop* ;
 
@@ -221,10 +217,6 @@ partialop ::=
 
 binop ::=
    (safeop | unsafeop | partialop) [QM] term ;
-
-nextterm ::=
-    construct
-  | nextpattern ;
 
 term ::=
     construct
@@ -271,21 +263,15 @@ idseq_in_seq ::=
     id_var
   | LP idseq_in_seq (COMMA idseq_in_seq)* RP ;
 
-nextpattern ::=
-    binding id_var [COLON type]
-  | nextparampattern ;
-
 casepattern ::=
-    binding id_var [COLON type]
+    binding pattern_ref [COLON type]
   | caseparampattern ;
 
 pattern ::=
-    binding id_var [COLON type]
+    binding pattern_ref [COLON type]
   | parampattern ;
 
-nextparampattern ::=
-    (NOT | ADDRESSOF | SUB | SUB_UNSAFE | DIGESTOF) parampattern
-  | nextpostfix ;
+pattern_ref ::= id ;
 
 caseparampattern ::=
     (NOT | ADDRESSOF | SUB | SUB_UNSAFE | DIGESTOF) caseparampattern
@@ -295,11 +281,9 @@ parampattern ::=
     (NOT | ADDRESSOF | SUB | SUB_UNSAFE | DIGESTOF) parampattern
   | postfix ;
 
-nextpostfix ::= nextatom postfixelem* ;
+casepostfix ::= atom postfixelem* ;
 
-casepostfix ::= caseatom postfixelem* ;
-
-postfix ::= atom postfixelem* ;
+postfix ::= (atom | ifblock) postfixelem* ;
 
 postfixelem ::= dot_id | tilde_id | chain_id | dot_typeref | typeargs | call ;
 
@@ -313,24 +297,8 @@ dot_id ::= DOT (member_ref | tuple_id) ;
 
 dot_typeref ::= DOT type_ref ;
 
-nextatom ::=
-    particle
-  | ifblock
-  | whileloop
-  | forloop
-  | LP rawseq [tuple] RP
-  | LBK [AS type COLON] [rawseq] RBK ;
-
-caseatom ::=
-    particle
-  | whileloop
-  | forloop
-  | LP rawseq [tuple] RP
-  | LBK [AS type COLON] [rawseq] RBK ;
-
 atom ::=
     particle
-  | ifblock
   | whileloop
   | forloop
   | LP rawseq [tuple] RP
@@ -423,7 +391,9 @@ literal ::=
 
 stringliteral ::= string | doc_string ;
 
-param ::= id_var COLON type [EQUALS infix] ;
+param ::= param_ref COLON type [EQUALS infix] ;
+
+param_ref ::= id ;
 
 annotatedids ::= "\\" id (COMMA id)* "\\" ;
 

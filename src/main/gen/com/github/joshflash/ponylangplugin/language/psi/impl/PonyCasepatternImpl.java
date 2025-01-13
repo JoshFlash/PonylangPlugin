@@ -41,8 +41,8 @@ public class PonyCasepatternImpl extends ASTWrapperPsiElement implements PonyCas
 
   @Override
   @Nullable
-  public PonyIdVar getIdVar() {
-    return findChildByClass(PonyIdVar.class);
+  public PonyPatternRef getPatternRef() {
+    return findChildByClass(PonyPatternRef.class);
   }
 
   @Override

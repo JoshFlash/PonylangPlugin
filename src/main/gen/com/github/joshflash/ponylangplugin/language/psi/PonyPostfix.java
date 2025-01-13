@@ -7,8 +7,11 @@ import com.intellij.psi.PsiElement;
 
 public interface PonyPostfix extends PsiElement {
 
-  @NotNull
+  @Nullable
   PonyAtom getAtom();
+
+  @Nullable
+  PonyIfblock getIfblock();
 
   @NotNull
   List<PonyPostfixelem> getPostfixelemList();
