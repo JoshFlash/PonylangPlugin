@@ -28,15 +28,15 @@ public class PonyIdseqImpl extends ASTWrapperPsiElement implements PonyIdseq {
   }
 
   @Override
-  @Nullable
-  public PonyIdVar getIdVar() {
-    return findChildByClass(PonyIdVar.class);
-  }
-
-  @Override
   @NotNull
   public List<PonyIdseqInSeq> getIdseqInSeqList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyIdseqInSeq.class);
+  }
+
+  @Override
+  @Nullable
+  public PonyPatternRef getPatternRef() {
+    return findChildByClass(PonyPatternRef.class);
   }
 
 }

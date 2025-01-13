@@ -29,14 +29,8 @@ public class PonyParticleImpl extends ASTWrapperPsiElement implements PonyPartic
 
   @Override
   @Nullable
-  public PonyAnnotatedids getAnnotatedids() {
-    return findChildByClass(PonyAnnotatedids.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyCap getCap() {
-    return findChildByClass(PonyCap.class);
+  public PonyFunDef getFunDef() {
+    return findChildByClass(PonyFunDef.class);
   }
 
   @Override
@@ -53,26 +47,8 @@ public class PonyParticleImpl extends ASTWrapperPsiElement implements PonyPartic
 
   @Override
   @Nullable
-  public PonyLambdacaptures getLambdacaptures() {
-    return findChildByClass(PonyLambdacaptures.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyLambdaparams getLambdaparams() {
-    return findChildByClass(PonyLambdaparams.class);
-  }
-
-  @Override
-  @Nullable
   public PonyLiteral getLiteral() {
     return findChildByClass(PonyLiteral.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyMembers getMembers() {
-    return findChildByClass(PonyMembers.class);
   }
 
   @Override
@@ -83,20 +59,20 @@ public class PonyParticleImpl extends ASTWrapperPsiElement implements PonyPartic
 
   @Override
   @Nullable
+  public PonyObjectDef getObjectDef() {
+    return findChildByClass(PonyObjectDef.class);
+  }
+
+  @Override
+  @Nullable
   public PonyPositional getPositional() {
     return findChildByClass(PonyPositional.class);
   }
 
   @Override
   @Nullable
-  public PonyRawseq getRawseq() {
-    return findChildByClass(PonyRawseq.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyType getType() {
-    return findChildByClass(PonyType.class);
+  public PonyRecoverDef getRecoverDef() {
+    return findChildByClass(PonyRecoverDef.class);
   }
 
   @Override
@@ -109,12 +85,6 @@ public class PonyParticleImpl extends ASTWrapperPsiElement implements PonyPartic
   @Nullable
   public PonyTypeargs getTypeargs() {
     return findChildByClass(PonyTypeargs.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyTypeparams getTypeparams() {
-    return findChildByClass(PonyTypeparams.class);
   }
 
 }

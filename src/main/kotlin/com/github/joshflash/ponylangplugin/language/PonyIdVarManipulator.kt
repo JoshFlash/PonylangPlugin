@@ -4,12 +4,12 @@ import com.github.joshflash.ponylangplugin.language.psi.impl.PonyIdVarExt
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.AbstractElementManipulator
 
-class PonyIdRefManipulator : AbstractElementManipulator<PonyIdVarExt>() {
+class PonyIdVarManipulator : AbstractElementManipulator<PonyIdVarExt>() {
     override fun handleContentChange(element: PonyIdVarExt, range: TextRange, newContent: String): PonyIdVarExt {
         val oldText = element.text
-        val updatedText = (oldText.substring(0, range.getStartOffset())
+        val updatedText = (oldText.substring(0, range.startOffset)
                 + newContent
-                + oldText.substring(range.getEndOffset()))
+                + oldText.substring(range.endOffset))
         element.setName(updatedText)
         return element
     }

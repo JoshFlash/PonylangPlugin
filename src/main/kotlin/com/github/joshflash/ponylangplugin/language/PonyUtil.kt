@@ -60,24 +60,18 @@ object PonyUtil {
         return null
     }
 
-    fun resolveMemberReference(refId: String, project: Project): PonyMemberRef? {
+    fun resolveMethodReference(refId: String, project: Project): PonyMemberRef? {
         val sourceFile = ponySourceFileForMember(refId, project) ?: return null
-
         val methods = PsiTreeUtil.collectElementsOfType(sourceFile, PonyMethod::class.java)
-        for (method in methods) {
-            if (method.memberRef.id.text == refId) {
-                return method.memberRef
-            }
-        }
 
+        return methods.firstOrNull { it.memberRef.id.text == refId }?.memberRef
+    }
+
+    fun resolveFieldReference(refId: String, project: Project): PonyMemberRef? {
+        val sourceFile = ponySourceFileForMember(refId, project) ?: return null
         val fields = PsiTreeUtil.collectElementsOfType(sourceFile, PonyField::class.java)
-        for (field in fields) {
-            if (field.memberRef.id.text == refId) {
-                return field.memberRef
-            }
-        }
 
-        return null
+        return fields.firstOrNull { it.memberRef.id.text == refId }?.memberRef
     }
 
     fun findAllClassDefSource(project: Project): Map<String, String> {
@@ -112,48 +106,14 @@ object PonyUtil {
         )
     }
 
-    fun findFieldsInProject(project: Project): List<PonyField> {
-        return findInProject<PonyField>(project)
-            .filterNot { it.memberRef.text.startsWith('_') }
-    }
-
-    fun findFieldsInDirectory(
-        directory: PsiDirectory,
-        includeSubdirectories: Boolean = false
-    ) : List<PonyField> {
-        return findInDirectory<PonyField>(directory, includeSubdirectories)
-            .filterNot { it.memberRef.text.startsWith('_') }
-    }
-
-    fun findFieldsInFile(file: PsiFile) : List<PonyField> {
-        val result = findInFile<PonyField>(file)
-
-        return result
-    }
-
-    fun findClassDefsInProject(project: Project): List<PonyClassDef> {
-        return findInProject<PonyClassDef>(project)
-    }
-
-    fun findClassDefsInDirectory(
-        directory: PsiDirectory,
-        includeSubdirectories: Boolean = false
-    ) : List<PonyClassDef> {
-        return findInDirectory<PonyClassDef>(directory, includeSubdirectories)
-    }
-
-    fun findClassDefsInFile(file: PsiFile) : List<PonyClassDef> {
-        return findInFile<PonyClassDef>(file)
-    }
-
-    private inline fun <reified T: PsiElement> findInFile(file: PsiFile) : List<T> {
+    inline fun <reified T: PsiElement> findAllInFile(file: PsiFile) : List<T> {
         val result = ArrayList<T>()
         result.addAll(PsiTreeUtil.findChildrenOfType(file, T::class.java))
 
         return result
     }
 
-    private inline fun <reified T : PsiElement> findInDirectory(
+    private inline fun <reified T : PsiElement> findAllInDirectory(
         directory: PsiDirectory,
         includeSubdirectories: Boolean
     ) : List<T> {
@@ -191,7 +151,7 @@ object PonyUtil {
         return results
     }
 
-    private inline fun <reified T : PsiElement> findInProject(project: Project): List<T> {
+    private inline fun <reified T : PsiElement> findAllElementsOfTypeInProject(project: Project): List<T> {
         val results = ArrayList<T>()
         val virtualFiles = FileTypeIndex.getFiles(PonyFileType.INSTANCE, GlobalSearchScope.allScope(project))
         for (virtualFile in virtualFiles) {

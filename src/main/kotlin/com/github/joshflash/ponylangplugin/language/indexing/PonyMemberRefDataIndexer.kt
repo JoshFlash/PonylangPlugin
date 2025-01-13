@@ -1,6 +1,5 @@
 package com.github.joshflash.ponylangplugin.language.indexing
 
-import com.github.joshflash.ponylangplugin.language.psi.PonyClassDef
 import com.github.joshflash.ponylangplugin.language.psi.PonyFile
 import com.github.joshflash.ponylangplugin.language.psi.PonyMembers
 import com.intellij.psi.util.PsiTreeUtil
@@ -12,19 +11,16 @@ class PonyMemberRefDataIndexer: DataIndexer<String, String, FileContent> {
         val result = mutableMapOf<String, String>()
         val ponyFile = inputData.psiFile as? PonyFile ?: return emptyMap()
 
-        val members = PsiTreeUtil.collectElementsOfType(ponyFile, PonyMembers::class.java)
-        for (member in members) {
-            val classDef = PsiTreeUtil.getParentOfType(member, PonyClassDef::class.java) ?: continue
-//            val prefix = classDef.typeRef.typeId.text
-            for (field in member.fieldList) {
-                if (field.memberRef.text.startsWith('_')) continue
+        val allMembers = PsiTreeUtil.collectElementsOfType(ponyFile, PonyMembers::class.java)
+        for (members in allMembers) {
+            for (field in members.fieldList) {
                 result[field.memberRef.text] = ponyFile.name
             }
-            for (method in member.methodList) {
-                if (method.memberRef.text.startsWith('_')) continue
+            for (method in members.methodList) {
                 result[method.memberRef.text] = ponyFile.name
             }
         }
+
         return result
     }
 }

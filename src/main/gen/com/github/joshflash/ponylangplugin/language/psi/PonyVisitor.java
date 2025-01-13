@@ -119,6 +119,10 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitFunDef(@NotNull PonyFunDef o) {
+    visitPsiElement(o);
+  }
+
   public void visitIdFfi(@NotNull PonyIdFfi o) {
     visitPsiElement(o);
   }
@@ -231,6 +235,10 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitObjectDef(@NotNull PonyObjectDef o) {
+    visitPsiElement(o);
+  }
+
   public void visitParam(@NotNull PonyParam o) {
     visitPsiElement(o);
   }
@@ -276,6 +284,10 @@ public class PonyVisitor extends PsiElementVisitor {
   }
 
   public void visitRawseq(@NotNull PonyRawseq o) {
+    visitPsiElement(o);
+  }
+
+  public void visitRecoverDef(@NotNull PonyRecoverDef o) {
     visitPsiElement(o);
   }
 

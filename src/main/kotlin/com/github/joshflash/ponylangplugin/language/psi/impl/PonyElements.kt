@@ -18,6 +18,7 @@ interface PonyElements {
                 when(node.elementType) {
                     TYPE_REF -> return PonyTypeRefExt(node)
                     ID_VAR -> return PonyIdVarExt(node)
+                    MEMBER_REF -> return PonyMemberRefExt(node)
                 }
                 return PonyTypes.Factory.createElement(node)
             }

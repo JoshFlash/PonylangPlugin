@@ -8,10 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface PonyParticle extends PsiElement {
 
   @Nullable
-  PonyAnnotatedids getAnnotatedids();
-
-  @Nullable
-  PonyCap getCap();
+  PonyFunDef getFunDef();
 
   @Nullable
   PonyIdFfi getIdFfi();
@@ -20,36 +17,24 @@ public interface PonyParticle extends PsiElement {
   PonyIdVar getIdVar();
 
   @Nullable
-  PonyLambdacaptures getLambdacaptures();
-
-  @Nullable
-  PonyLambdaparams getLambdaparams();
-
-  @Nullable
   PonyLiteral getLiteral();
-
-  @Nullable
-  PonyMembers getMembers();
 
   @Nullable
   PonyNamed getNamed();
 
   @Nullable
+  PonyObjectDef getObjectDef();
+
+  @Nullable
   PonyPositional getPositional();
 
   @Nullable
-  PonyRawseq getRawseq();
-
-  @Nullable
-  PonyType getType();
+  PonyRecoverDef getRecoverDef();
 
   @Nullable
   PonyTypeRef getTypeRef();
 
   @Nullable
   PonyTypeargs getTypeargs();
-
-  @Nullable
-  PonyTypeparams getTypeparams();
 
 }

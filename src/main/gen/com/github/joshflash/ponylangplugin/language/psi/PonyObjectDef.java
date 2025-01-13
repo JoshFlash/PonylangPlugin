@@ -5,12 +5,18 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PonyIdseqInSeq extends PsiElement {
-
-  @NotNull
-  List<PonyIdseqInSeq> getIdseqInSeqList();
+public interface PonyObjectDef extends PsiElement {
 
   @Nullable
-  PonyPatternRef getPatternRef();
+  PonyAnnotatedids getAnnotatedids();
+
+  @Nullable
+  PonyCap getCap();
+
+  @NotNull
+  PonyMembers getMembers();
+
+  @Nullable
+  PonyType getType();
 
 }

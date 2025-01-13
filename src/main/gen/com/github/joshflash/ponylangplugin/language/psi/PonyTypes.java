@@ -36,6 +36,7 @@ public interface PonyTypes {
   IElementType EXPRSEQ = new PonyElementType("EXPRSEQ");
   IElementType FIELD = new PonyElementType("FIELD");
   IElementType FORLOOP = new PonyElementType("FORLOOP");
+  IElementType FUN_DEF = new PonyElementType("FUN_DEF");
   IElementType IDSEQ = new PonyElementType("IDSEQ");
   IElementType IDSEQ_IN_SEQ = new PonyElementType("IDSEQ_IN_SEQ");
   IElementType ID_FFI = new PonyElementType("ID_FFI");
@@ -64,6 +65,7 @@ public interface PonyTypes {
   IElementType NOMINAL = new PonyElementType("NOMINAL");
   IElementType NOSEMI = new PonyElementType("NOSEMI");
   IElementType NUMBER = new PonyElementType("NUMBER");
+  IElementType OBJECT_DEF = new PonyElementType("OBJECT_DEF");
   IElementType PARAM = new PonyElementType("PARAM");
   IElementType PARAMPATTERN = new PonyElementType("PARAMPATTERN");
   IElementType PARAMS = new PonyElementType("PARAMS");
@@ -76,6 +78,7 @@ public interface PonyTypes {
   IElementType POSTFIX = new PonyElementType("POSTFIX");
   IElementType POSTFIXELEM = new PonyElementType("POSTFIXELEM");
   IElementType RAWSEQ = new PonyElementType("RAWSEQ");
+  IElementType RECOVER_DEF = new PonyElementType("RECOVER_DEF");
   IElementType SAFEOP = new PonyElementType("SAFEOP");
   IElementType SEMIEXPR = new PonyElementType("SEMIEXPR");
   IElementType STRINGLITERAL = new PonyElementType("STRINGLITERAL");
@@ -315,6 +318,9 @@ public interface PonyTypes {
       else if (type == FORLOOP) {
         return new PonyForloopImpl(node);
       }
+      else if (type == FUN_DEF) {
+        return new PonyFunDefImpl(node);
+      }
       else if (type == IDSEQ) {
         return new PonyIdseqImpl(node);
       }
@@ -399,6 +405,9 @@ public interface PonyTypes {
       else if (type == NUMBER) {
         return new PonyNumberImpl(node);
       }
+      else if (type == OBJECT_DEF) {
+        return new PonyObjectDefImpl(node);
+      }
       else if (type == PARAM) {
         return new PonyParamImpl(node);
       }
@@ -434,6 +443,9 @@ public interface PonyTypes {
       }
       else if (type == RAWSEQ) {
         return new PonyRawseqImpl(node);
+      }
+      else if (type == RECOVER_DEF) {
+        return new PonyRecoverDefImpl(node);
       }
       else if (type == SAFEOP) {
         return new PonySafeopImpl(node);

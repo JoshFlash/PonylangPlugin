@@ -10,7 +10,8 @@ class PonyAnnotator : Annotator {
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
         when (element) {
             is PonyTypeRef -> annotateTypeRef(element, holder)
-            is PonyIdVar -> annotateIdRef(element, holder)
+            is PonyIdVar -> annotateIdVar(element, holder)
+            is PonyMemberRef -> annotateMemberRef(element, holder)
         }
     }
 
@@ -23,11 +24,20 @@ class PonyAnnotator : Annotator {
         }
     }
 
-    private fun annotateIdRef(element: PonyIdVar, holder: AnnotationHolder) {
-        val resolved = PonyMemberReference(element).resolve()
+    private fun annotateIdVar(element: PonyIdVar, holder: AnnotationHolder) {
+        val resolved = PonyVariableReference(element).resolve()
         if (resolved == null && element.id != null) {
-            holder.newAnnotation(HighlightSeverity.ERROR, "Cannot resolve reference to ${element.text}")
+            holder.newAnnotation(HighlightSeverity.ERROR, "Unresolved reference: ${element.text}")
                 .range(element.id!!.textRange)
+                .create()
+        }
+    }
+
+    private fun annotateMemberRef(element: PonyMemberRef, holder: AnnotationHolder) {
+        val resolved = PonyMemberReference(element).resolve()
+        if (resolved == null) {
+            holder.newAnnotation(HighlightSeverity.ERROR, "Unresolved member: ${element.text}")
+                .range(element.id.textRange)
                 .create()
         }
     }
