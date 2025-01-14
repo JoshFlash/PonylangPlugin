@@ -20,6 +20,9 @@ public interface PonyConstruct extends PsiElement {
   PonyIfblock getIfblock();
 
   @Nullable
+  PonyIfdefblock getIfdefblock();
+
+  @Nullable
   PonyMatchblock getMatchblock();
 
   @Nullable

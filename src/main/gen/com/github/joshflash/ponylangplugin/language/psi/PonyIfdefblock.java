@@ -5,21 +5,21 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PonyUsestmt extends PsiElement {
+public interface PonyIfdefblock extends PsiElement {
 
   @Nullable
+  PonyAnnotatedids getAnnotatedids();
+
+  @Nullable
+  PonyAnnotatedrawseq getAnnotatedrawseq();
+
+  @Nullable
+  PonyElifdef getElifdef();
+
+  @NotNull
   PonyFlaginfix getFlaginfix();
 
-  @Nullable
-  PonyInfix getInfix();
-
-  @Nullable
-  PonyUseFfi getUseFfi();
-
-  @Nullable
-  PsiElement getId();
-
-  @Nullable
-  PsiElement getString();
+  @NotNull
+  PonyRawseq getRawseq();
 
 }

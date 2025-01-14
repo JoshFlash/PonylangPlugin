@@ -17,13 +17,7 @@ public interface PonyControlblock extends PsiElement {
   PonyCap getCap();
 
   @Nullable
-  PonyElifdef getElifdef();
-
-  @Nullable
   PonyEliftype getEliftype();
-
-  @Nullable
-  PonyInfix getInfix();
 
   @Nullable
   PonyIstype getIstype();

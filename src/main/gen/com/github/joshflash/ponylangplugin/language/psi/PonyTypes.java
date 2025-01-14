@@ -35,6 +35,9 @@ public interface PonyTypes {
   IElementType ELIFTYPE = new PonyElementType("ELIFTYPE");
   IElementType EXPRSEQ = new PonyElementType("EXPRSEQ");
   IElementType FIELD = new PonyElementType("FIELD");
+  IElementType FLAGINFIX = new PonyElementType("FLAGINFIX");
+  IElementType FLAGINFIXOP = new PonyElementType("FLAGINFIXOP");
+  IElementType FLAGTERM = new PonyElementType("FLAGTERM");
   IElementType FORLOOP = new PonyElementType("FORLOOP");
   IElementType FUN_DEF = new PonyElementType("FUN_DEF");
   IElementType IDSEQ = new PonyElementType("IDSEQ");
@@ -42,6 +45,7 @@ public interface PonyTypes {
   IElementType ID_FFI = new PonyElementType("ID_FFI");
   IElementType ID_VAR = new PonyElementType("ID_VAR");
   IElementType IFBLOCK = new PonyElementType("IFBLOCK");
+  IElementType IFDEFBLOCK = new PonyElementType("IFDEFBLOCK");
   IElementType INFIX = new PonyElementType("INFIX");
   IElementType INFIXOP = new PonyElementType("INFIXOP");
   IElementType INFIXTYPE = new PonyElementType("INFIXTYPE");
@@ -125,6 +129,7 @@ public interface PonyTypes {
   IElementType COMP_INT = new PonyTokenType("compile_intrinsic");
   IElementType CONSUME = new PonyTokenType("consume");
   IElementType CONTINUE = new PonyTokenType("continue");
+  IElementType CONTROLBLOCK_0_0 = new PonyTokenType("controlblock_0_0");
   IElementType DIGESTOF = new PonyTokenType("digestof");
   IElementType DIV = new PonyTokenType("/");
   IElementType DIV_PARTIAL = new PonyTokenType("/?");
@@ -315,6 +320,15 @@ public interface PonyTypes {
       else if (type == FIELD) {
         return new PonyFieldImpl(node);
       }
+      else if (type == FLAGINFIX) {
+        return new PonyFlaginfixImpl(node);
+      }
+      else if (type == FLAGINFIXOP) {
+        return new PonyFlaginfixopImpl(node);
+      }
+      else if (type == FLAGTERM) {
+        return new PonyFlagtermImpl(node);
+      }
       else if (type == FORLOOP) {
         return new PonyForloopImpl(node);
       }
@@ -335,6 +349,9 @@ public interface PonyTypes {
       }
       else if (type == IFBLOCK) {
         return new PonyIfblockImpl(node);
+      }
+      else if (type == IFDEFBLOCK) {
+        return new PonyIfdefblockImpl(node);
       }
       else if (type == INFIX) {
         return new PonyInfixImpl(node);

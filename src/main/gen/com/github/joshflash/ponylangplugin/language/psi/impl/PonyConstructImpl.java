@@ -53,6 +53,12 @@ public class PonyConstructImpl extends ASTWrapperPsiElement implements PonyConst
 
   @Override
   @Nullable
+  public PonyIfdefblock getIfdefblock() {
+    return findChildByClass(PonyIfdefblock.class);
+  }
+
+  @Override
+  @Nullable
   public PonyMatchblock getMatchblock() {
     return findChildByClass(PonyMatchblock.class);
   }

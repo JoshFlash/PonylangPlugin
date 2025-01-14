@@ -11,14 +11,14 @@ import static com.github.joshflash.ponylangplugin.language.psi.PonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.joshflash.ponylangplugin.language.psi.*;
 
-public class PonyUsestmtImpl extends ASTWrapperPsiElement implements PonyUsestmt {
+public class PonyFlaginfixImpl extends ASTWrapperPsiElement implements PonyFlaginfix {
 
-  public PonyUsestmtImpl(@NotNull ASTNode node) {
+  public PonyFlaginfixImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PonyVisitor visitor) {
-    visitor.visitUsestmt(this);
+    visitor.visitFlaginfix(this);
   }
 
   @Override
@@ -28,33 +28,15 @@ public class PonyUsestmtImpl extends ASTWrapperPsiElement implements PonyUsestmt
   }
 
   @Override
-  @Nullable
-  public PonyFlaginfix getFlaginfix() {
-    return findChildByClass(PonyFlaginfix.class);
+  @NotNull
+  public List<PonyFlaginfixop> getFlaginfixopList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyFlaginfixop.class);
   }
 
   @Override
-  @Nullable
-  public PonyInfix getInfix() {
-    return findChildByClass(PonyInfix.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyUseFfi getUseFfi() {
-    return findChildByClass(PonyUseFfi.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getId() {
-    return findChildByType(ID);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getString() {
-    return findChildByType(STRING);
+  @NotNull
+  public PonyFlagterm getFlagterm() {
+    return findNotNullChildByClass(PonyFlagterm.class);
   }
 
 }

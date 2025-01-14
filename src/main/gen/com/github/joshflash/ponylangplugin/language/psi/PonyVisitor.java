@@ -115,6 +115,18 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitFlaginfix(@NotNull PonyFlaginfix o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFlaginfixop(@NotNull PonyFlaginfixop o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFlagterm(@NotNull PonyFlagterm o) {
+    visitPsiElement(o);
+  }
+
   public void visitForloop(@NotNull PonyForloop o) {
     visitPsiElement(o);
   }
@@ -140,6 +152,10 @@ public class PonyVisitor extends PsiElementVisitor {
   }
 
   public void visitIfblock(@NotNull PonyIfblock o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIfdefblock(@NotNull PonyIfdefblock o) {
     visitPsiElement(o);
   }
 

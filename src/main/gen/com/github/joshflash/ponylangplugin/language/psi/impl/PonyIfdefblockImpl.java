@@ -11,14 +11,14 @@ import static com.github.joshflash.ponylangplugin.language.psi.PonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.joshflash.ponylangplugin.language.psi.*;
 
-public class PonyControlblockImpl extends ASTWrapperPsiElement implements PonyControlblock {
+public class PonyIfdefblockImpl extends ASTWrapperPsiElement implements PonyIfdefblock {
 
-  public PonyControlblockImpl(@NotNull ASTNode node) {
+  public PonyIfdefblockImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PonyVisitor visitor) {
-    visitor.visitControlblock(this);
+    visitor.visitIfdefblock(this);
   }
 
   @Override
@@ -41,32 +41,20 @@ public class PonyControlblockImpl extends ASTWrapperPsiElement implements PonyCo
 
   @Override
   @Nullable
-  public PonyCap getCap() {
-    return findChildByClass(PonyCap.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyEliftype getEliftype() {
-    return findChildByClass(PonyEliftype.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyIstype getIstype() {
-    return findChildByClass(PonyIstype.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyRawseq getRawseq() {
-    return findChildByClass(PonyRawseq.class);
+  public PonyElifdef getElifdef() {
+    return findChildByClass(PonyElifdef.class);
   }
 
   @Override
   @NotNull
-  public List<PonyWithelem> getWithelemList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyWithelem.class);
+  public PonyFlaginfix getFlaginfix() {
+    return findNotNullChildByClass(PonyFlaginfix.class);
+  }
+
+  @Override
+  @NotNull
+  public PonyRawseq getRawseq() {
+    return findNotNullChildByClass(PonyRawseq.class);
   }
 
 }

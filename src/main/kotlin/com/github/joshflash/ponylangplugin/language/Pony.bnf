@@ -153,7 +153,7 @@
 
 module ::= [doc_string] usestmt* class_def* ;
 
-usestmt ::= USE [id EQUALS] (string | use_ffi) [IF infix] ;
+usestmt ::= USE [id EQUALS] (string | use_ffi) [IF (flaginfix | infix)] ;
 
 use_ffi ::= AT id_ffi typeargs LP [params] RP [QM] ;
 
@@ -228,16 +228,27 @@ construct ::=
   | forloop
   | matchblock
   | tryblock
+  | ifdefblock
   | controlblock
   | CONSUME [cap] term
   | HASH postfix ;
 
 controlblock ::=
-    IFDEF [annotatedids] infix THEN rawseq [elifdef | (ELSE annotatedrawseq)] END
   | IFTYPE [annotatedids] istype [eliftype | (ELSE annotatedrawseq)] END
   | REPEAT [annotatedids] rawseq UNTIL annotatedrawseq [ELSE annotatedrawseq] END
   | WITH [annotatedids] withelem (COMMA withelem)* DO rawseq END
   | RECOVER [annotatedids] [cap] rawseq END ;
+
+ifdefblock ::= IFDEF [annotatedids] flaginfix THEN rawseq [elifdef | (ELSE annotatedrawseq)] END
+
+flagterm ::= (id | term) ;
+
+flaginfix ::= flagterm flaginfixop* ;
+
+flaginfixop ::=
+      (safeop | unsafeop | partialop) [QM] flagterm
+    | (IS | ISNT) flagterm
+    |  AS type ;
 
 withelem ::= idseq EQUALS rawseq ;
 

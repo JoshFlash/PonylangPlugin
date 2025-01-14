@@ -11,14 +11,14 @@ import static com.github.joshflash.ponylangplugin.language.psi.PonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.joshflash.ponylangplugin.language.psi.*;
 
-public class PonyControlblockImpl extends ASTWrapperPsiElement implements PonyControlblock {
+public class PonyFlaginfixopImpl extends ASTWrapperPsiElement implements PonyFlaginfixop {
 
-  public PonyControlblockImpl(@NotNull ASTNode node) {
+  public PonyFlaginfixopImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PonyVisitor visitor) {
-    visitor.visitControlblock(this);
+    visitor.visitFlaginfixop(this);
   }
 
   @Override
@@ -29,44 +29,32 @@ public class PonyControlblockImpl extends ASTWrapperPsiElement implements PonyCo
 
   @Override
   @Nullable
-  public PonyAnnotatedids getAnnotatedids() {
-    return findChildByClass(PonyAnnotatedids.class);
+  public PonyFlagterm getFlagterm() {
+    return findChildByClass(PonyFlagterm.class);
   }
 
   @Override
   @Nullable
-  public PonyAnnotatedrawseq getAnnotatedrawseq() {
-    return findChildByClass(PonyAnnotatedrawseq.class);
+  public PonyPartialop getPartialop() {
+    return findChildByClass(PonyPartialop.class);
   }
 
   @Override
   @Nullable
-  public PonyCap getCap() {
-    return findChildByClass(PonyCap.class);
+  public PonySafeop getSafeop() {
+    return findChildByClass(PonySafeop.class);
   }
 
   @Override
   @Nullable
-  public PonyEliftype getEliftype() {
-    return findChildByClass(PonyEliftype.class);
+  public PonyType getType() {
+    return findChildByClass(PonyType.class);
   }
 
   @Override
   @Nullable
-  public PonyIstype getIstype() {
-    return findChildByClass(PonyIstype.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyRawseq getRawseq() {
-    return findChildByClass(PonyRawseq.class);
-  }
-
-  @Override
-  @NotNull
-  public List<PonyWithelem> getWithelemList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyWithelem.class);
+  public PonyUnsafeop getUnsafeop() {
+    return findChildByClass(PonyUnsafeop.class);
   }
 
 }
