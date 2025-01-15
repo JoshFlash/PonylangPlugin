@@ -18,16 +18,16 @@ class PonyVariableReference(idVar: PonyIdVar): PsiReferenceBase<PonyIdVar>(idVar
             return paramId
         }
 
-        val privateMethods = PonyUtil.findAllInFile<PonyMethod>(element.containingFile)
-        val methodId = privateMethods.firstOrNull { it.memberRef.id.text == key }?.memberRef
-        if (memberCallExists() && methodId != null) {
-            return methodId
-        }
-
         val privateFields = PonyUtil.findAllInFile<PonyField>(element.containingFile)
         val fieldId = privateFields.firstOrNull { it.memberRef.id.text == key }?.memberRef
-        if (fieldId != null) {
+        if (fieldId != null && !memberCallExists()) {
             return fieldId
+        }
+
+        val privateMethods = PonyUtil.findAllInFile<PonyMethod>(element.containingFile)
+        val methodId = privateMethods.firstOrNull { it.memberRef.id.text == key }?.memberRef
+        if (methodId != null) {
+            return methodId
         }
 
         val useStatements = PonyUtil.findAllInFile<PonyUsestmt>(element.containingFile)
@@ -38,7 +38,7 @@ class PonyVariableReference(idVar: PonyIdVar): PsiReferenceBase<PonyIdVar>(idVar
 
         val patternRefs = PsiTreeUtil.collectElementsOfType(containingMethod, PonyPatternRef::class.java)
         for (patternRef in patternRefs) {
-            if (patternRef.id.text == key) {
+            if (patternRef.id?.text == key) {
                 val commonParent = PsiTreeUtil.findCommonParent(patternRef, element)
 
                 val nestingConstruct = PsiTreeUtil.getParentOfType(patternRef, PonyConstruct::class.java)

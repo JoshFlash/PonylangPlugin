@@ -35,12 +35,6 @@ public class PonyUsestmtImpl extends ASTWrapperPsiElement implements PonyUsestmt
 
   @Override
   @Nullable
-  public PonyInfix getInfix() {
-    return findChildByClass(PonyInfix.class);
-  }
-
-  @Override
-  @Nullable
   public PonyUseFfi getUseFfi() {
     return findChildByClass(PonyUseFfi.class);
   }

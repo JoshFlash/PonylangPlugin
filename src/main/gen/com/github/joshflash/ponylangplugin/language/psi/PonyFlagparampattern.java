@@ -5,21 +5,15 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PonyFlagterm extends PsiElement {
+public interface PonyFlagparampattern extends PsiElement {
 
   @Nullable
-  PonyBinding getBinding();
-
-  @Nullable
-  PonyConstruct getConstruct();
+  PonyFlagatom getFlagatom();
 
   @Nullable
   PonyFlagparampattern getFlagparampattern();
 
-  @Nullable
-  PonyPatternRef getPatternRef();
-
-  @Nullable
-  PonyType getType();
+  @NotNull
+  List<PonyPostfixelem> getPostfixelemList();
 
 }

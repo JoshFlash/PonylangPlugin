@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface PonyPatternRef extends PsiElement {
 
-  @NotNull
+  @Nullable
   PsiElement getId();
 
 }

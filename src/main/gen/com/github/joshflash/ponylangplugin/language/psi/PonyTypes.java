@@ -35,8 +35,10 @@ public interface PonyTypes {
   IElementType ELIFTYPE = new PonyElementType("ELIFTYPE");
   IElementType EXPRSEQ = new PonyElementType("EXPRSEQ");
   IElementType FIELD = new PonyElementType("FIELD");
+  IElementType FLAGATOM = new PonyElementType("FLAGATOM");
   IElementType FLAGINFIX = new PonyElementType("FLAGINFIX");
   IElementType FLAGINFIXOP = new PonyElementType("FLAGINFIXOP");
+  IElementType FLAGPARAMPATTERN = new PonyElementType("FLAGPARAMPATTERN");
   IElementType FLAGTERM = new PonyElementType("FLAGTERM");
   IElementType FORLOOP = new PonyElementType("FORLOOP");
   IElementType FUN_DEF = new PonyElementType("FUN_DEF");
@@ -320,11 +322,17 @@ public interface PonyTypes {
       else if (type == FIELD) {
         return new PonyFieldImpl(node);
       }
+      else if (type == FLAGATOM) {
+        return new PonyFlagatomImpl(node);
+      }
       else if (type == FLAGINFIX) {
         return new PonyFlaginfixImpl(node);
       }
       else if (type == FLAGINFIXOP) {
         return new PonyFlaginfixopImpl(node);
+      }
+      else if (type == FLAGPARAMPATTERN) {
+        return new PonyFlagparampatternImpl(node);
       }
       else if (type == FLAGTERM) {
         return new PonyFlagtermImpl(node);

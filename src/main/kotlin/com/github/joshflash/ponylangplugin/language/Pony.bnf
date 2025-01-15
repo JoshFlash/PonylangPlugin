@@ -153,7 +153,7 @@
 
 module ::= [doc_string] usestmt* class_def* ;
 
-usestmt ::= USE [id EQUALS] (string | use_ffi) [IF (flaginfix | infix)] ;
+usestmt ::= USE [id EQUALS] (string | use_ffi) [IF flaginfix] ;
 
 use_ffi ::= AT id_ffi typeargs LP [params] RP [QM] ;
 
@@ -241,14 +241,36 @@ controlblock ::=
 
 ifdefblock ::= IFDEF [annotatedids] flaginfix THEN rawseq [elifdef | (ELSE annotatedrawseq)] END
 
-flagterm ::= (id | term) ;
-
 flaginfix ::= flagterm flaginfixop* ;
 
 flaginfixop ::=
       (safeop | unsafeop | partialop) [QM] flagterm
     | (IS | ISNT) flagterm
     |  AS type ;
+
+flagterm ::=
+      construct
+    | binding pattern_ref [COLON type]
+    | flagparampattern ;
+
+flagparampattern ::=
+    (NOT | ADDRESSOF | SUB | SUB_UNSAFE | DIGESTOF) flagparampattern
+   | flagatom postfixelem* ;
+
+flagatom ::=
+    id
+  | literal
+  | THIS
+  | object_def
+  | fun_def
+  | recover_def
+  | AT id_ffi [typeargs] LP [positional] [named] RP [QM]
+  | SOURCELOC
+  | ifblock
+  | whileloop
+  | forloop
+  | LP rawseq [tuple] RP
+  | LBK [AS type COLON] [rawseq] RBK ;
 
 withelem ::= idseq EQUALS rawseq ;
 
@@ -282,7 +304,7 @@ pattern ::=
     binding pattern_ref [COLON type]
   | parampattern ;
 
-pattern_ref ::= id ;
+pattern_ref ::= (id | SCORE) ;
 
 caseparampattern ::=
     (NOT | ADDRESSOF | SUB | SUB_UNSAFE | DIGESTOF) caseparampattern
@@ -356,7 +378,7 @@ positional ::= rawseq (COMMA rawseq)* ;
 
 named ::= WHERE namedarg (COMMA namedarg)* ;
 
-namedarg ::= id_var EQUALS rawseq ;
+namedarg ::= id EQUALS rawseq ;
 
 type ::= atomtype [TYPE_ARROW type] ;
 

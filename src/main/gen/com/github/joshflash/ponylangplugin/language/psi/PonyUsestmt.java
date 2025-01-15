@@ -11,9 +11,6 @@ public interface PonyUsestmt extends PsiElement {
   PonyFlaginfix getFlaginfix();
 
   @Nullable
-  PonyInfix getInfix();
-
-  @Nullable
   PonyUseFfi getUseFfi();
 
   @Nullable

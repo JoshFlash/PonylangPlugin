@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface PonyNamedarg extends PsiElement {
 
   @NotNull
-  PonyIdVar getIdVar();
+  PonyRawseq getRawseq();
 
   @NotNull
-  PonyRawseq getRawseq();
+  PsiElement getId();
 
 }

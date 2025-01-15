@@ -28,9 +28,9 @@ public class PonyPatternRefImpl extends ASTWrapperPsiElement implements PonyPatt
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PsiElement getId() {
-    return findNotNullChildByType(ID);
+    return findChildByType(ID);
   }
 
 }
