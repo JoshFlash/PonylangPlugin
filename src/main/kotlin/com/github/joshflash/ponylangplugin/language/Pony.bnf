@@ -283,7 +283,7 @@ eliftype ::=
 istype ::= type ISA type THEN rawseq ;
 
 elifdef ::=
-    ELSEIF [annotatedids] infix THEN rawseq [elifdef | (ELSE annotatedrawseq)] ;
+    ELSEIF [annotatedids] flaginfix THEN rawseq [elifdef | (ELSE annotatedrawseq)] ;
 
 elif ::=
     ELSEIF [annotatedids] rawseq THEN rawseq [elif | (ELSE annotatedrawseq)] ;
@@ -304,7 +304,7 @@ pattern ::=
     binding pattern_ref [COLON type]
   | parampattern ;
 
-pattern_ref ::= (id | SCORE) ;
+pattern_ref ::= id | SCORE ;
 
 caseparampattern ::=
     (NOT | ADDRESSOF | SUB | SUB_UNSAFE | DIGESTOF) caseparampattern
@@ -368,7 +368,7 @@ tuple ::= COMMA rawseq (COMMA rawseq)* ;
 
 lambdacaptures ::= LP (lambdacapture | THIS) (COMMA (lambdacapture | THIS))* RP ;
 
-lambdacapture ::= id_var [COLON type] [EQUALS infix] ;
+lambdacapture ::= param_ref [COLON type] [EQUALS infix] ;
 
 lambdaparams ::= lambdaparam (COMMA lambdaparam)* ;
 
@@ -432,7 +432,7 @@ stringliteral ::= string | doc_string ;
 
 param ::= param_ref COLON type [EQUALS infix] ;
 
-param_ref ::= id ;
+param_ref ::= id | SCORE ;
 
 annotatedids ::= "\\" id (COMMA id)* "\\" ;
 

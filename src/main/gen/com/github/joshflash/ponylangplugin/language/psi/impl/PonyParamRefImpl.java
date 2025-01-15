@@ -28,9 +28,9 @@ public class PonyParamRefImpl extends ASTWrapperPsiElement implements PonyParamR
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PsiElement getId() {
-    return findNotNullChildByType(ID);
+    return findChildByType(ID);
   }
 
 }

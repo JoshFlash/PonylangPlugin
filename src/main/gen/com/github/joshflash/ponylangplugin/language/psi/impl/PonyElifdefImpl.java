@@ -47,8 +47,8 @@ public class PonyElifdefImpl extends ASTWrapperPsiElement implements PonyElifdef
 
   @Override
   @NotNull
-  public PonyInfix getInfix() {
-    return findNotNullChildByClass(PonyInfix.class);
+  public PonyFlaginfix getFlaginfix() {
+    return findNotNullChildByClass(PonyFlaginfix.class);
   }
 
   @Override

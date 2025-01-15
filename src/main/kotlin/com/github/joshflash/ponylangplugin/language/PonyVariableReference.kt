@@ -9,13 +9,15 @@ class PonyVariableReference(idVar: PonyIdVar): PsiReferenceBase<PonyIdVar>(idVar
     override fun resolve(): PsiElement? {
         val key = element.id?.text ?: return null
 
-        val nestingObjectDef  = PsiTreeUtil.getParentOfType(element, PonyObjectDef::class.java)
-        val containingMethod = PsiTreeUtil.getContextOfType(nestingObjectDef ?: element, PonyMethod::class.java)
+        var method = PsiTreeUtil.getParentOfType(element, PonyMethod::class.java)
+        while (method != null) {
+            val methodParams = PsiTreeUtil.getChildOfType(method, PonyParams::class.java)
+            val paramId = methodParams?.paramList?.firstOrNull { it.paramRef.id?.text == key }?.paramRef
+            if (paramId != null) {
+                return paramId
+            }
 
-        val methodParams = PsiTreeUtil.getChildOfType(containingMethod, PonyParams::class.java)
-        val paramId = methodParams?.paramList?.firstOrNull { it.paramRef.id.text == key }?.paramRef
-        if (paramId != null) {
-            return paramId
+            method = PsiTreeUtil.getParentOfType(method, PonyMethod::class.java)
         }
 
         val privateFields = PonyUtil.findAllInFile<PonyField>(element.containingFile)
@@ -36,7 +38,22 @@ class PonyVariableReference(idVar: PonyIdVar): PsiReferenceBase<PonyIdVar>(idVar
             return useStmtId
         }
 
-        val patternRefs = PsiTreeUtil.collectElementsOfType(containingMethod, PonyPatternRef::class.java)
+        val functionDef = PsiTreeUtil.getParentOfType(element, PonyFunDef::class.java)
+        val lambdaParams = PsiTreeUtil.getChildOfType(functionDef, PonyLambdaparams::class.java)
+        val lambdaParamId = lambdaParams?.lambdaparamList?.firstOrNull { it.paramRef.id?.text == key }?.paramRef
+        if (lambdaParamId != null) {
+            return lambdaParamId
+        }
+        val lamdaCaptures = PsiTreeUtil.getChildOfType(functionDef, PonyLambdacaptures::class.java)
+        val lambdaCaptureId = lamdaCaptures?.lambdacaptureList?.firstOrNull { it.paramRef.id?.text == key }?.paramRef
+        if (lambdaCaptureId != null) {
+            return lambdaCaptureId
+        }
+
+
+        val nestingObjectDef  = PsiTreeUtil.getParentOfType(element, PonyObjectDef::class.java)
+        val encapsulatingMethod = PsiTreeUtil.getContextOfType(nestingObjectDef ?: element, PonyMethod::class.java)
+        val patternRefs = PsiTreeUtil.collectElementsOfType(encapsulatingMethod, PonyPatternRef::class.java)
         for (patternRef in patternRefs) {
             if (patternRef.id?.text == key) {
                 val commonParent = PsiTreeUtil.findCommonParent(patternRef, element)
@@ -49,7 +66,7 @@ class PonyVariableReference(idVar: PonyIdVar): PsiReferenceBase<PonyIdVar>(idVar
             }
         }
 
-        return null
+        return fieldId
     }
 
     private fun memberCallExists(): Boolean {
