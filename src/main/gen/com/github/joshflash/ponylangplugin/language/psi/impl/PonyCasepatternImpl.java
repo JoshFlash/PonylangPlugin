@@ -35,14 +35,20 @@ public class PonyCasepatternImpl extends ASTWrapperPsiElement implements PonyCas
 
   @Override
   @Nullable
-  public PonyCaseparampattern getCaseparampattern() {
-    return findChildByClass(PonyCaseparampattern.class);
+  public PonyPostfix getPostfix() {
+    return findChildByClass(PonyPostfix.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PonyPostfixop> getPostfixopList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyPostfixop.class);
   }
 
   @Override
   @Nullable
-  public PonyPatternRef getPatternRef() {
-    return findChildByClass(PonyPatternRef.class);
+  public PonyTermRef getTermRef() {
+    return findChildByClass(PonyTermRef.class);
   }
 
   @Override

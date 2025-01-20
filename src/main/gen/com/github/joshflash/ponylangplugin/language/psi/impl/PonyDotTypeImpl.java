@@ -11,14 +11,14 @@ import static com.github.joshflash.ponylangplugin.language.psi.PonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.joshflash.ponylangplugin.language.psi.*;
 
-public class PonyFlagparampatternImpl extends ASTWrapperPsiElement implements PonyFlagparampattern {
+public class PonyDotTypeImpl extends ASTWrapperPsiElement implements PonyDotType {
 
-  public PonyFlagparampatternImpl(@NotNull ASTNode node) {
+  public PonyDotTypeImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PonyVisitor visitor) {
-    visitor.visitFlagparampattern(this);
+    visitor.visitDotType(this);
   }
 
   @Override
@@ -28,21 +28,9 @@ public class PonyFlagparampatternImpl extends ASTWrapperPsiElement implements Po
   }
 
   @Override
-  @Nullable
-  public PonyFlagatom getFlagatom() {
-    return findChildByClass(PonyFlagatom.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyFlagparampattern getFlagparampattern() {
-    return findChildByClass(PonyFlagparampattern.class);
-  }
-
-  @Override
   @NotNull
-  public List<PonyPostfixelem> getPostfixelemList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyPostfixelem.class);
+  public PonyTypeRef getTypeRef() {
+    return findNotNullChildByClass(PonyTypeRef.class);
   }
 
 }

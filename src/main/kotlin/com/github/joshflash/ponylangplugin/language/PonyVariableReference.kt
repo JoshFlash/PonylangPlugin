@@ -15,12 +15,14 @@ class PonyVariableReference(idVar: PonyIdVar): PsiReferenceBase<PonyIdVar>(idVar
         }
 
         val method = PsiTreeUtil.getTopmostParentOfType(element, PonyMethod::class.java)
+
         val paramRefs = PsiTreeUtil.collectElementsOfType(method, PonyParamRef::class.java)
         val paramId = paramRefs.firstOrNull { it.id?.text == key }
         if (paramId != null) {
             return paramId
         }
-        val patternRefs = PsiTreeUtil.collectElementsOfType(method, PonyPatternRef::class.java)
+
+        val patternRefs = PsiTreeUtil.collectElementsOfType(method, PonyTermRef::class.java)
         val patternId = patternRefs.firstOrNull { it.id?.text == key }
         if (patternId != null) {
             return patternId

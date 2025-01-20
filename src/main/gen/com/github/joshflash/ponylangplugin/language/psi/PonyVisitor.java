@@ -51,15 +51,7 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitCaseparampattern(@NotNull PonyCaseparampattern o) {
-    visitPsiElement(o);
-  }
-
   public void visitCasepattern(@NotNull PonyCasepattern o) {
-    visitPsiElement(o);
-  }
-
-  public void visitCasepostfix(@NotNull PonyCasepostfix o) {
     visitPsiElement(o);
   }
 
@@ -75,10 +67,6 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitConstruct(@NotNull PonyConstruct o) {
-    visitPsiElement(o);
-  }
-
   public void visitControlblock(@NotNull PonyControlblock o) {
     visitPsiElement(o);
   }
@@ -91,7 +79,7 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitDotTyperef(@NotNull PonyDotTyperef o) {
+  public void visitDotType(@NotNull PonyDotType o) {
     visitPsiElement(o);
   }
 
@@ -115,26 +103,6 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitFlagatom(@NotNull PonyFlagatom o) {
-    visitPsiElement(o);
-  }
-
-  public void visitFlaginfix(@NotNull PonyFlaginfix o) {
-    visitPsiElement(o);
-  }
-
-  public void visitFlaginfixop(@NotNull PonyFlaginfixop o) {
-    visitPsiElement(o);
-  }
-
-  public void visitFlagparampattern(@NotNull PonyFlagparampattern o) {
-    visitPsiElement(o);
-  }
-
-  public void visitFlagterm(@NotNull PonyFlagterm o) {
-    visitPsiElement(o);
-  }
-
   public void visitForloop(@NotNull PonyForloop o) {
     visitPsiElement(o);
   }
@@ -155,15 +123,7 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitIdseqInSeq(@NotNull PonyIdseqInSeq o) {
-    visitPsiElement(o);
-  }
-
   public void visitIfblock(@NotNull PonyIfblock o) {
-    visitPsiElement(o);
-  }
-
-  public void visitIfdefblock(@NotNull PonyIfdefblock o) {
     visitPsiElement(o);
   }
 
@@ -239,10 +199,6 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitNamedarg(@NotNull PonyNamedarg o) {
-    visitPsiElement(o);
-  }
-
   public void visitNextexprseq(@NotNull PonyNextexprseq o) {
     visitPsiElement(o);
   }
@@ -271,23 +227,11 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitParampattern(@NotNull PonyParampattern o) {
-    visitPsiElement(o);
-  }
-
   public void visitParams(@NotNull PonyParams o) {
     visitPsiElement(o);
   }
 
   public void visitPartialop(@NotNull PonyPartialop o) {
-    visitPsiElement(o);
-  }
-
-  public void visitPattern(@NotNull PonyPattern o) {
-    visitPsiElement(o);
-  }
-
-  public void visitPatternRef(@NotNull PonyPatternRef o) {
     visitPsiElement(o);
   }
 
@@ -303,11 +247,19 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitPostfixop(@NotNull PonyPostfixop o) {
+    visitPsiElement(o);
+  }
+
   public void visitRawseq(@NotNull PonyRawseq o) {
     visitPsiElement(o);
   }
 
   public void visitRecoverDef(@NotNull PonyRecoverDef o) {
+    visitPsiElement(o);
+  }
+
+  public void visitResourceblock(@NotNull PonyResourceblock o) {
     visitPsiElement(o);
   }
 
@@ -324,6 +276,10 @@ public class PonyVisitor extends PsiElementVisitor {
   }
 
   public void visitTerm(@NotNull PonyTerm o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTermRef(@NotNull PonyTermRef o) {
     visitPsiElement(o);
   }
 

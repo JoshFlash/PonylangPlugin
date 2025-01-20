@@ -1,8 +1,5 @@
 package com.github.joshflash.ponylangplugin.language
 
-import com.github.joshflash.ponylangplugin.language.psi.PonyAssignment
-import com.github.joshflash.ponylangplugin.language.psi.PonyCaseexpr
-import com.github.joshflash.ponylangplugin.language.psi.PonyCaseparampattern
 import com.github.joshflash.ponylangplugin.language.psi.PonyField
 import com.github.joshflash.ponylangplugin.language.psi.PonyMemberRef
 import com.github.joshflash.ponylangplugin.language.psi.PonyMethod

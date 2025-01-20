@@ -20,6 +20,9 @@ public interface PonyAtom extends PsiElement {
   PonyIdVar getIdVar();
 
   @Nullable
+  PonyIfblock getIfblock();
+
+  @Nullable
   PonyLiteral getLiteral();
 
   @Nullable

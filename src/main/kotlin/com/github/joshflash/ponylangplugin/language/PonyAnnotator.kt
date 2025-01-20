@@ -5,6 +5,7 @@ import com.intellij.lang.annotation.Annotator
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
+import com.intellij.psi.util.PsiTreeUtil
 
 class PonyAnnotator : Annotator {
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
@@ -12,6 +13,17 @@ class PonyAnnotator : Annotator {
             is PonyTypeRef -> annotateTypeRef(element, holder)
             is PonyIdVar -> annotateIdVar(element, holder)
             is PonyMemberRef -> annotateMemberRef(element, holder)
+            is PonyIfblock -> annotateIfBlock(element, holder)
+        }
+    }
+
+    private fun annotateIfBlock(element: PonyIfblock, holder: AnnotationHolder) {
+        val parentCasePattern = PsiTreeUtil.getParentOfType(element, PonyCasepattern::class.java) ?: return
+        val invalidIfblock = parentCasePattern.postfix?.atom?.ifblock
+        if (invalidIfblock != null) {
+            holder.newAnnotation(HighlightSeverity.ERROR, "Invalid If Statement within case pattern: ${element.text}")
+                .range(invalidIfblock.textRange)
+                .create()
         }
     }
 

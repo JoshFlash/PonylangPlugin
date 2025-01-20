@@ -29,44 +29,32 @@ public class PonyControlblockImpl extends ASTWrapperPsiElement implements PonyCo
 
   @Override
   @Nullable
-  public PonyAnnotatedids getAnnotatedids() {
-    return findChildByClass(PonyAnnotatedids.class);
+  public PonyForloop getForloop() {
+    return findChildByClass(PonyForloop.class);
   }
 
   @Override
   @Nullable
-  public PonyAnnotatedrawseq getAnnotatedrawseq() {
-    return findChildByClass(PonyAnnotatedrawseq.class);
+  public PonyIfblock getIfblock() {
+    return findChildByClass(PonyIfblock.class);
   }
 
   @Override
   @Nullable
-  public PonyCap getCap() {
-    return findChildByClass(PonyCap.class);
+  public PonyMatchblock getMatchblock() {
+    return findChildByClass(PonyMatchblock.class);
   }
 
   @Override
   @Nullable
-  public PonyEliftype getEliftype() {
-    return findChildByClass(PonyEliftype.class);
+  public PonyTryblock getTryblock() {
+    return findChildByClass(PonyTryblock.class);
   }
 
   @Override
   @Nullable
-  public PonyIstype getIstype() {
-    return findChildByClass(PonyIstype.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyRawseq getRawseq() {
-    return findChildByClass(PonyRawseq.class);
-  }
-
-  @Override
-  @NotNull
-  public List<PonyWithelem> getWithelemList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyWithelem.class);
+  public PonyWhileloop getWhileloop() {
+    return findChildByClass(PonyWhileloop.class);
   }
 
 }

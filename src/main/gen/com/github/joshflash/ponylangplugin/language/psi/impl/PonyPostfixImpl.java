@@ -28,15 +28,9 @@ public class PonyPostfixImpl extends ASTWrapperPsiElement implements PonyPostfix
   }
 
   @Override
-  @Nullable
+  @NotNull
   public PonyAtom getAtom() {
-    return findChildByClass(PonyAtom.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyIfblock getIfblock() {
-    return findChildByClass(PonyIfblock.class);
+    return findNotNullChildByClass(PonyAtom.class);
   }
 
   @Override

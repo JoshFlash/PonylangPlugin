@@ -16,14 +16,10 @@ object PonyControlKeywordCompletionProvider : PonyCompletionProviderBase() {
         PlatformPatterns.psiElement()
             .withLanguage(PonyLanguage)
             .insideSequence(true,
-                PlatformPatterns.psiElement(PonyTypes.CONSTRUCT),
+                PlatformPatterns.psiElement(PonyTypes.TERM),
                 PlatformPatterns.or(
-                    PlatformPatterns.psiElement(PonyTypes.IFBLOCK),
-                    PlatformPatterns.psiElement(PonyTypes.WHILELOOP),
-                    PlatformPatterns.psiElement(PonyTypes.FORLOOP),
-                    PlatformPatterns.psiElement(PonyTypes.MATCHBLOCK),
-                    PlatformPatterns.psiElement(PonyTypes.TRYBLOCK),
                     PlatformPatterns.psiElement(PonyTypes.CONTROLBLOCK),
+                    PlatformPatterns.psiElement(PonyTypes.RESOURCEBLOCK),
                 )
             )
 

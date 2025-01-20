@@ -29,14 +29,56 @@ public class PonyTermImpl extends ASTWrapperPsiElement implements PonyTerm {
 
   @Override
   @Nullable
-  public PonyConstruct getConstruct() {
-    return findChildByClass(PonyConstruct.class);
+  public PonyBinding getBinding() {
+    return findChildByClass(PonyBinding.class);
   }
 
   @Override
   @Nullable
-  public PonyPattern getPattern() {
-    return findChildByClass(PonyPattern.class);
+  public PonyCap getCap() {
+    return findChildByClass(PonyCap.class);
+  }
+
+  @Override
+  @Nullable
+  public PonyControlblock getControlblock() {
+    return findChildByClass(PonyControlblock.class);
+  }
+
+  @Override
+  @Nullable
+  public PonyPostfix getPostfix() {
+    return findChildByClass(PonyPostfix.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PonyPostfixop> getPostfixopList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyPostfixop.class);
+  }
+
+  @Override
+  @Nullable
+  public PonyResourceblock getResourceblock() {
+    return findChildByClass(PonyResourceblock.class);
+  }
+
+  @Override
+  @Nullable
+  public PonyTerm getTerm() {
+    return findChildByClass(PonyTerm.class);
+  }
+
+  @Override
+  @Nullable
+  public PonyTermRef getTermRef() {
+    return findChildByClass(PonyTermRef.class);
+  }
+
+  @Override
+  @Nullable
+  public PonyType getType() {
+    return findChildByClass(PonyType.class);
   }
 
 }

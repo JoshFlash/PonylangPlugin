@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface PonyUsestmt extends PsiElement {
 
   @Nullable
-  PonyFlaginfix getFlaginfix();
+  PonyInfix getInfix();
 
   @Nullable
   PonyUseFfi getUseFfi();

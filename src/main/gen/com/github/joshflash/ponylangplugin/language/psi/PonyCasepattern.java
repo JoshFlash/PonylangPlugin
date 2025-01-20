@@ -11,10 +11,13 @@ public interface PonyCasepattern extends PsiElement {
   PonyBinding getBinding();
 
   @Nullable
-  PonyCaseparampattern getCaseparampattern();
+  PonyPostfix getPostfix();
+
+  @NotNull
+  List<PonyPostfixop> getPostfixopList();
 
   @Nullable
-  PonyPatternRef getPatternRef();
+  PonyTermRef getTermRef();
 
   @Nullable
   PonyType getType();

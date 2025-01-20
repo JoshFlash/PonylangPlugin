@@ -5,9 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PonyDotTyperef extends PsiElement {
+public interface PonyTermRef extends PsiElement {
 
-  @NotNull
-  PonyTypeRef getTypeRef();
+  @Nullable
+  PsiElement getId();
 
 }

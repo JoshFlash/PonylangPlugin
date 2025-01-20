@@ -8,24 +8,18 @@ import com.intellij.psi.PsiElement;
 public interface PonyControlblock extends PsiElement {
 
   @Nullable
-  PonyAnnotatedids getAnnotatedids();
+  PonyForloop getForloop();
 
   @Nullable
-  PonyAnnotatedrawseq getAnnotatedrawseq();
+  PonyIfblock getIfblock();
 
   @Nullable
-  PonyCap getCap();
+  PonyMatchblock getMatchblock();
 
   @Nullable
-  PonyEliftype getEliftype();
+  PonyTryblock getTryblock();
 
   @Nullable
-  PonyIstype getIstype();
-
-  @Nullable
-  PonyRawseq getRawseq();
-
-  @NotNull
-  List<PonyWithelem> getWithelemList();
+  PonyWhileloop getWhileloop();
 
 }

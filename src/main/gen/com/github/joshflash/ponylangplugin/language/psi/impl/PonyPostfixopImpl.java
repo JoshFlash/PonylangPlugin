@@ -11,32 +11,20 @@ import static com.github.joshflash.ponylangplugin.language.psi.PonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.joshflash.ponylangplugin.language.psi.*;
 
-public class PonyIdseqInSeqImpl extends ASTWrapperPsiElement implements PonyIdseqInSeq {
+public class PonyPostfixopImpl extends ASTWrapperPsiElement implements PonyPostfixop {
 
-  public PonyIdseqInSeqImpl(@NotNull ASTNode node) {
+  public PonyPostfixopImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PonyVisitor visitor) {
-    visitor.visitIdseqInSeq(this);
+    visitor.visitPostfixop(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof PonyVisitor) accept((PonyVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public List<PonyIdseqInSeq> getIdseqInSeqList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyIdseqInSeq.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyPatternRef getPatternRef() {
-    return findChildByClass(PonyPatternRef.class);
   }
 
 }

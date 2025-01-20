@@ -17,7 +17,7 @@ public interface PonyElifdef extends PsiElement {
   PonyElifdef getElifdef();
 
   @NotNull
-  PonyFlaginfix getFlaginfix();
+  PonyInfix getInfix();
 
   @NotNull
   PonyRawseq getRawseq();

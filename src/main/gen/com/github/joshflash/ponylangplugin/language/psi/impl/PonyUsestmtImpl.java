@@ -29,8 +29,8 @@ public class PonyUsestmtImpl extends ASTWrapperPsiElement implements PonyUsestmt
 
   @Override
   @Nullable
-  public PonyFlaginfix getFlaginfix() {
-    return findChildByClass(PonyFlaginfix.class);
+  public PonyInfix getInfix() {
+    return findChildByClass(PonyInfix.class);
   }
 
   @Override

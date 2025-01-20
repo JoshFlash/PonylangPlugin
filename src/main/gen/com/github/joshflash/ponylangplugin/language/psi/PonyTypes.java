@@ -19,35 +19,25 @@ public interface PonyTypes {
   IElementType CALL = new PonyElementType("CALL");
   IElementType CAP = new PonyElementType("CAP");
   IElementType CASEEXPR = new PonyElementType("CASEEXPR");
-  IElementType CASEPARAMPATTERN = new PonyElementType("CASEPARAMPATTERN");
   IElementType CASEPATTERN = new PonyElementType("CASEPATTERN");
-  IElementType CASEPOSTFIX = new PonyElementType("CASEPOSTFIX");
   IElementType CHAIN_ID = new PonyElementType("CHAIN_ID");
   IElementType CLASS_DEF = new PonyElementType("CLASS_DEF");
   IElementType COMMENT = new PonyElementType("COMMENT");
-  IElementType CONSTRUCT = new PonyElementType("CONSTRUCT");
   IElementType CONTROLBLOCK = new PonyElementType("CONTROLBLOCK");
   IElementType DECLARATION = new PonyElementType("DECLARATION");
   IElementType DOT_ID = new PonyElementType("DOT_ID");
-  IElementType DOT_TYPEREF = new PonyElementType("DOT_TYPEREF");
+  IElementType DOT_TYPE = new PonyElementType("DOT_TYPE");
   IElementType ELIF = new PonyElementType("ELIF");
   IElementType ELIFDEF = new PonyElementType("ELIFDEF");
   IElementType ELIFTYPE = new PonyElementType("ELIFTYPE");
   IElementType EXPRSEQ = new PonyElementType("EXPRSEQ");
   IElementType FIELD = new PonyElementType("FIELD");
-  IElementType FLAGATOM = new PonyElementType("FLAGATOM");
-  IElementType FLAGINFIX = new PonyElementType("FLAGINFIX");
-  IElementType FLAGINFIXOP = new PonyElementType("FLAGINFIXOP");
-  IElementType FLAGPARAMPATTERN = new PonyElementType("FLAGPARAMPATTERN");
-  IElementType FLAGTERM = new PonyElementType("FLAGTERM");
   IElementType FORLOOP = new PonyElementType("FORLOOP");
   IElementType FUN_DEF = new PonyElementType("FUN_DEF");
   IElementType IDSEQ = new PonyElementType("IDSEQ");
-  IElementType IDSEQ_IN_SEQ = new PonyElementType("IDSEQ_IN_SEQ");
   IElementType ID_FFI = new PonyElementType("ID_FFI");
   IElementType ID_VAR = new PonyElementType("ID_VAR");
   IElementType IFBLOCK = new PonyElementType("IFBLOCK");
-  IElementType IFDEFBLOCK = new PonyElementType("IFDEFBLOCK");
   IElementType INFIX = new PonyElementType("INFIX");
   IElementType INFIXOP = new PonyElementType("INFIXOP");
   IElementType INFIXTYPE = new PonyElementType("INFIXTYPE");
@@ -66,28 +56,27 @@ public interface PonyTypes {
   IElementType MEMBER_REF = new PonyElementType("MEMBER_REF");
   IElementType METHOD = new PonyElementType("METHOD");
   IElementType NAMED = new PonyElementType("NAMED");
-  IElementType NAMEDARG = new PonyElementType("NAMEDARG");
   IElementType NEXTEXPRSEQ = new PonyElementType("NEXTEXPRSEQ");
   IElementType NOMINAL = new PonyElementType("NOMINAL");
   IElementType NOSEMI = new PonyElementType("NOSEMI");
   IElementType NUMBER = new PonyElementType("NUMBER");
   IElementType OBJECT_DEF = new PonyElementType("OBJECT_DEF");
   IElementType PARAM = new PonyElementType("PARAM");
-  IElementType PARAMPATTERN = new PonyElementType("PARAMPATTERN");
   IElementType PARAMS = new PonyElementType("PARAMS");
   IElementType PARAM_REF = new PonyElementType("PARAM_REF");
   IElementType PARTIALOP = new PonyElementType("PARTIALOP");
-  IElementType PATTERN = new PonyElementType("PATTERN");
-  IElementType PATTERN_REF = new PonyElementType("PATTERN_REF");
   IElementType POSITIONAL = new PonyElementType("POSITIONAL");
   IElementType POSTFIX = new PonyElementType("POSTFIX");
   IElementType POSTFIXELEM = new PonyElementType("POSTFIXELEM");
+  IElementType POSTFIXOP = new PonyElementType("POSTFIXOP");
   IElementType RAWSEQ = new PonyElementType("RAWSEQ");
   IElementType RECOVER_DEF = new PonyElementType("RECOVER_DEF");
+  IElementType RESOURCEBLOCK = new PonyElementType("RESOURCEBLOCK");
   IElementType SAFEOP = new PonyElementType("SAFEOP");
   IElementType SEMIEXPR = new PonyElementType("SEMIEXPR");
   IElementType STRINGLITERAL = new PonyElementType("STRINGLITERAL");
   IElementType TERM = new PonyElementType("TERM");
+  IElementType TERM_REF = new PonyElementType("TERM_REF");
   IElementType TILDE_ID = new PonyElementType("TILDE_ID");
   IElementType TRYBLOCK = new PonyElementType("TRYBLOCK");
   IElementType TUPLE = new PonyElementType("TUPLE");
@@ -272,14 +261,8 @@ public interface PonyTypes {
       else if (type == CASEEXPR) {
         return new PonyCaseexprImpl(node);
       }
-      else if (type == CASEPARAMPATTERN) {
-        return new PonyCaseparampatternImpl(node);
-      }
       else if (type == CASEPATTERN) {
         return new PonyCasepatternImpl(node);
-      }
-      else if (type == CASEPOSTFIX) {
-        return new PonyCasepostfixImpl(node);
       }
       else if (type == CHAIN_ID) {
         return new PonyChainIdImpl(node);
@@ -290,9 +273,6 @@ public interface PonyTypes {
       else if (type == COMMENT) {
         return new PonyCommentImpl(node);
       }
-      else if (type == CONSTRUCT) {
-        return new PonyConstructImpl(node);
-      }
       else if (type == CONTROLBLOCK) {
         return new PonyControlblockImpl(node);
       }
@@ -302,8 +282,8 @@ public interface PonyTypes {
       else if (type == DOT_ID) {
         return new PonyDotIdImpl(node);
       }
-      else if (type == DOT_TYPEREF) {
-        return new PonyDotTyperefImpl(node);
+      else if (type == DOT_TYPE) {
+        return new PonyDotTypeImpl(node);
       }
       else if (type == ELIF) {
         return new PonyElifImpl(node);
@@ -320,21 +300,6 @@ public interface PonyTypes {
       else if (type == FIELD) {
         return new PonyFieldImpl(node);
       }
-      else if (type == FLAGATOM) {
-        return new PonyFlagatomImpl(node);
-      }
-      else if (type == FLAGINFIX) {
-        return new PonyFlaginfixImpl(node);
-      }
-      else if (type == FLAGINFIXOP) {
-        return new PonyFlaginfixopImpl(node);
-      }
-      else if (type == FLAGPARAMPATTERN) {
-        return new PonyFlagparampatternImpl(node);
-      }
-      else if (type == FLAGTERM) {
-        return new PonyFlagtermImpl(node);
-      }
       else if (type == FORLOOP) {
         return new PonyForloopImpl(node);
       }
@@ -344,9 +309,6 @@ public interface PonyTypes {
       else if (type == IDSEQ) {
         return new PonyIdseqImpl(node);
       }
-      else if (type == IDSEQ_IN_SEQ) {
-        return new PonyIdseqInSeqImpl(node);
-      }
       else if (type == ID_FFI) {
         return new PonyIdFfiImpl(node);
       }
@@ -355,9 +317,6 @@ public interface PonyTypes {
       }
       else if (type == IFBLOCK) {
         return new PonyIfblockImpl(node);
-      }
-      else if (type == IFDEFBLOCK) {
-        return new PonyIfdefblockImpl(node);
       }
       else if (type == INFIX) {
         return new PonyInfixImpl(node);
@@ -413,9 +372,6 @@ public interface PonyTypes {
       else if (type == NAMED) {
         return new PonyNamedImpl(node);
       }
-      else if (type == NAMEDARG) {
-        return new PonyNamedargImpl(node);
-      }
       else if (type == NEXTEXPRSEQ) {
         return new PonyNextexprseqImpl(node);
       }
@@ -434,9 +390,6 @@ public interface PonyTypes {
       else if (type == PARAM) {
         return new PonyParamImpl(node);
       }
-      else if (type == PARAMPATTERN) {
-        return new PonyParampatternImpl(node);
-      }
       else if (type == PARAMS) {
         return new PonyParamsImpl(node);
       }
@@ -445,12 +398,6 @@ public interface PonyTypes {
       }
       else if (type == PARTIALOP) {
         return new PonyPartialopImpl(node);
-      }
-      else if (type == PATTERN) {
-        return new PonyPatternImpl(node);
-      }
-      else if (type == PATTERN_REF) {
-        return new PonyPatternRefImpl(node);
       }
       else if (type == POSITIONAL) {
         return new PonyPositionalImpl(node);
@@ -461,11 +408,17 @@ public interface PonyTypes {
       else if (type == POSTFIXELEM) {
         return new PonyPostfixelemImpl(node);
       }
+      else if (type == POSTFIXOP) {
+        return new PonyPostfixopImpl(node);
+      }
       else if (type == RAWSEQ) {
         return new PonyRawseqImpl(node);
       }
       else if (type == RECOVER_DEF) {
         return new PonyRecoverDefImpl(node);
+      }
+      else if (type == RESOURCEBLOCK) {
+        return new PonyResourceblockImpl(node);
       }
       else if (type == SAFEOP) {
         return new PonySafeopImpl(node);
@@ -478,6 +431,9 @@ public interface PonyTypes {
       }
       else if (type == TERM) {
         return new PonyTermImpl(node);
+      }
+      else if (type == TERM_REF) {
+        return new PonyTermRefImpl(node);
       }
       else if (type == TILDE_ID) {
         return new PonyTildeIdImpl(node);
