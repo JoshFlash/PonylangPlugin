@@ -12,6 +12,8 @@ class PonyMemberReferenceIndex : FileBasedIndexExtension<String, String>() {
 
     companion object {
         val INDEX_ID: ID<String, String> = ID.create("com.github.joshflash.ponylangplugin.idrefindex")
+        const val FIELD_SUFFIX = ".field"
+        const val METHOD_SUFFIX = ".method"
     }
 
     override fun getName(): ID<String, String> = INDEX_ID

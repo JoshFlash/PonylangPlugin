@@ -187,9 +187,14 @@ tasks.register("generatePonyFileList") {
     doLast {
         // Gather .pony files relative to pony-source/
         val ponyFiles = resourceDir.walkTopDown()
-            .filter { it.isFile && it.extension == "pony" && !it.name.contains("_test.pony") }
+            .filter { it.isFile && it.extension == "pony" && !it.name.equals("_test.pony") }
             .map { it.relativeTo(resourceDir).path.replace(File.separatorChar, '/') }
             .toList()
+            .sortedWith(compareBy(
+                { !it.contains("real.pony") },
+                { !it.contains("platform.pony") },
+                { !it.contains("builtin") },
+            ))
 
         // Ensure the output directory exists
         outputDir.mkdirs()

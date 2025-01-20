@@ -13,9 +13,18 @@ class PonyMemberReference(memberRef: PonyMemberRef): PsiReferenceBase<PonyMember
         val project = element.project
 
         val parentField = PsiTreeUtil.getParentOfType(element, PonyField::class.java)
-        val parentMethod = PsiTreeUtil.getParentOfType(element, PonyMethod::class.java)
-        if (parentField != null || parentMethod != null) {
+        if (parentField != null && parentField.memberRef == element) {
             return element
+        }
+
+        val parentMethod = PsiTreeUtil.getParentOfType(element, PonyMethod::class.java)
+        if (parentMethod != null && parentMethod.memberRef == element) {
+            return element
+        }
+
+        val memberRef = PonyUtil.resolveMembersInFile(element, key)
+        if (memberRef != null) {
+            return memberRef
         }
 
         val methodReference = PonyUtil.resolveMethodReference(key, project)

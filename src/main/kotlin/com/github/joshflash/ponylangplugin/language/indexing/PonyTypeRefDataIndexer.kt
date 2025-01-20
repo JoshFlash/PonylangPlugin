@@ -11,9 +11,10 @@ class PonyTypeRefDataIndexer: DataIndexer<String, String, FileContent> {
         val result = mutableMapOf<String, String>()
         val ponyFile = inputData.psiFile as? PonyFile ?: return emptyMap()
 
+        val suffix = PonyTypeReferenceIndex.TYPE_SUFFIX
         val classDefs = PsiTreeUtil.collectElementsOfType(ponyFile, PonyClassDef::class.java)
         for (classDef in classDefs) {
-            result[classDef.typeRef.typeId.text] = ponyFile.name
+            result[classDef.typeRef.typeId.text + suffix] = ponyFile.name
         }
         return result
     }

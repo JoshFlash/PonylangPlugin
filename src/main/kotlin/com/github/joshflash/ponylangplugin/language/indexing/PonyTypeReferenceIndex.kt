@@ -12,6 +12,7 @@ class PonyTypeReferenceIndex : FileBasedIndexExtension<String, String>() {
 
     companion object {
         val INDEX_ID: ID<String, String> = ID.create("com.github.joshflash.ponylangplugin.typerefindex")
+        const val TYPE_SUFFIX = ".type"
     }
 
     override fun getName(): ID<String, String> = INDEX_ID

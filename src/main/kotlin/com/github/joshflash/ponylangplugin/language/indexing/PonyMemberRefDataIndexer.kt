@@ -11,13 +11,16 @@ class PonyMemberRefDataIndexer: DataIndexer<String, String, FileContent> {
         val result = mutableMapOf<String, String>()
         val ponyFile = inputData.psiFile as? PonyFile ?: return emptyMap()
 
+        val fieldSuffix = PonyMemberReferenceIndex.FIELD_SUFFIX
+        val methodSuffix = PonyMemberReferenceIndex.METHOD_SUFFIX
+
         val allMembers = PsiTreeUtil.collectElementsOfType(ponyFile, PonyMembers::class.java)
         for (members in allMembers) {
             for (field in members.fieldList) {
-                result[field.memberRef.text] = ponyFile.name
+                result[field.memberRef.text + fieldSuffix] = ponyFile.name
             }
             for (method in members.methodList) {
-                result[method.memberRef.text] = ponyFile.name
+                result[method.memberRef.text + methodSuffix] = ponyFile.name
             }
         }
 

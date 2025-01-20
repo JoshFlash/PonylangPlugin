@@ -49,7 +49,7 @@ object PonyUtil {
     }
 
     fun resolveTypeReference(typeId: String, project: Project): PonyTypeRef? {
-        val sourceFile = getPonySourceFileForType(typeId, project) ?: return null
+        val sourceFile = getPonySourceFileForType(typeId + PonyTypeReferenceIndex.TYPE_SUFFIX, project) ?: return null
         val classDefs = PsiTreeUtil.collectElementsOfType(sourceFile, PonyClassDef::class.java)
         for (classDef in classDefs) {
             if (classDef.typeRef.typeId.text == typeId) {
@@ -61,14 +61,14 @@ object PonyUtil {
     }
 
     fun resolveMethodReference(refId: String, project: Project): PonyMemberRef? {
-        val sourceFile = ponySourceFileForMember(refId, project) ?: return null
+        val sourceFile = ponySourceFileForMember(refId + PonyMemberReferenceIndex.METHOD_SUFFIX, project) ?: return null
         val methods = PsiTreeUtil.collectElementsOfType(sourceFile, PonyMethod::class.java)
 
         return methods.firstOrNull { it.memberRef.id.text == refId }?.memberRef
     }
 
     fun resolveFieldReference(refId: String, project: Project): PonyMemberRef? {
-        val sourceFile = ponySourceFileForMember(refId, project) ?: return null
+        val sourceFile = ponySourceFileForMember(refId + PonyMemberReferenceIndex.FIELD_SUFFIX, project) ?: return null
         val fields = PsiTreeUtil.collectElementsOfType(sourceFile, PonyField::class.java)
 
         return fields.firstOrNull { it.memberRef.id.text == refId }?.memberRef
@@ -104,6 +104,33 @@ object PonyUtil {
             },
             project.globalScope()
         )
+    }
+
+    fun resolveMembersInFile(element: PsiElement, key: String): PsiElement? {
+        val privateFields = findAllInFile<PonyField>(element.containingFile)
+        val fieldId = privateFields.firstOrNull { it.memberRef.id.text == key }?.memberRef
+        if (fieldId != null && !memberCallExists(element)) {
+            return fieldId
+        }
+
+        val privateMethods = findAllInFile<PonyMethod>(element.containingFile)
+        val methodId = privateMethods.firstOrNull { it.memberRef.id.text == key }?.memberRef
+        if (methodId != null) {
+            return methodId
+        }
+
+        val useStatements = findAllInFile<PonyUsestmt>(element.containingFile)
+        val useStmtId = useStatements.firstOrNull { it.id?.text == key}?.id
+        if (useStmtId != null) {
+            return useStmtId
+        }
+
+        return fieldId
+    }
+
+    private fun memberCallExists(element: PsiElement): Boolean {
+        val atom = PsiTreeUtil.getContextOfType(element, PonyAtom::class.java)
+        return PsiTreeUtil.getNextSiblingOfType(atom, PonyPostfixelem::class.java)?.call != null
     }
 
     inline fun <reified T: PsiElement> findAllInFile(file: PsiFile) : List<T> {
