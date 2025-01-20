@@ -153,7 +153,8 @@
 
 module ::= [doc_string] usestmt* class_def* ;
 
-usestmt ::= USE [id EQUALS] (string | use_ffi) [IF infix] ;
+usestmt ::= USE [id EQUALS] (string | use_ffi) [useinfix] ;
+useinfix ::= IF infix
 
 use_ffi ::= AT id_ffi typeargs LP [params] RP [QM] ;
 id_ffi ::= SCORE* (id | type_id | string) ;
@@ -231,7 +232,7 @@ term ::=
   | HASH postfix ;
 
 resourceblock ::=
-    IFDEF [annotatedids] infix THEN rawseq [elifdef | (ELSE annotatedrawseq)] END
+    ifdefblock
   | IFTYPE [annotatedids] istype [eliftype | (ELSE annotatedrawseq)] END
   | REPEAT [annotatedids] rawseq UNTIL annotatedrawseq [ELSE annotatedrawseq] END
   | WITH [annotatedids] withelem (COMMA withelem)* DO rawseq END
@@ -250,6 +251,7 @@ forloop ::= FOR [annotatedids] idseq IN rawseq DO rawseq [ELSE annotatedrawseq] 
 tryblock ::= TRY [annotatedids] rawseq [ELSE annotatedrawseq] [THEN annotatedrawseq] END ;
 matchblock ::= MATCH [annotatedids] rawseq caseexpr* [ELSE annotatedrawseq] END ;
 
+ifdefblock ::= IFDEF [annotatedids] infix THEN rawseq [elifdef | (ELSE annotatedrawseq)] END
 elifdef ::= ELSEIF [annotatedids] infix THEN rawseq [elifdef | (ELSE annotatedrawseq)] ;
 withelem ::= idseq EQUALS rawseq ;
 eliftype ::= ELSEIF [annotatedids] istype [eliftype | (ELSE annotatedrawseq)] ;

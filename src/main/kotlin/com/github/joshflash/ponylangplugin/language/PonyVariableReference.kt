@@ -28,6 +28,18 @@ class PonyVariableReference(idVar: PonyIdVar): PsiReferenceBase<PonyIdVar>(idVar
             return patternId
         }
 
+        val ifdefblock = PsiTreeUtil.getParentOfType(element, PonyIfdefblock::class.java)
+        val useinfix = PsiTreeUtil.getParentOfType(element, PonyUseinfix::class.java)
+        if (ifdefblock != null || useinfix != null) {
+            val indexedId =
+                PonyUtil.resolveMethodReference(key, element.project)
+                ?: PonyUtil.resolveFieldReference(key, element.project)
+
+            if (indexedId != null) {
+                return indexedId
+            }
+        }
+
         return null
     }
 

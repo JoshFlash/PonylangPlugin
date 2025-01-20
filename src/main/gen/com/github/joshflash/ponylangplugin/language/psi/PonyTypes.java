@@ -38,6 +38,7 @@ public interface PonyTypes {
   IElementType ID_FFI = new PonyElementType("ID_FFI");
   IElementType ID_VAR = new PonyElementType("ID_VAR");
   IElementType IFBLOCK = new PonyElementType("IFBLOCK");
+  IElementType IFDEFBLOCK = new PonyElementType("IFDEFBLOCK");
   IElementType INFIX = new PonyElementType("INFIX");
   IElementType INFIXOP = new PonyElementType("INFIXOP");
   IElementType INFIXTYPE = new PonyElementType("INFIXTYPE");
@@ -89,6 +90,7 @@ public interface PonyTypes {
   IElementType TYPE_REF = new PonyElementType("TYPE_REF");
   IElementType UNIONTYPE = new PonyElementType("UNIONTYPE");
   IElementType UNSAFEOP = new PonyElementType("UNSAFEOP");
+  IElementType USEINFIX = new PonyElementType("USEINFIX");
   IElementType USESTMT = new PonyElementType("USESTMT");
   IElementType USE_FFI = new PonyElementType("USE_FFI");
   IElementType WHILELOOP = new PonyElementType("WHILELOOP");
@@ -318,6 +320,9 @@ public interface PonyTypes {
       else if (type == IFBLOCK) {
         return new PonyIfblockImpl(node);
       }
+      else if (type == IFDEFBLOCK) {
+        return new PonyIfdefblockImpl(node);
+      }
       else if (type == INFIX) {
         return new PonyInfixImpl(node);
       }
@@ -470,6 +475,9 @@ public interface PonyTypes {
       }
       else if (type == UNSAFEOP) {
         return new PonyUnsafeopImpl(node);
+      }
+      else if (type == USEINFIX) {
+        return new PonyUseinfixImpl(node);
       }
       else if (type == USESTMT) {
         return new PonyUsestmtImpl(node);

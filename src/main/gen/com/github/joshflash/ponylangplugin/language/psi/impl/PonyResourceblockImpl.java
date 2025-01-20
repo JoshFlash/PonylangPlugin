@@ -47,20 +47,14 @@ public class PonyResourceblockImpl extends ASTWrapperPsiElement implements PonyR
 
   @Override
   @Nullable
-  public PonyElifdef getElifdef() {
-    return findChildByClass(PonyElifdef.class);
-  }
-
-  @Override
-  @Nullable
   public PonyEliftype getEliftype() {
     return findChildByClass(PonyEliftype.class);
   }
 
   @Override
   @Nullable
-  public PonyInfix getInfix() {
-    return findChildByClass(PonyInfix.class);
+  public PonyIfdefblock getIfdefblock() {
+    return findChildByClass(PonyIfdefblock.class);
   }
 
   @Override

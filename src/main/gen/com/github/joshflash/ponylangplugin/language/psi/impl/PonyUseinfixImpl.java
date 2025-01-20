@@ -11,14 +11,14 @@ import static com.github.joshflash.ponylangplugin.language.psi.PonyTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.joshflash.ponylangplugin.language.psi.*;
 
-public class PonyUsestmtImpl extends ASTWrapperPsiElement implements PonyUsestmt {
+public class PonyUseinfixImpl extends ASTWrapperPsiElement implements PonyUseinfix {
 
-  public PonyUsestmtImpl(@NotNull ASTNode node) {
+  public PonyUseinfixImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PonyVisitor visitor) {
-    visitor.visitUsestmt(this);
+    visitor.visitUseinfix(this);
   }
 
   @Override
@@ -28,27 +28,9 @@ public class PonyUsestmtImpl extends ASTWrapperPsiElement implements PonyUsestmt
   }
 
   @Override
-  @Nullable
-  public PonyUseFfi getUseFfi() {
-    return findChildByClass(PonyUseFfi.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyUseinfix getUseinfix() {
-    return findChildByClass(PonyUseinfix.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getId() {
-    return findChildByType(ID);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getString() {
-    return findChildByType(STRING);
+  @NotNull
+  public PonyInfix getInfix() {
+    return findNotNullChildByClass(PonyInfix.class);
   }
 
 }
