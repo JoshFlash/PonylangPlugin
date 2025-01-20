@@ -7,6 +7,9 @@ import com.intellij.psi.PsiElement;
 
 public interface PonyFlagatom extends PsiElement {
 
+  @NotNull
+  List<PonyFlaginfix> getFlaginfixList();
+
   @Nullable
   PonyForloop getForloop();
 
@@ -30,9 +33,6 @@ public interface PonyFlagatom extends PsiElement {
 
   @Nullable
   PonyPositional getPositional();
-
-  @Nullable
-  PonyRawseq getRawseq();
 
   @Nullable
   PonyRecoverDef getRecoverDef();

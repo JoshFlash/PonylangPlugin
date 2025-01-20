@@ -234,7 +234,7 @@ construct ::=
   | HASH postfix ;
 
 controlblock ::=
-  | IFTYPE [annotatedids] istype [eliftype | (ELSE annotatedrawseq)] END
+    IFTYPE [annotatedids] istype [eliftype | (ELSE annotatedrawseq)] END
   | REPEAT [annotatedids] rawseq UNTIL annotatedrawseq [ELSE annotatedrawseq] END
   | WITH [annotatedids] withelem (COMMA withelem)* DO rawseq END
   | RECOVER [annotatedids] [cap] rawseq END ;
@@ -269,8 +269,8 @@ flagatom ::=
   | ifblock
   | whileloop
   | forloop
-  | LP rawseq [tuple] RP
-  | LBK [AS type COLON] [rawseq] RBK ;
+  | LP flaginfix* [tuple] RP
+  | LBK [AS type COLON] [flaginfix*] RBK ;
 
 withelem ::= idseq EQUALS rawseq ;
 
@@ -331,22 +331,19 @@ dot_id ::= DOT (member_ref | tuple_id) ;
 dot_typeref ::= DOT type_ref ;
 
 atom ::=
-    particle
-  | whileloop
-  | forloop
-  | LP rawseq [tuple] RP
-  | LBK [AS type COLON] [rawseq] RBK ;
-
-particle ::=
     id_var
   | type_ref
   | literal
-  | THIS
-  | object_def
+  | whileloop
+  | forloop
   | fun_def
+  | object_def
   | recover_def
+  | LP rawseq [tuple] RP
+  | THIS
   | AT id_ffi [typeargs] LP [positional] [named] RP [QM]
-  | SOURCELOC ;
+  | SOURCELOC
+  | LBK [AS type COLON] [rawseq] RBK ;
 
 object_def ::= OBJECT [annotatedids] [cap] [IS type] members END
 

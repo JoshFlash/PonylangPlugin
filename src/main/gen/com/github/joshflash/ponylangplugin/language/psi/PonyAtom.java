@@ -11,16 +11,43 @@ public interface PonyAtom extends PsiElement {
   PonyForloop getForloop();
 
   @Nullable
-  PonyParticle getParticle();
+  PonyFunDef getFunDef();
+
+  @Nullable
+  PonyIdFfi getIdFfi();
+
+  @Nullable
+  PonyIdVar getIdVar();
+
+  @Nullable
+  PonyLiteral getLiteral();
+
+  @Nullable
+  PonyNamed getNamed();
+
+  @Nullable
+  PonyObjectDef getObjectDef();
+
+  @Nullable
+  PonyPositional getPositional();
 
   @Nullable
   PonyRawseq getRawseq();
+
+  @Nullable
+  PonyRecoverDef getRecoverDef();
 
   @Nullable
   PonyTuple getTuple();
 
   @Nullable
   PonyType getType();
+
+  @Nullable
+  PonyTypeRef getTypeRef();
+
+  @Nullable
+  PonyTypeargs getTypeargs();
 
   @Nullable
   PonyWhileloop getWhileloop();

@@ -9,17 +9,27 @@ class PonyVariableReference(idVar: PonyIdVar): PsiReferenceBase<PonyIdVar>(idVar
     override fun resolve(): PsiElement? {
         val key = element.id?.text ?: return null
 
-        var method = PsiTreeUtil.getParentOfType(element, PonyMethod::class.java)
-        while (method != null) {
-            val methodParams = PsiTreeUtil.getChildOfType(method, PonyParams::class.java)
-            val paramId = methodParams?.paramList?.firstOrNull { it.paramRef.id?.text == key }?.paramRef
-            if (paramId != null) {
-                return paramId
-            }
-
-            method = PsiTreeUtil.getParentOfType(method, PonyMethod::class.java)
+        val topLevelMember = resolveTopLevelMembers(key)
+        if (topLevelMember != null) {
+            return topLevelMember
         }
 
+        val method = PsiTreeUtil.getTopmostParentOfType(element, PonyMethod::class.java)
+        val paramRefs = PsiTreeUtil.collectElementsOfType(method, PonyParamRef::class.java)
+        val paramId = paramRefs.firstOrNull { it.id?.text == key }
+        if (paramId != null) {
+            return paramId
+        }
+        val patternRefs = PsiTreeUtil.collectElementsOfType(method, PonyPatternRef::class.java)
+        val patternId = patternRefs.firstOrNull { it.id?.text == key }
+        if (patternId != null) {
+            return patternId
+        }
+
+        return null
+    }
+
+    private fun resolveTopLevelMembers(key: String): PsiElement? {
         val privateFields = PonyUtil.findAllInFile<PonyField>(element.containingFile)
         val fieldId = privateFields.firstOrNull { it.memberRef.id.text == key }?.memberRef
         if (fieldId != null && !memberCallExists()) {
@@ -36,34 +46,6 @@ class PonyVariableReference(idVar: PonyIdVar): PsiReferenceBase<PonyIdVar>(idVar
         val useStmtId = useStatements.firstOrNull { it.id?.text == key}?.id
         if (useStmtId != null) {
             return useStmtId
-        }
-
-        val functionDef = PsiTreeUtil.getParentOfType(element, PonyFunDef::class.java)
-        val lambdaParams = PsiTreeUtil.getChildOfType(functionDef, PonyLambdaparams::class.java)
-        val lambdaParamId = lambdaParams?.lambdaparamList?.firstOrNull { it.paramRef.id?.text == key }?.paramRef
-        if (lambdaParamId != null) {
-            return lambdaParamId
-        }
-        val lamdaCaptures = PsiTreeUtil.getChildOfType(functionDef, PonyLambdacaptures::class.java)
-        val lambdaCaptureId = lamdaCaptures?.lambdacaptureList?.firstOrNull { it.paramRef.id?.text == key }?.paramRef
-        if (lambdaCaptureId != null) {
-            return lambdaCaptureId
-        }
-
-
-        val nestingObjectDef  = PsiTreeUtil.getParentOfType(element, PonyObjectDef::class.java)
-        val encapsulatingMethod = PsiTreeUtil.getContextOfType(nestingObjectDef ?: element, PonyMethod::class.java)
-        val patternRefs = PsiTreeUtil.collectElementsOfType(encapsulatingMethod, PonyPatternRef::class.java)
-        for (patternRef in patternRefs) {
-            if (patternRef.id?.text == key) {
-                val commonParent = PsiTreeUtil.findCommonParent(patternRef, element)
-
-                val nestingConstruct = PsiTreeUtil.getParentOfType(patternRef, PonyConstruct::class.java)
-                val commonConstruct = PsiTreeUtil.getParentOfType(commonParent, PonyConstruct::class.java)
-                if (commonConstruct == nestingConstruct) {
-                    return patternRef
-                }
-            }
         }
 
         return fieldId

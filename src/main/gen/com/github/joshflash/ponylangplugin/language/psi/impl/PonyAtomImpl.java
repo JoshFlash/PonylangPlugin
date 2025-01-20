@@ -35,14 +35,56 @@ public class PonyAtomImpl extends ASTWrapperPsiElement implements PonyAtom {
 
   @Override
   @Nullable
-  public PonyParticle getParticle() {
-    return findChildByClass(PonyParticle.class);
+  public PonyFunDef getFunDef() {
+    return findChildByClass(PonyFunDef.class);
+  }
+
+  @Override
+  @Nullable
+  public PonyIdFfi getIdFfi() {
+    return findChildByClass(PonyIdFfi.class);
+  }
+
+  @Override
+  @Nullable
+  public PonyIdVar getIdVar() {
+    return findChildByClass(PonyIdVar.class);
+  }
+
+  @Override
+  @Nullable
+  public PonyLiteral getLiteral() {
+    return findChildByClass(PonyLiteral.class);
+  }
+
+  @Override
+  @Nullable
+  public PonyNamed getNamed() {
+    return findChildByClass(PonyNamed.class);
+  }
+
+  @Override
+  @Nullable
+  public PonyObjectDef getObjectDef() {
+    return findChildByClass(PonyObjectDef.class);
+  }
+
+  @Override
+  @Nullable
+  public PonyPositional getPositional() {
+    return findChildByClass(PonyPositional.class);
   }
 
   @Override
   @Nullable
   public PonyRawseq getRawseq() {
     return findChildByClass(PonyRawseq.class);
+  }
+
+  @Override
+  @Nullable
+  public PonyRecoverDef getRecoverDef() {
+    return findChildByClass(PonyRecoverDef.class);
   }
 
   @Override
@@ -55,6 +97,18 @@ public class PonyAtomImpl extends ASTWrapperPsiElement implements PonyAtom {
   @Nullable
   public PonyType getType() {
     return findChildByClass(PonyType.class);
+  }
+
+  @Override
+  @Nullable
+  public PonyTypeRef getTypeRef() {
+    return findChildByClass(PonyTypeRef.class);
+  }
+
+  @Override
+  @Nullable
+  public PonyTypeargs getTypeargs() {
+    return findChildByClass(PonyTypeargs.class);
   }
 
   @Override

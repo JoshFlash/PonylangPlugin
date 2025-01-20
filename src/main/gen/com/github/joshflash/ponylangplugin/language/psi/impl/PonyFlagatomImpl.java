@@ -28,6 +28,12 @@ public class PonyFlagatomImpl extends ASTWrapperPsiElement implements PonyFlagat
   }
 
   @Override
+  @NotNull
+  public List<PonyFlaginfix> getFlaginfixList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyFlaginfix.class);
+  }
+
+  @Override
   @Nullable
   public PonyForloop getForloop() {
     return findChildByClass(PonyForloop.class);
@@ -73,12 +79,6 @@ public class PonyFlagatomImpl extends ASTWrapperPsiElement implements PonyFlagat
   @Nullable
   public PonyPositional getPositional() {
     return findChildByClass(PonyPositional.class);
-  }
-
-  @Override
-  @Nullable
-  public PonyRawseq getRawseq() {
-    return findChildByClass(PonyRawseq.class);
   }
 
   @Override

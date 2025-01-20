@@ -18,7 +18,7 @@ object PonyTypeIdCompletionProvider : PonyCompletionProviderBase() {
             .inside(PlatformPatterns.psiElement(PonyTypes.TYPE_REF))
             .inside(PlatformPatterns.or(
                 PlatformPatterns.psiElement(PonyTypes.NOMINAL),
-                PlatformPatterns.psiElement(PonyTypes.PARTICLE)
+                PlatformPatterns.psiElement(PonyTypes.ATOM)
             ))
 
 

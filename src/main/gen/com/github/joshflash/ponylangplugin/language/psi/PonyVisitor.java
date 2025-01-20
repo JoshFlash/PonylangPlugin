@@ -283,10 +283,6 @@ public class PonyVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitParticle(@NotNull PonyParticle o) {
-    visitPsiElement(o);
-  }
-
   public void visitPattern(@NotNull PonyPattern o) {
     visitPsiElement(o);
   }

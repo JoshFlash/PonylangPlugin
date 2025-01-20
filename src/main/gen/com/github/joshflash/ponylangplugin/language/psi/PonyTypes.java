@@ -77,7 +77,6 @@ public interface PonyTypes {
   IElementType PARAMS = new PonyElementType("PARAMS");
   IElementType PARAM_REF = new PonyElementType("PARAM_REF");
   IElementType PARTIALOP = new PonyElementType("PARTIALOP");
-  IElementType PARTICLE = new PonyElementType("PARTICLE");
   IElementType PATTERN = new PonyElementType("PATTERN");
   IElementType PATTERN_REF = new PonyElementType("PATTERN_REF");
   IElementType POSITIONAL = new PonyElementType("POSITIONAL");
@@ -131,7 +130,6 @@ public interface PonyTypes {
   IElementType COMP_INT = new PonyTokenType("compile_intrinsic");
   IElementType CONSUME = new PonyTokenType("consume");
   IElementType CONTINUE = new PonyTokenType("continue");
-  IElementType CONTROLBLOCK_0_0 = new PonyTokenType("controlblock_0_0");
   IElementType DIGESTOF = new PonyTokenType("digestof");
   IElementType DIV = new PonyTokenType("/");
   IElementType DIV_PARTIAL = new PonyTokenType("/?");
@@ -447,9 +445,6 @@ public interface PonyTypes {
       }
       else if (type == PARTIALOP) {
         return new PonyPartialopImpl(node);
-      }
-      else if (type == PARTICLE) {
-        return new PonyParticleImpl(node);
       }
       else if (type == PATTERN) {
         return new PonyPatternImpl(node);
