@@ -6,14 +6,15 @@ import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.indexing.DataIndexer
 import com.intellij.util.indexing.FileContent
 
-class PonyTypeRefDataIndexer: DataIndexer<String, Void, FileContent> {
-    override fun map(inputData: FileContent): Map<String, Void?> {
-        val result = mutableMapOf<String, Void?>()
+class PonyTypeRefDataIndexer: DataIndexer<String, String, FileContent> {
+    override fun map(inputData: FileContent): Map<String, String> {
+        val result = mutableMapOf<String, String>()
         val ponyFile = inputData.psiFile as? PonyFile ?: return emptyMap()
 
+        val suffix = PonyTypeReferenceIndex.TYPE_SUFFIX
         val classDefs = PsiTreeUtil.collectElementsOfType(ponyFile, PonyClassDef::class.java)
         for (classDef in classDefs) {
-            result[classDef.typeRef.typeId.text] = null
+            result[classDef.typeRef.typeId.text + suffix] = ponyFile.name
         }
         return result
     }

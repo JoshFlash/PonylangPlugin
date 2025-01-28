@@ -14,12 +14,12 @@ public interface PonyField extends PsiElement {
   PonyInfix getInfix();
 
   @NotNull
+  PonyMemberRef getMemberRef();
+
+  @NotNull
   PonyType getType();
 
   @Nullable
   PsiElement getDocString();
-
-  @NotNull
-  PsiElement getId();
 
 }

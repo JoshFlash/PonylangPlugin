@@ -129,69 +129,130 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // particle
+  // id_var
+  //   | type_ref
+  //   | literal
   //   | ifblock
   //   | whileloop
   //   | forloop
+  //   | fun_def
+  //   | object_def
+  //   | recover_def
   //   | LP rawseq [tuple] RP
+  //   | THIS
+  //   | AT id_ffi [typeargs] LP [positional] [named] RP [QM]
+  //   | SOURCELOC
   //   | LBK [AS type COLON] [rawseq] RBK
   public static boolean atom(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "atom")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, ATOM, "<atom>");
-    r = particle(b, l + 1);
+    r = id_var(b, l + 1);
+    if (!r) r = type_ref(b, l + 1);
+    if (!r) r = literal(b, l + 1);
     if (!r) r = ifblock(b, l + 1);
     if (!r) r = whileloop(b, l + 1);
     if (!r) r = forloop(b, l + 1);
-    if (!r) r = atom_4(b, l + 1);
-    if (!r) r = atom_5(b, l + 1);
+    if (!r) r = fun_def(b, l + 1);
+    if (!r) r = object_def(b, l + 1);
+    if (!r) r = recover_def(b, l + 1);
+    if (!r) r = atom_9(b, l + 1);
+    if (!r) r = consumeToken(b, THIS);
+    if (!r) r = atom_11(b, l + 1);
+    if (!r) r = consumeToken(b, SOURCELOC);
+    if (!r) r = atom_13(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
   // LP rawseq [tuple] RP
-  private static boolean atom_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "atom_4")) return false;
+  private static boolean atom_9(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "atom_9")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LP);
     r = r && rawseq(b, l + 1);
-    r = r && atom_4_2(b, l + 1);
+    r = r && atom_9_2(b, l + 1);
     r = r && consumeToken(b, RP);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // [tuple]
-  private static boolean atom_4_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "atom_4_2")) return false;
+  private static boolean atom_9_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "atom_9_2")) return false;
     tuple(b, l + 1);
     return true;
   }
 
+  // AT id_ffi [typeargs] LP [positional] [named] RP [QM]
+  private static boolean atom_11(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "atom_11")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, AT);
+    r = r && id_ffi(b, l + 1);
+    r = r && atom_11_2(b, l + 1);
+    r = r && consumeToken(b, LP);
+    r = r && atom_11_4(b, l + 1);
+    r = r && atom_11_5(b, l + 1);
+    r = r && consumeToken(b, RP);
+    r = r && atom_11_7(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [typeargs]
+  private static boolean atom_11_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "atom_11_2")) return false;
+    typeargs(b, l + 1);
+    return true;
+  }
+
+  // [positional]
+  private static boolean atom_11_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "atom_11_4")) return false;
+    positional(b, l + 1);
+    return true;
+  }
+
+  // [named]
+  private static boolean atom_11_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "atom_11_5")) return false;
+    named(b, l + 1);
+    return true;
+  }
+
+  // [QM]
+  private static boolean atom_11_7(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "atom_11_7")) return false;
+    consumeToken(b, QM);
+    return true;
+  }
+
   // LBK [AS type COLON] [rawseq] RBK
-  private static boolean atom_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "atom_5")) return false;
+  private static boolean atom_13(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "atom_13")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LBK);
-    r = r && atom_5_1(b, l + 1);
-    r = r && atom_5_2(b, l + 1);
+    r = r && atom_13_1(b, l + 1);
+    r = r && atom_13_2(b, l + 1);
     r = r && consumeToken(b, RBK);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // [AS type COLON]
-  private static boolean atom_5_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "atom_5_1")) return false;
-    atom_5_1_0(b, l + 1);
+  private static boolean atom_13_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "atom_13_1")) return false;
+    atom_13_1_0(b, l + 1);
     return true;
   }
 
   // AS type COLON
-  private static boolean atom_5_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "atom_5_1_0")) return false;
+  private static boolean atom_13_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "atom_13_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, AS);
@@ -202,8 +263,8 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   // [rawseq]
-  private static boolean atom_5_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "atom_5_2")) return false;
+  private static boolean atom_13_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "atom_13_2")) return false;
     rawseq(b, l + 1);
     return true;
   }
@@ -250,7 +311,7 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // RCVR [cap] [id_ref] [typeparams] LP [type (COMMA type)*] RP [COLON type] [QM] RBC [cap | gencap] [CARET | BANG]
+  // RCVR [cap] [id_var] [typeparams] LP [type (COMMA type)*] RP [COLON type] [QM] RBC [cap | gencap] [CARET | BANG]
   public static boolean barelambdatype(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "barelambdatype")) return false;
     if (!nextTokenIs(b, RCVR)) return false;
@@ -279,10 +340,10 @@ public class PonyParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // [id_ref]
+  // [id_var]
   private static boolean barelambdatype_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "barelambdatype_2")) return false;
-    id_ref(b, l + 1);
+    id_var(b, l + 1);
     return true;
   }
 
@@ -487,84 +548,6 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // particle
-  //   | whileloop
-  //   | forloop
-  //   | LP rawseq [tuple] RP
-  //   | LBK [AS type COLON] [rawseq] RBK
-  public static boolean caseatom(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "caseatom")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, CASEATOM, "<caseatom>");
-    r = particle(b, l + 1);
-    if (!r) r = whileloop(b, l + 1);
-    if (!r) r = forloop(b, l + 1);
-    if (!r) r = caseatom_3(b, l + 1);
-    if (!r) r = caseatom_4(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // LP rawseq [tuple] RP
-  private static boolean caseatom_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "caseatom_3")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, LP);
-    r = r && rawseq(b, l + 1);
-    r = r && caseatom_3_2(b, l + 1);
-    r = r && consumeToken(b, RP);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [tuple]
-  private static boolean caseatom_3_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "caseatom_3_2")) return false;
-    tuple(b, l + 1);
-    return true;
-  }
-
-  // LBK [AS type COLON] [rawseq] RBK
-  private static boolean caseatom_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "caseatom_4")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, LBK);
-    r = r && caseatom_4_1(b, l + 1);
-    r = r && caseatom_4_2(b, l + 1);
-    r = r && consumeToken(b, RBK);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [AS type COLON]
-  private static boolean caseatom_4_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "caseatom_4_1")) return false;
-    caseatom_4_1_0(b, l + 1);
-    return true;
-  }
-
-  // AS type COLON
-  private static boolean caseatom_4_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "caseatom_4_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, AS);
-    r = r && type(b, l + 1);
-    r = r && consumeToken(b, COLON);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [rawseq]
-  private static boolean caseatom_4_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "caseatom_4_2")) return false;
-    rawseq(b, l + 1);
-    return true;
-  }
-
-  /* ********************************************************** */
   // PIPE [annotatedids] [casepattern] [IF rawseq] [ARROW rawseq]
   public static boolean caseexpr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "caseexpr")) return false;
@@ -631,61 +614,25 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (NOT | ADDRESSOF | SUB | SUB_UNSAFE | DIGESTOF) caseparampattern
-  //   | casepostfix
-  public static boolean caseparampattern(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "caseparampattern")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _COLLAPSE_, CASEPARAMPATTERN, "<caseparampattern>");
-    r = caseparampattern_0(b, l + 1);
-    if (!r) r = casepostfix(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // (NOT | ADDRESSOF | SUB | SUB_UNSAFE | DIGESTOF) caseparampattern
-  private static boolean caseparampattern_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "caseparampattern_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = caseparampattern_0_0(b, l + 1);
-    r = r && caseparampattern(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // NOT | ADDRESSOF | SUB | SUB_UNSAFE | DIGESTOF
-  private static boolean caseparampattern_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "caseparampattern_0_0")) return false;
-    boolean r;
-    r = consumeToken(b, NOT);
-    if (!r) r = consumeToken(b, ADDRESSOF);
-    if (!r) r = consumeToken(b, SUB);
-    if (!r) r = consumeToken(b, SUB_UNSAFE);
-    if (!r) r = consumeToken(b, DIGESTOF);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // binding id_ref [COLON type]
-  //   | caseparampattern
+  // binding term_ref [COLON type]
+  //   | postfixop* postfix
   public static boolean casepattern(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "casepattern")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CASEPATTERN, "<casepattern>");
     r = casepattern_0(b, l + 1);
-    if (!r) r = caseparampattern(b, l + 1);
+    if (!r) r = casepattern_1(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // binding id_ref [COLON type]
+  // binding term_ref [COLON type]
   private static boolean casepattern_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "casepattern_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = binding(b, l + 1);
-    r = r && id_ref(b, l + 1);
+    r = r && term_ref(b, l + 1);
     r = r && casepattern_0_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
@@ -709,37 +656,37 @@ public class PonyParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  /* ********************************************************** */
-  // caseatom postfixelem*
-  public static boolean casepostfix(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "casepostfix")) return false;
+  // postfixop* postfix
+  private static boolean casepattern_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "casepattern_1")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, CASEPOSTFIX, "<casepostfix>");
-    r = caseatom(b, l + 1);
-    r = r && casepostfix_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    Marker m = enter_section_(b);
+    r = casepattern_1_0(b, l + 1);
+    r = r && postfix(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
   }
 
-  // postfixelem*
-  private static boolean casepostfix_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "casepostfix_1")) return false;
+  // postfixop*
+  private static boolean casepattern_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "casepattern_1_0")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!postfixelem(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "casepostfix_1", c)) break;
+      if (!postfixop(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "casepattern_1_0", c)) break;
     }
     return true;
   }
 
   /* ********************************************************** */
-  // CHAIN id
+  // CHAIN member_ref
   public static boolean chain_id(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "chain_id")) return false;
     if (!nextTokenIs(b, CHAIN)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, CHAIN, ID);
+    r = consumeToken(b, CHAIN);
+    r = r && member_ref(b, l + 1);
     exit_section_(b, m, CHAIN_ID, r);
     return r;
   }
@@ -833,387 +780,18 @@ public class PonyParser implements PsiParser, LightPsiParser {
   // ifblock
   //   | whileloop
   //   | forloop
-  //   | IFDEF [annotatedids] infix THEN rawseq [elifdef | (ELSE annotatedrawseq)] END
-  //   | IFTYPE [annotatedids] istype [eliftype | (ELSE annotatedrawseq)] END
-  //   | MATCH [annotatedids] rawseq caseexpr* [ELSE annotatedrawseq] END
-  //   | REPEAT [annotatedids] rawseq UNTIL annotatedrawseq [ELSE annotatedrawseq] END
-  //   | WITH [annotatedids] withelem (COMMA withelem)* DO rawseq END
-  //   | TRY [annotatedids] rawseq [ELSE annotatedrawseq] [THEN annotatedrawseq] END
-  //   | RECOVER [annotatedids] [cap] rawseq END
-  //   | CONSUME [cap] term
-  //   | HASH postfix
-  public static boolean construct(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct")) return false;
+  //   | tryblock
+  //   | matchblock
+  public static boolean controlblock(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "controlblock")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, CONSTRUCT, "<construct>");
+    Marker m = enter_section_(b, l, _NONE_, CONTROLBLOCK, "<controlblock>");
     r = ifblock(b, l + 1);
     if (!r) r = whileloop(b, l + 1);
     if (!r) r = forloop(b, l + 1);
-    if (!r) r = construct_3(b, l + 1);
-    if (!r) r = construct_4(b, l + 1);
-    if (!r) r = construct_5(b, l + 1);
-    if (!r) r = construct_6(b, l + 1);
-    if (!r) r = construct_7(b, l + 1);
-    if (!r) r = construct_8(b, l + 1);
-    if (!r) r = construct_9(b, l + 1);
-    if (!r) r = construct_10(b, l + 1);
-    if (!r) r = construct_11(b, l + 1);
+    if (!r) r = tryblock(b, l + 1);
+    if (!r) r = matchblock(b, l + 1);
     exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // IFDEF [annotatedids] infix THEN rawseq [elifdef | (ELSE annotatedrawseq)] END
-  private static boolean construct_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_3")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, IFDEF);
-    r = r && construct_3_1(b, l + 1);
-    r = r && infix(b, l + 1);
-    r = r && consumeToken(b, THEN);
-    r = r && rawseq(b, l + 1);
-    r = r && construct_3_5(b, l + 1);
-    r = r && consumeToken(b, END);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [annotatedids]
-  private static boolean construct_3_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_3_1")) return false;
-    annotatedids(b, l + 1);
-    return true;
-  }
-
-  // [elifdef | (ELSE annotatedrawseq)]
-  private static boolean construct_3_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_3_5")) return false;
-    construct_3_5_0(b, l + 1);
-    return true;
-  }
-
-  // elifdef | (ELSE annotatedrawseq)
-  private static boolean construct_3_5_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_3_5_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = elifdef(b, l + 1);
-    if (!r) r = construct_3_5_0_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // ELSE annotatedrawseq
-  private static boolean construct_3_5_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_3_5_0_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, ELSE);
-    r = r && annotatedrawseq(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // IFTYPE [annotatedids] istype [eliftype | (ELSE annotatedrawseq)] END
-  private static boolean construct_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_4")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, IFTYPE);
-    r = r && construct_4_1(b, l + 1);
-    r = r && istype(b, l + 1);
-    r = r && construct_4_3(b, l + 1);
-    r = r && consumeToken(b, END);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [annotatedids]
-  private static boolean construct_4_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_4_1")) return false;
-    annotatedids(b, l + 1);
-    return true;
-  }
-
-  // [eliftype | (ELSE annotatedrawseq)]
-  private static boolean construct_4_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_4_3")) return false;
-    construct_4_3_0(b, l + 1);
-    return true;
-  }
-
-  // eliftype | (ELSE annotatedrawseq)
-  private static boolean construct_4_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_4_3_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = eliftype(b, l + 1);
-    if (!r) r = construct_4_3_0_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // ELSE annotatedrawseq
-  private static boolean construct_4_3_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_4_3_0_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, ELSE);
-    r = r && annotatedrawseq(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // MATCH [annotatedids] rawseq caseexpr* [ELSE annotatedrawseq] END
-  private static boolean construct_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_5")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, MATCH);
-    r = r && construct_5_1(b, l + 1);
-    r = r && rawseq(b, l + 1);
-    r = r && construct_5_3(b, l + 1);
-    r = r && construct_5_4(b, l + 1);
-    r = r && consumeToken(b, END);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [annotatedids]
-  private static boolean construct_5_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_5_1")) return false;
-    annotatedids(b, l + 1);
-    return true;
-  }
-
-  // caseexpr*
-  private static boolean construct_5_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_5_3")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!caseexpr(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "construct_5_3", c)) break;
-    }
-    return true;
-  }
-
-  // [ELSE annotatedrawseq]
-  private static boolean construct_5_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_5_4")) return false;
-    construct_5_4_0(b, l + 1);
-    return true;
-  }
-
-  // ELSE annotatedrawseq
-  private static boolean construct_5_4_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_5_4_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, ELSE);
-    r = r && annotatedrawseq(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // REPEAT [annotatedids] rawseq UNTIL annotatedrawseq [ELSE annotatedrawseq] END
-  private static boolean construct_6(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_6")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, REPEAT);
-    r = r && construct_6_1(b, l + 1);
-    r = r && rawseq(b, l + 1);
-    r = r && consumeToken(b, UNTIL);
-    r = r && annotatedrawseq(b, l + 1);
-    r = r && construct_6_5(b, l + 1);
-    r = r && consumeToken(b, END);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [annotatedids]
-  private static boolean construct_6_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_6_1")) return false;
-    annotatedids(b, l + 1);
-    return true;
-  }
-
-  // [ELSE annotatedrawseq]
-  private static boolean construct_6_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_6_5")) return false;
-    construct_6_5_0(b, l + 1);
-    return true;
-  }
-
-  // ELSE annotatedrawseq
-  private static boolean construct_6_5_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_6_5_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, ELSE);
-    r = r && annotatedrawseq(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // WITH [annotatedids] withelem (COMMA withelem)* DO rawseq END
-  private static boolean construct_7(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_7")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, WITH);
-    r = r && construct_7_1(b, l + 1);
-    r = r && withelem(b, l + 1);
-    r = r && construct_7_3(b, l + 1);
-    r = r && consumeToken(b, DO);
-    r = r && rawseq(b, l + 1);
-    r = r && consumeToken(b, END);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [annotatedids]
-  private static boolean construct_7_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_7_1")) return false;
-    annotatedids(b, l + 1);
-    return true;
-  }
-
-  // (COMMA withelem)*
-  private static boolean construct_7_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_7_3")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!construct_7_3_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "construct_7_3", c)) break;
-    }
-    return true;
-  }
-
-  // COMMA withelem
-  private static boolean construct_7_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_7_3_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, COMMA);
-    r = r && withelem(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // TRY [annotatedids] rawseq [ELSE annotatedrawseq] [THEN annotatedrawseq] END
-  private static boolean construct_8(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_8")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, TRY);
-    r = r && construct_8_1(b, l + 1);
-    r = r && rawseq(b, l + 1);
-    r = r && construct_8_3(b, l + 1);
-    r = r && construct_8_4(b, l + 1);
-    r = r && consumeToken(b, END);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [annotatedids]
-  private static boolean construct_8_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_8_1")) return false;
-    annotatedids(b, l + 1);
-    return true;
-  }
-
-  // [ELSE annotatedrawseq]
-  private static boolean construct_8_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_8_3")) return false;
-    construct_8_3_0(b, l + 1);
-    return true;
-  }
-
-  // ELSE annotatedrawseq
-  private static boolean construct_8_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_8_3_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, ELSE);
-    r = r && annotatedrawseq(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [THEN annotatedrawseq]
-  private static boolean construct_8_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_8_4")) return false;
-    construct_8_4_0(b, l + 1);
-    return true;
-  }
-
-  // THEN annotatedrawseq
-  private static boolean construct_8_4_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_8_4_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, THEN);
-    r = r && annotatedrawseq(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // RECOVER [annotatedids] [cap] rawseq END
-  private static boolean construct_9(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_9")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, RECOVER);
-    r = r && construct_9_1(b, l + 1);
-    r = r && construct_9_2(b, l + 1);
-    r = r && rawseq(b, l + 1);
-    r = r && consumeToken(b, END);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [annotatedids]
-  private static boolean construct_9_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_9_1")) return false;
-    annotatedids(b, l + 1);
-    return true;
-  }
-
-  // [cap]
-  private static boolean construct_9_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_9_2")) return false;
-    cap(b, l + 1);
-    return true;
-  }
-
-  // CONSUME [cap] term
-  private static boolean construct_10(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_10")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, CONSUME);
-    r = r && construct_10_1(b, l + 1);
-    r = r && term(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [cap]
-  private static boolean construct_10_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_10_1")) return false;
-    cap(b, l + 1);
-    return true;
-  }
-
-  // HASH postfix
-  private static boolean construct_11(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_11")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, HASH);
-    r = r && postfix(b, l + 1);
-    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -1235,7 +813,7 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOT (id | tuple_id)
+  // DOT (member_ref | tuple_id)
   public static boolean dot_id(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "dot_id")) return false;
     if (!nextTokenIs(b, DOT)) return false;
@@ -1247,25 +825,25 @@ public class PonyParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // id | tuple_id
+  // member_ref | tuple_id
   private static boolean dot_id_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "dot_id_1")) return false;
     boolean r;
-    r = consumeToken(b, ID);
+    r = member_ref(b, l + 1);
     if (!r) r = consumeToken(b, TUPLE_ID);
     return r;
   }
 
   /* ********************************************************** */
   // DOT type_ref
-  public static boolean dot_typeref(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "dot_typeref")) return false;
+  public static boolean dot_type(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "dot_type")) return false;
     if (!nextTokenIs(b, DOT)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, DOT);
     r = r && type_ref(b, l + 1);
-    exit_section_(b, m, DOT_TYPEREF, r);
+    exit_section_(b, m, DOT_TYPE, r);
     return r;
   }
 
@@ -1455,13 +1033,14 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // binding id COLON type [EQUALS infix] [doc_string]
+  // binding member_ref COLON type [EQUALS infix] [doc_string]
   public static boolean field(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "field")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FIELD, "<field>");
     r = binding(b, l + 1);
-    r = r && consumeTokens(b, 0, ID, COLON);
+    r = r && member_ref(b, l + 1);
+    r = r && consumeToken(b, COLON);
     r = r && type(b, l + 1);
     r = r && field_4(b, l + 1);
     r = r && field_5(b, l + 1);
@@ -1540,6 +1119,106 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // LBC [annotatedids] [cap] [param_ref] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
+  public static boolean fun_def(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fun_def")) return false;
+    if (!nextTokenIs(b, LBC)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LBC);
+    r = r && fun_def_1(b, l + 1);
+    r = r && fun_def_2(b, l + 1);
+    r = r && fun_def_3(b, l + 1);
+    r = r && fun_def_4(b, l + 1);
+    r = r && consumeToken(b, LP);
+    r = r && fun_def_6(b, l + 1);
+    r = r && consumeToken(b, RP);
+    r = r && fun_def_8(b, l + 1);
+    r = r && fun_def_9(b, l + 1);
+    r = r && fun_def_10(b, l + 1);
+    r = r && consumeToken(b, ARROW);
+    r = r && rawseq(b, l + 1);
+    r = r && consumeToken(b, RBC);
+    r = r && fun_def_14(b, l + 1);
+    exit_section_(b, m, FUN_DEF, r);
+    return r;
+  }
+
+  // [annotatedids]
+  private static boolean fun_def_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fun_def_1")) return false;
+    annotatedids(b, l + 1);
+    return true;
+  }
+
+  // [cap]
+  private static boolean fun_def_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fun_def_2")) return false;
+    cap(b, l + 1);
+    return true;
+  }
+
+  // [param_ref]
+  private static boolean fun_def_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fun_def_3")) return false;
+    param_ref(b, l + 1);
+    return true;
+  }
+
+  // [typeparams]
+  private static boolean fun_def_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fun_def_4")) return false;
+    typeparams(b, l + 1);
+    return true;
+  }
+
+  // [lambdaparams]
+  private static boolean fun_def_6(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fun_def_6")) return false;
+    lambdaparams(b, l + 1);
+    return true;
+  }
+
+  // [lambdacaptures]
+  private static boolean fun_def_8(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fun_def_8")) return false;
+    lambdacaptures(b, l + 1);
+    return true;
+  }
+
+  // [COLON type]
+  private static boolean fun_def_9(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fun_def_9")) return false;
+    fun_def_9_0(b, l + 1);
+    return true;
+  }
+
+  // COLON type
+  private static boolean fun_def_9_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fun_def_9_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COLON);
+    r = r && type(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [QM]
+  private static boolean fun_def_10(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fun_def_10")) return false;
+    consumeToken(b, QM);
+    return true;
+  }
+
+  // [cap]
+  private static boolean fun_def_14(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fun_def_14")) return false;
+    cap(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
   // SCORE* (id | type_id | string)
   public static boolean id_ffi(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "id_ffi")) return false;
@@ -1574,11 +1253,11 @@ public class PonyParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // id | SCORE
-  public static boolean id_ref(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "id_ref")) return false;
-    if (!nextTokenIs(b, "<id ref>", ID, SCORE)) return false;
+  public static boolean id_var(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "id_var")) return false;
+    if (!nextTokenIs(b, "<id var>", ID, SCORE)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, ID_REF, "<id ref>");
+    Marker m = enter_section_(b, l, _NONE_, ID_VAR, "<id var>");
     r = consumeToken(b, ID);
     if (!r) r = consumeToken(b, SCORE);
     exit_section_(b, l, m, r, false, null);
@@ -1586,32 +1265,32 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // id_ref
-  //   | LP idseq_in_seq (COMMA idseq_in_seq)* RP
+  // term_ref
+  //   | LP idseq (COMMA idseq)* RP
   public static boolean idseq(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "idseq")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, IDSEQ, "<idseq>");
-    r = id_ref(b, l + 1);
+    r = term_ref(b, l + 1);
     if (!r) r = idseq_1(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // LP idseq_in_seq (COMMA idseq_in_seq)* RP
+  // LP idseq (COMMA idseq)* RP
   private static boolean idseq_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "idseq_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LP);
-    r = r && idseq_in_seq(b, l + 1);
+    r = r && idseq(b, l + 1);
     r = r && idseq_1_2(b, l + 1);
     r = r && consumeToken(b, RP);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // (COMMA idseq_in_seq)*
+  // (COMMA idseq)*
   private static boolean idseq_1_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "idseq_1_2")) return false;
     while (true) {
@@ -1622,61 +1301,13 @@ public class PonyParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // COMMA idseq_in_seq
+  // COMMA idseq
   private static boolean idseq_1_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "idseq_1_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COMMA);
-    r = r && idseq_in_seq(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // id_ref
-  //   | LP idseq_in_seq (COMMA idseq_in_seq)* RP
-  public static boolean idseq_in_seq(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "idseq_in_seq")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, IDSEQ_IN_SEQ, "<idseq in seq>");
-    r = id_ref(b, l + 1);
-    if (!r) r = idseq_in_seq_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // LP idseq_in_seq (COMMA idseq_in_seq)* RP
-  private static boolean idseq_in_seq_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "idseq_in_seq_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, LP);
-    r = r && idseq_in_seq(b, l + 1);
-    r = r && idseq_in_seq_1_2(b, l + 1);
-    r = r && consumeToken(b, RP);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (COMMA idseq_in_seq)*
-  private static boolean idseq_in_seq_1_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "idseq_in_seq_1_2")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!idseq_in_seq_1_2_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "idseq_in_seq_1_2", c)) break;
-    }
-    return true;
-  }
-
-  // COMMA idseq_in_seq
-  private static boolean idseq_in_seq_1_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "idseq_in_seq_1_2_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, COMMA);
-    r = r && idseq_in_seq(b, l + 1);
+    r = r && idseq(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -1727,6 +1358,60 @@ public class PonyParser implements PsiParser, LightPsiParser {
   // ELSE annotatedrawseq
   private static boolean ifblock_5_0_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ifblock_5_0_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ELSE);
+    r = r && annotatedrawseq(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // IFDEF [annotatedids] infix THEN rawseq [elifdef | (ELSE annotatedrawseq)] END
+  public static boolean ifdefblock(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ifdefblock")) return false;
+    if (!nextTokenIs(b, IFDEF)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IFDEF);
+    r = r && ifdefblock_1(b, l + 1);
+    r = r && infix(b, l + 1);
+    r = r && consumeToken(b, THEN);
+    r = r && rawseq(b, l + 1);
+    r = r && ifdefblock_5(b, l + 1);
+    r = r && consumeToken(b, END);
+    exit_section_(b, m, IFDEFBLOCK, r);
+    return r;
+  }
+
+  // [annotatedids]
+  private static boolean ifdefblock_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ifdefblock_1")) return false;
+    annotatedids(b, l + 1);
+    return true;
+  }
+
+  // [elifdef | (ELSE annotatedrawseq)]
+  private static boolean ifdefblock_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ifdefblock_5")) return false;
+    ifdefblock_5_0(b, l + 1);
+    return true;
+  }
+
+  // elifdef | (ELSE annotatedrawseq)
+  private static boolean ifdefblock_5_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ifdefblock_5_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = elifdef(b, l + 1);
+    if (!r) r = ifdefblock_5_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ELSE annotatedrawseq
+  private static boolean ifdefblock_5_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ifdefblock_5_0_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, ELSE);
@@ -1906,13 +1591,13 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // id_ref [COLON type] [EQUALS infix]
+  // param_ref [COLON type] [EQUALS infix]
   public static boolean lambdacapture(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "lambdacapture")) return false;
     if (!nextTokenIs(b, "<lambdacapture>", ID, SCORE)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, LAMBDACAPTURE, "<lambdacapture>");
-    r = id_ref(b, l + 1);
+    r = param_ref(b, l + 1);
     r = r && lambdacapture_1(b, l + 1);
     r = r && lambdacapture_2(b, l + 1);
     exit_section_(b, l, m, r, false, null);
@@ -2011,13 +1696,13 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // id_ref [COLON type] [EQUALS infix]
+  // param_ref [COLON type] [EQUALS infix]
   public static boolean lambdaparam(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "lambdaparam")) return false;
     if (!nextTokenIs(b, "<lambdaparam>", ID, SCORE)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, LAMBDAPARAM, "<lambdaparam>");
-    r = id_ref(b, l + 1);
+    r = param_ref(b, l + 1);
     r = r && lambdaparam_1(b, l + 1);
     r = r && lambdaparam_2(b, l + 1);
     exit_section_(b, l, m, r, false, null);
@@ -2096,7 +1781,7 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LBC [cap] [id_ref] [typeparams] LP [type (COMMA type)*] RP [COLON type] [QM] RBC [cap | gencap] [CARET | BANG]
+  // LBC [cap] [id_var] [typeparams] LP [type (COMMA type)*] RP [COLON type] [QM] RBC [cap | gencap] [CARET | BANG]
   public static boolean lambdatype(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "lambdatype")) return false;
     if (!nextTokenIs(b, LBC)) return false;
@@ -2125,10 +1810,10 @@ public class PonyParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // [id_ref]
+  // [id_var]
   private static boolean lambdatype_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "lambdatype_2")) return false;
-    id_ref(b, l + 1);
+    id_var(b, l + 1);
     return true;
   }
 
@@ -2256,6 +1941,71 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // MATCH [annotatedids] rawseq caseexpr* [ELSE annotatedrawseq] END
+  public static boolean matchblock(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchblock")) return false;
+    if (!nextTokenIs(b, MATCH)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, MATCH);
+    r = r && matchblock_1(b, l + 1);
+    r = r && rawseq(b, l + 1);
+    r = r && matchblock_3(b, l + 1);
+    r = r && matchblock_4(b, l + 1);
+    r = r && consumeToken(b, END);
+    exit_section_(b, m, MATCHBLOCK, r);
+    return r;
+  }
+
+  // [annotatedids]
+  private static boolean matchblock_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchblock_1")) return false;
+    annotatedids(b, l + 1);
+    return true;
+  }
+
+  // caseexpr*
+  private static boolean matchblock_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchblock_3")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!caseexpr(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "matchblock_3", c)) break;
+    }
+    return true;
+  }
+
+  // [ELSE annotatedrawseq]
+  private static boolean matchblock_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchblock_4")) return false;
+    matchblock_4_0(b, l + 1);
+    return true;
+  }
+
+  // ELSE annotatedrawseq
+  private static boolean matchblock_4_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchblock_4_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ELSE);
+    r = r && annotatedrawseq(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // id
+  public static boolean member_ref(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "member_ref")) return false;
+    if (!nextTokenIs(b, ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ID);
+    exit_section_(b, m, MEMBER_REF, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // field* method*
   public static boolean members(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "members")) return false;
@@ -2290,7 +2040,7 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (FUN | BE | NEW) [annotatedids] [cap | AT] id [typeparams] LP [params] RP [COLON type] [QM] [ARROW] [doc_string] [rawseq]
+  // (FUN | BE | NEW) [annotatedids] [cap | AT] member_ref [typeparams] LP [params] RP [COLON type] [QM] [ARROW] [doc_string] [rawseq]
   public static boolean method(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "method")) return false;
     boolean r;
@@ -2298,7 +2048,7 @@ public class PonyParser implements PsiParser, LightPsiParser {
     r = method_0(b, l + 1);
     r = r && method_1(b, l + 1);
     r = r && method_2(b, l + 1);
-    r = r && consumeToken(b, ID);
+    r = r && member_ref(b, l + 1);
     r = r && method_4(b, l + 1);
     r = r && consumeToken(b, LP);
     r = r && method_6(b, l + 1);
@@ -2448,171 +2198,48 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // WHERE namedarg (COMMA namedarg)*
+  // WHERE id EQUALS rawseq (COMMA id EQUALS rawseq)*
   public static boolean named(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "named")) return false;
     if (!nextTokenIs(b, WHERE)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, WHERE);
-    r = r && namedarg(b, l + 1);
-    r = r && named_2(b, l + 1);
+    r = consumeTokens(b, 0, WHERE, ID, EQUALS);
+    r = r && rawseq(b, l + 1);
+    r = r && named_4(b, l + 1);
     exit_section_(b, m, NAMED, r);
     return r;
   }
 
-  // (COMMA namedarg)*
-  private static boolean named_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "named_2")) return false;
+  // (COMMA id EQUALS rawseq)*
+  private static boolean named_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "named_4")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!named_2_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "named_2", c)) break;
+      if (!named_4_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "named_4", c)) break;
     }
     return true;
   }
 
-  // COMMA namedarg
-  private static boolean named_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "named_2_0")) return false;
+  // COMMA id EQUALS rawseq
+  private static boolean named_4_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "named_4_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, COMMA);
-    r = r && namedarg(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // id EQUALS rawseq
-  public static boolean namedarg(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "namedarg")) return false;
-    if (!nextTokenIs(b, ID)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, ID, EQUALS);
+    r = consumeTokens(b, 0, COMMA, ID, EQUALS);
     r = r && rawseq(b, l + 1);
-    exit_section_(b, m, NAMEDARG, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // nextinfix [EQUALS assignment]
-  public static boolean nextassignment(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextassignment")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, NEXTASSIGNMENT, "<nextassignment>");
-    r = nextinfix(b, l + 1);
-    r = r && nextassignment_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // [EQUALS assignment]
-  private static boolean nextassignment_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextassignment_1")) return false;
-    nextassignment_1_0(b, l + 1);
-    return true;
-  }
-
-  // EQUALS assignment
-  private static boolean nextassignment_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextassignment_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, EQUALS);
-    r = r && assignment(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   /* ********************************************************** */
-  // particle
-  //   | ifblock
-  //   | whileloop
-  //   | forloop
-  //   | LP rawseq [tuple] RP
-  //   | LBK [AS type COLON] [rawseq] RBK
-  public static boolean nextatom(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextatom")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, NEXTATOM, "<nextatom>");
-    r = particle(b, l + 1);
-    if (!r) r = ifblock(b, l + 1);
-    if (!r) r = whileloop(b, l + 1);
-    if (!r) r = forloop(b, l + 1);
-    if (!r) r = nextatom_4(b, l + 1);
-    if (!r) r = nextatom_5(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // LP rawseq [tuple] RP
-  private static boolean nextatom_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextatom_4")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, LP);
-    r = r && rawseq(b, l + 1);
-    r = r && nextatom_4_2(b, l + 1);
-    r = r && consumeToken(b, RP);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [tuple]
-  private static boolean nextatom_4_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextatom_4_2")) return false;
-    tuple(b, l + 1);
-    return true;
-  }
-
-  // LBK [AS type COLON] [rawseq] RBK
-  private static boolean nextatom_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextatom_5")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, LBK);
-    r = r && nextatom_5_1(b, l + 1);
-    r = r && nextatom_5_2(b, l + 1);
-    r = r && consumeToken(b, RBK);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [AS type COLON]
-  private static boolean nextatom_5_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextatom_5_1")) return false;
-    nextatom_5_1_0(b, l + 1);
-    return true;
-  }
-
-  // AS type COLON
-  private static boolean nextatom_5_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextatom_5_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, AS);
-    r = r && type(b, l + 1);
-    r = r && consumeToken(b, COLON);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [rawseq]
-  private static boolean nextatom_5_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextatom_5_2")) return false;
-    rawseq(b, l + 1);
-    return true;
-  }
-
-  /* ********************************************************** */
-  // nextassignment [semiexpr | nosemi]
+  // assignment [semiexpr | nosemi]
   public static boolean nextexprseq(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "nextexprseq")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, NEXTEXPRSEQ, "<nextexprseq>");
-    r = nextassignment(b, l + 1);
+    r = assignment(b, l + 1);
     r = r && nextexprseq_1(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -2635,148 +2262,9 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // nextterm infixop*
-  public static boolean nextinfix(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextinfix")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, NEXTINFIX, "<nextinfix>");
-    r = nextterm(b, l + 1);
-    r = r && nextinfix_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // infixop*
-  private static boolean nextinfix_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextinfix_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!infixop(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "nextinfix_1", c)) break;
-    }
-    return true;
-  }
-
-  /* ********************************************************** */
-  // (NOT | ADDRESSOF | SUB | SUB_UNSAFE | DIGESTOF) parampattern
-  //   | nextpostfix
-  public static boolean nextparampattern(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextparampattern")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, NEXTPARAMPATTERN, "<nextparampattern>");
-    r = nextparampattern_0(b, l + 1);
-    if (!r) r = nextpostfix(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // (NOT | ADDRESSOF | SUB | SUB_UNSAFE | DIGESTOF) parampattern
-  private static boolean nextparampattern_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextparampattern_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = nextparampattern_0_0(b, l + 1);
-    r = r && parampattern(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // NOT | ADDRESSOF | SUB | SUB_UNSAFE | DIGESTOF
-  private static boolean nextparampattern_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextparampattern_0_0")) return false;
-    boolean r;
-    r = consumeToken(b, NOT);
-    if (!r) r = consumeToken(b, ADDRESSOF);
-    if (!r) r = consumeToken(b, SUB);
-    if (!r) r = consumeToken(b, SUB_UNSAFE);
-    if (!r) r = consumeToken(b, DIGESTOF);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // binding id_ref [COLON type]
-  //   | nextparampattern
-  public static boolean nextpattern(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextpattern")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, NEXTPATTERN, "<nextpattern>");
-    r = nextpattern_0(b, l + 1);
-    if (!r) r = nextparampattern(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // binding id_ref [COLON type]
-  private static boolean nextpattern_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextpattern_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = binding(b, l + 1);
-    r = r && id_ref(b, l + 1);
-    r = r && nextpattern_0_2(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [COLON type]
-  private static boolean nextpattern_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextpattern_0_2")) return false;
-    nextpattern_0_2_0(b, l + 1);
-    return true;
-  }
-
-  // COLON type
-  private static boolean nextpattern_0_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextpattern_0_2_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, COLON);
-    r = r && type(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // nextatom postfixelem*
-  public static boolean nextpostfix(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextpostfix")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, NEXTPOSTFIX, "<nextpostfix>");
-    r = nextatom(b, l + 1);
-    r = r && nextpostfix_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // postfixelem*
-  private static boolean nextpostfix_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextpostfix_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!postfixelem(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "nextpostfix_1", c)) break;
-    }
-    return true;
-  }
-
-  /* ********************************************************** */
-  // construct
-  //   | nextpattern
-  public static boolean nextterm(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "nextterm")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, NEXTTERM, "<nextterm>");
-    r = construct(b, l + 1);
-    if (!r) r = nextpattern(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // [id DOT] type_ref [typeargs] [cap | gencap] [CARET | BANG]
+  // [id_var DOT] type_ref [typeargs] [cap | gencap] [CARET | BANG]
   public static boolean nominal(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "nominal")) return false;
-    if (!nextTokenIs(b, "<nominal>", ID, TYPE_ID)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, NOMINAL, "<nominal>");
     r = nominal_0(b, l + 1);
@@ -2788,11 +2276,22 @@ public class PonyParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [id DOT]
+  // [id_var DOT]
   private static boolean nominal_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "nominal_0")) return false;
-    parseTokens(b, 0, ID, DOT);
+    nominal_0_0(b, l + 1);
     return true;
+  }
+
+  // id_var DOT
+  private static boolean nominal_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "nominal_0_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = id_var(b, l + 1);
+    r = r && consumeToken(b, DOT);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   // [typeargs]
@@ -2860,16 +2359,66 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // id COLON type [EQUALS infix]
-  public static boolean param(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "param")) return false;
-    if (!nextTokenIs(b, ID)) return false;
+  // OBJECT [annotatedids] [cap] [IS type] members END
+  public static boolean object_def(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "object_def")) return false;
+    if (!nextTokenIs(b, OBJECT)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, ID, COLON);
+    r = consumeToken(b, OBJECT);
+    r = r && object_def_1(b, l + 1);
+    r = r && object_def_2(b, l + 1);
+    r = r && object_def_3(b, l + 1);
+    r = r && members(b, l + 1);
+    r = r && consumeToken(b, END);
+    exit_section_(b, m, OBJECT_DEF, r);
+    return r;
+  }
+
+  // [annotatedids]
+  private static boolean object_def_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "object_def_1")) return false;
+    annotatedids(b, l + 1);
+    return true;
+  }
+
+  // [cap]
+  private static boolean object_def_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "object_def_2")) return false;
+    cap(b, l + 1);
+    return true;
+  }
+
+  // [IS type]
+  private static boolean object_def_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "object_def_3")) return false;
+    object_def_3_0(b, l + 1);
+    return true;
+  }
+
+  // IS type
+  private static boolean object_def_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "object_def_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IS);
+    r = r && type(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // param_ref COLON type [EQUALS infix]
+  public static boolean param(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "param")) return false;
+    if (!nextTokenIs(b, "<param>", ID, SCORE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, PARAM, "<param>");
+    r = param_ref(b, l + 1);
+    r = r && consumeToken(b, COLON);
     r = r && type(b, l + 1);
     r = r && param_3(b, l + 1);
-    exit_section_(b, m, PARAM, r);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
@@ -2892,38 +2441,15 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (NOT | ADDRESSOF | SUB | SUB_UNSAFE | DIGESTOF) parampattern
-  //   | postfix
-  public static boolean parampattern(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "parampattern")) return false;
+  // id | SCORE
+  public static boolean param_ref(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "param_ref")) return false;
+    if (!nextTokenIs(b, "<param ref>", ID, SCORE)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _COLLAPSE_, PARAMPATTERN, "<parampattern>");
-    r = parampattern_0(b, l + 1);
-    if (!r) r = postfix(b, l + 1);
+    Marker m = enter_section_(b, l, _NONE_, PARAM_REF, "<param ref>");
+    r = consumeToken(b, ID);
+    if (!r) r = consumeToken(b, SCORE);
     exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // (NOT | ADDRESSOF | SUB | SUB_UNSAFE | DIGESTOF) parampattern
-  private static boolean parampattern_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "parampattern_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = parampattern_0_0(b, l + 1);
-    r = r && parampattern(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // NOT | ADDRESSOF | SUB | SUB_UNSAFE | DIGESTOF
-  private static boolean parampattern_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "parampattern_0_0")) return false;
-    boolean r;
-    r = consumeToken(b, NOT);
-    if (!r) r = consumeToken(b, ADDRESSOF);
-    if (!r) r = consumeToken(b, SUB);
-    if (!r) r = consumeToken(b, SUB_UNSAFE);
-    if (!r) r = consumeToken(b, DIGESTOF);
     return r;
   }
 
@@ -2931,7 +2457,6 @@ public class PonyParser implements PsiParser, LightPsiParser {
   // (param | ELIPSIS) (COMMA (param | ELIPSIS))*
   public static boolean params(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "params")) return false;
-    if (!nextTokenIs(b, "<params>", ELIPSIS, ID)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, PARAMS, "<params>");
     r = params_0(b, l + 1);
@@ -2998,364 +2523,6 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // id_ref
-  //   | type_ref
-  //   | literal
-  //   | THIS
-  //   | OBJECT [annotatedids] [cap] [IS type] members END
-  //   | LBC [annotatedids] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
-  //   | RCVR [annotatedids] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
-  //   | AT id_ffi [typeargs] LP [positional] [named] RP [QM]
-  //   | SOURCELOC
-  public static boolean particle(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, PARTICLE, "<particle>");
-    r = id_ref(b, l + 1);
-    if (!r) r = type_ref(b, l + 1);
-    if (!r) r = literal(b, l + 1);
-    if (!r) r = consumeToken(b, THIS);
-    if (!r) r = particle_4(b, l + 1);
-    if (!r) r = particle_5(b, l + 1);
-    if (!r) r = particle_6(b, l + 1);
-    if (!r) r = particle_7(b, l + 1);
-    if (!r) r = consumeToken(b, SOURCELOC);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // OBJECT [annotatedids] [cap] [IS type] members END
-  private static boolean particle_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_4")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, OBJECT);
-    r = r && particle_4_1(b, l + 1);
-    r = r && particle_4_2(b, l + 1);
-    r = r && particle_4_3(b, l + 1);
-    r = r && members(b, l + 1);
-    r = r && consumeToken(b, END);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [annotatedids]
-  private static boolean particle_4_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_4_1")) return false;
-    annotatedids(b, l + 1);
-    return true;
-  }
-
-  // [cap]
-  private static boolean particle_4_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_4_2")) return false;
-    cap(b, l + 1);
-    return true;
-  }
-
-  // [IS type]
-  private static boolean particle_4_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_4_3")) return false;
-    particle_4_3_0(b, l + 1);
-    return true;
-  }
-
-  // IS type
-  private static boolean particle_4_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_4_3_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, IS);
-    r = r && type(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // LBC [annotatedids] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
-  private static boolean particle_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_5")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, LBC);
-    r = r && particle_5_1(b, l + 1);
-    r = r && particle_5_2(b, l + 1);
-    r = r && particle_5_3(b, l + 1);
-    r = r && particle_5_4(b, l + 1);
-    r = r && consumeToken(b, LP);
-    r = r && particle_5_6(b, l + 1);
-    r = r && consumeToken(b, RP);
-    r = r && particle_5_8(b, l + 1);
-    r = r && particle_5_9(b, l + 1);
-    r = r && particle_5_10(b, l + 1);
-    r = r && consumeToken(b, ARROW);
-    r = r && rawseq(b, l + 1);
-    r = r && consumeToken(b, RBC);
-    r = r && particle_5_14(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [annotatedids]
-  private static boolean particle_5_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_5_1")) return false;
-    annotatedids(b, l + 1);
-    return true;
-  }
-
-  // [cap]
-  private static boolean particle_5_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_5_2")) return false;
-    cap(b, l + 1);
-    return true;
-  }
-
-  // [id]
-  private static boolean particle_5_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_5_3")) return false;
-    consumeToken(b, ID);
-    return true;
-  }
-
-  // [typeparams]
-  private static boolean particle_5_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_5_4")) return false;
-    typeparams(b, l + 1);
-    return true;
-  }
-
-  // [lambdaparams]
-  private static boolean particle_5_6(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_5_6")) return false;
-    lambdaparams(b, l + 1);
-    return true;
-  }
-
-  // [lambdacaptures]
-  private static boolean particle_5_8(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_5_8")) return false;
-    lambdacaptures(b, l + 1);
-    return true;
-  }
-
-  // [COLON type]
-  private static boolean particle_5_9(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_5_9")) return false;
-    particle_5_9_0(b, l + 1);
-    return true;
-  }
-
-  // COLON type
-  private static boolean particle_5_9_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_5_9_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, COLON);
-    r = r && type(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [QM]
-  private static boolean particle_5_10(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_5_10")) return false;
-    consumeToken(b, QM);
-    return true;
-  }
-
-  // [cap]
-  private static boolean particle_5_14(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_5_14")) return false;
-    cap(b, l + 1);
-    return true;
-  }
-
-  // RCVR [annotatedids] [cap] [id] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
-  private static boolean particle_6(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_6")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, RCVR);
-    r = r && particle_6_1(b, l + 1);
-    r = r && particle_6_2(b, l + 1);
-    r = r && particle_6_3(b, l + 1);
-    r = r && particle_6_4(b, l + 1);
-    r = r && consumeToken(b, LP);
-    r = r && particle_6_6(b, l + 1);
-    r = r && consumeToken(b, RP);
-    r = r && particle_6_8(b, l + 1);
-    r = r && particle_6_9(b, l + 1);
-    r = r && particle_6_10(b, l + 1);
-    r = r && consumeToken(b, ARROW);
-    r = r && rawseq(b, l + 1);
-    r = r && consumeToken(b, RBC);
-    r = r && particle_6_14(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [annotatedids]
-  private static boolean particle_6_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_6_1")) return false;
-    annotatedids(b, l + 1);
-    return true;
-  }
-
-  // [cap]
-  private static boolean particle_6_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_6_2")) return false;
-    cap(b, l + 1);
-    return true;
-  }
-
-  // [id]
-  private static boolean particle_6_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_6_3")) return false;
-    consumeToken(b, ID);
-    return true;
-  }
-
-  // [typeparams]
-  private static boolean particle_6_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_6_4")) return false;
-    typeparams(b, l + 1);
-    return true;
-  }
-
-  // [lambdaparams]
-  private static boolean particle_6_6(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_6_6")) return false;
-    lambdaparams(b, l + 1);
-    return true;
-  }
-
-  // [lambdacaptures]
-  private static boolean particle_6_8(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_6_8")) return false;
-    lambdacaptures(b, l + 1);
-    return true;
-  }
-
-  // [COLON type]
-  private static boolean particle_6_9(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_6_9")) return false;
-    particle_6_9_0(b, l + 1);
-    return true;
-  }
-
-  // COLON type
-  private static boolean particle_6_9_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_6_9_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, COLON);
-    r = r && type(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [QM]
-  private static boolean particle_6_10(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_6_10")) return false;
-    consumeToken(b, QM);
-    return true;
-  }
-
-  // [cap]
-  private static boolean particle_6_14(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_6_14")) return false;
-    cap(b, l + 1);
-    return true;
-  }
-
-  // AT id_ffi [typeargs] LP [positional] [named] RP [QM]
-  private static boolean particle_7(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_7")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, AT);
-    r = r && id_ffi(b, l + 1);
-    r = r && particle_7_2(b, l + 1);
-    r = r && consumeToken(b, LP);
-    r = r && particle_7_4(b, l + 1);
-    r = r && particle_7_5(b, l + 1);
-    r = r && consumeToken(b, RP);
-    r = r && particle_7_7(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [typeargs]
-  private static boolean particle_7_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_7_2")) return false;
-    typeargs(b, l + 1);
-    return true;
-  }
-
-  // [positional]
-  private static boolean particle_7_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_7_4")) return false;
-    positional(b, l + 1);
-    return true;
-  }
-
-  // [named]
-  private static boolean particle_7_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_7_5")) return false;
-    named(b, l + 1);
-    return true;
-  }
-
-  // [QM]
-  private static boolean particle_7_7(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "particle_7_7")) return false;
-    consumeToken(b, QM);
-    return true;
-  }
-
-  /* ********************************************************** */
-  // binding id_ref [COLON type]
-  //   | parampattern
-  public static boolean pattern(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "pattern")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, PATTERN, "<pattern>");
-    r = pattern_0(b, l + 1);
-    if (!r) r = parampattern(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // binding id_ref [COLON type]
-  private static boolean pattern_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "pattern_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = binding(b, l + 1);
-    r = r && id_ref(b, l + 1);
-    r = r && pattern_0_2(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [COLON type]
-  private static boolean pattern_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "pattern_0_2")) return false;
-    pattern_0_2_0(b, l + 1);
-    return true;
-  }
-
-  // COLON type
-  private static boolean pattern_0_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "pattern_0_2_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, COLON);
-    r = r && type(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  /* ********************************************************** */
   // rawseq (COMMA rawseq)*
   public static boolean positional(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "positional")) return false;
@@ -3413,7 +2580,7 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // dot_id | tilde_id | chain_id | dot_typeref | typeargs | call
+  // dot_id | tilde_id | chain_id | dot_type | typeargs | call
   public static boolean postfixelem(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "postfixelem")) return false;
     boolean r;
@@ -3421,9 +2588,24 @@ public class PonyParser implements PsiParser, LightPsiParser {
     r = dot_id(b, l + 1);
     if (!r) r = tilde_id(b, l + 1);
     if (!r) r = chain_id(b, l + 1);
-    if (!r) r = dot_typeref(b, l + 1);
+    if (!r) r = dot_type(b, l + 1);
     if (!r) r = typeargs(b, l + 1);
     if (!r) r = call(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // NOT | ADDRESSOF | SUB | SUB_UNSAFE | DIGESTOF
+  public static boolean postfixop(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "postfixop")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, POSTFIXOP, "<postfixop>");
+    r = consumeToken(b, NOT);
+    if (!r) r = consumeToken(b, ADDRESSOF);
+    if (!r) r = consumeToken(b, SUB);
+    if (!r) r = consumeToken(b, SUB_UNSAFE);
+    if (!r) r = consumeToken(b, DIGESTOF);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -3438,6 +2620,289 @@ public class PonyParser implements PsiParser, LightPsiParser {
     if (!r) r = jump(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
+  }
+
+  /* ********************************************************** */
+  // RCVR [annotatedids] [cap] [param_ref] [typeparams] LP [lambdaparams] RP [lambdacaptures] [COLON type] [QM] ARROW rawseq RBC [cap]
+  public static boolean recover_def(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "recover_def")) return false;
+    if (!nextTokenIs(b, RCVR)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, RCVR);
+    r = r && recover_def_1(b, l + 1);
+    r = r && recover_def_2(b, l + 1);
+    r = r && recover_def_3(b, l + 1);
+    r = r && recover_def_4(b, l + 1);
+    r = r && consumeToken(b, LP);
+    r = r && recover_def_6(b, l + 1);
+    r = r && consumeToken(b, RP);
+    r = r && recover_def_8(b, l + 1);
+    r = r && recover_def_9(b, l + 1);
+    r = r && recover_def_10(b, l + 1);
+    r = r && consumeToken(b, ARROW);
+    r = r && rawseq(b, l + 1);
+    r = r && consumeToken(b, RBC);
+    r = r && recover_def_14(b, l + 1);
+    exit_section_(b, m, RECOVER_DEF, r);
+    return r;
+  }
+
+  // [annotatedids]
+  private static boolean recover_def_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "recover_def_1")) return false;
+    annotatedids(b, l + 1);
+    return true;
+  }
+
+  // [cap]
+  private static boolean recover_def_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "recover_def_2")) return false;
+    cap(b, l + 1);
+    return true;
+  }
+
+  // [param_ref]
+  private static boolean recover_def_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "recover_def_3")) return false;
+    param_ref(b, l + 1);
+    return true;
+  }
+
+  // [typeparams]
+  private static boolean recover_def_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "recover_def_4")) return false;
+    typeparams(b, l + 1);
+    return true;
+  }
+
+  // [lambdaparams]
+  private static boolean recover_def_6(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "recover_def_6")) return false;
+    lambdaparams(b, l + 1);
+    return true;
+  }
+
+  // [lambdacaptures]
+  private static boolean recover_def_8(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "recover_def_8")) return false;
+    lambdacaptures(b, l + 1);
+    return true;
+  }
+
+  // [COLON type]
+  private static boolean recover_def_9(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "recover_def_9")) return false;
+    recover_def_9_0(b, l + 1);
+    return true;
+  }
+
+  // COLON type
+  private static boolean recover_def_9_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "recover_def_9_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COLON);
+    r = r && type(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [QM]
+  private static boolean recover_def_10(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "recover_def_10")) return false;
+    consumeToken(b, QM);
+    return true;
+  }
+
+  // [cap]
+  private static boolean recover_def_14(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "recover_def_14")) return false;
+    cap(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // ifdefblock
+  //   | IFTYPE [annotatedids] istype [eliftype | (ELSE annotatedrawseq)] END
+  //   | REPEAT [annotatedids] rawseq UNTIL annotatedrawseq [ELSE annotatedrawseq] END
+  //   | WITH [annotatedids] withelem (COMMA withelem)* DO rawseq END
+  //   | RECOVER [annotatedids] [cap] rawseq END
+  public static boolean resourceblock(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resourceblock")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, RESOURCEBLOCK, "<resourceblock>");
+    r = ifdefblock(b, l + 1);
+    if (!r) r = resourceblock_1(b, l + 1);
+    if (!r) r = resourceblock_2(b, l + 1);
+    if (!r) r = resourceblock_3(b, l + 1);
+    if (!r) r = resourceblock_4(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // IFTYPE [annotatedids] istype [eliftype | (ELSE annotatedrawseq)] END
+  private static boolean resourceblock_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resourceblock_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IFTYPE);
+    r = r && resourceblock_1_1(b, l + 1);
+    r = r && istype(b, l + 1);
+    r = r && resourceblock_1_3(b, l + 1);
+    r = r && consumeToken(b, END);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [annotatedids]
+  private static boolean resourceblock_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resourceblock_1_1")) return false;
+    annotatedids(b, l + 1);
+    return true;
+  }
+
+  // [eliftype | (ELSE annotatedrawseq)]
+  private static boolean resourceblock_1_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resourceblock_1_3")) return false;
+    resourceblock_1_3_0(b, l + 1);
+    return true;
+  }
+
+  // eliftype | (ELSE annotatedrawseq)
+  private static boolean resourceblock_1_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resourceblock_1_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = eliftype(b, l + 1);
+    if (!r) r = resourceblock_1_3_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ELSE annotatedrawseq
+  private static boolean resourceblock_1_3_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resourceblock_1_3_0_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ELSE);
+    r = r && annotatedrawseq(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // REPEAT [annotatedids] rawseq UNTIL annotatedrawseq [ELSE annotatedrawseq] END
+  private static boolean resourceblock_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resourceblock_2")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, REPEAT);
+    r = r && resourceblock_2_1(b, l + 1);
+    r = r && rawseq(b, l + 1);
+    r = r && consumeToken(b, UNTIL);
+    r = r && annotatedrawseq(b, l + 1);
+    r = r && resourceblock_2_5(b, l + 1);
+    r = r && consumeToken(b, END);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [annotatedids]
+  private static boolean resourceblock_2_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resourceblock_2_1")) return false;
+    annotatedids(b, l + 1);
+    return true;
+  }
+
+  // [ELSE annotatedrawseq]
+  private static boolean resourceblock_2_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resourceblock_2_5")) return false;
+    resourceblock_2_5_0(b, l + 1);
+    return true;
+  }
+
+  // ELSE annotatedrawseq
+  private static boolean resourceblock_2_5_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resourceblock_2_5_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ELSE);
+    r = r && annotatedrawseq(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // WITH [annotatedids] withelem (COMMA withelem)* DO rawseq END
+  private static boolean resourceblock_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resourceblock_3")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, WITH);
+    r = r && resourceblock_3_1(b, l + 1);
+    r = r && withelem(b, l + 1);
+    r = r && resourceblock_3_3(b, l + 1);
+    r = r && consumeToken(b, DO);
+    r = r && rawseq(b, l + 1);
+    r = r && consumeToken(b, END);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [annotatedids]
+  private static boolean resourceblock_3_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resourceblock_3_1")) return false;
+    annotatedids(b, l + 1);
+    return true;
+  }
+
+  // (COMMA withelem)*
+  private static boolean resourceblock_3_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resourceblock_3_3")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!resourceblock_3_3_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "resourceblock_3_3", c)) break;
+    }
+    return true;
+  }
+
+  // COMMA withelem
+  private static boolean resourceblock_3_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resourceblock_3_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    r = r && withelem(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // RECOVER [annotatedids] [cap] rawseq END
+  private static boolean resourceblock_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resourceblock_4")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, RECOVER);
+    r = r && resourceblock_4_1(b, l + 1);
+    r = r && resourceblock_4_2(b, l + 1);
+    r = r && rawseq(b, l + 1);
+    r = r && consumeToken(b, END);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [annotatedids]
+  private static boolean resourceblock_4_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resourceblock_4_1")) return false;
+    annotatedids(b, l + 1);
+    return true;
+  }
+
+  // [cap]
+  private static boolean resourceblock_4_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "resourceblock_4_2")) return false;
+    cap(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -3505,27 +2970,191 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // construct
-  //   | pattern
+  // controlblock
+  //   | resourceblock
+  //   | binding term_ref [COLON type]
+  //   | postfixop* postfix
+  //   | CONSUME [cap] term
+  //   | HASH postfix
   public static boolean term(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "term")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, TERM, "<term>");
-    r = construct(b, l + 1);
-    if (!r) r = pattern(b, l + 1);
+    r = controlblock(b, l + 1);
+    if (!r) r = resourceblock(b, l + 1);
+    if (!r) r = term_2(b, l + 1);
+    if (!r) r = term_3(b, l + 1);
+    if (!r) r = term_4(b, l + 1);
+    if (!r) r = term_5(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // binding term_ref [COLON type]
+  private static boolean term_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "term_2")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = binding(b, l + 1);
+    r = r && term_ref(b, l + 1);
+    r = r && term_2_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [COLON type]
+  private static boolean term_2_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "term_2_2")) return false;
+    term_2_2_0(b, l + 1);
+    return true;
+  }
+
+  // COLON type
+  private static boolean term_2_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "term_2_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COLON);
+    r = r && type(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // postfixop* postfix
+  private static boolean term_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "term_3")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = term_3_0(b, l + 1);
+    r = r && postfix(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // postfixop*
+  private static boolean term_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "term_3_0")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!postfixop(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "term_3_0", c)) break;
+    }
+    return true;
+  }
+
+  // CONSUME [cap] term
+  private static boolean term_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "term_4")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, CONSUME);
+    r = r && term_4_1(b, l + 1);
+    r = r && term(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [cap]
+  private static boolean term_4_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "term_4_1")) return false;
+    cap(b, l + 1);
+    return true;
+  }
+
+  // HASH postfix
+  private static boolean term_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "term_5")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, HASH);
+    r = r && postfix(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // id | SCORE
+  public static boolean term_ref(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "term_ref")) return false;
+    if (!nextTokenIs(b, "<term ref>", ID, SCORE)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, TERM_REF, "<term ref>");
+    r = consumeToken(b, ID);
+    if (!r) r = consumeToken(b, SCORE);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
   /* ********************************************************** */
-  // TILDE id
+  // TILDE member_ref
   public static boolean tilde_id(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "tilde_id")) return false;
     if (!nextTokenIs(b, TILDE)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, TILDE, ID);
+    r = consumeToken(b, TILDE);
+    r = r && member_ref(b, l + 1);
     exit_section_(b, m, TILDE_ID, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // TRY [annotatedids] rawseq [ELSE annotatedrawseq] [THEN annotatedrawseq] END
+  public static boolean tryblock(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "tryblock")) return false;
+    if (!nextTokenIs(b, TRY)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, TRY);
+    r = r && tryblock_1(b, l + 1);
+    r = r && rawseq(b, l + 1);
+    r = r && tryblock_3(b, l + 1);
+    r = r && tryblock_4(b, l + 1);
+    r = r && consumeToken(b, END);
+    exit_section_(b, m, TRYBLOCK, r);
+    return r;
+  }
+
+  // [annotatedids]
+  private static boolean tryblock_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "tryblock_1")) return false;
+    annotatedids(b, l + 1);
+    return true;
+  }
+
+  // [ELSE annotatedrawseq]
+  private static boolean tryblock_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "tryblock_3")) return false;
+    tryblock_3_0(b, l + 1);
+    return true;
+  }
+
+  // ELSE annotatedrawseq
+  private static boolean tryblock_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "tryblock_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ELSE);
+    r = r && annotatedrawseq(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [THEN annotatedrawseq]
+  private static boolean tryblock_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "tryblock_4")) return false;
+    tryblock_4_0(b, l + 1);
+    return true;
+  }
+
+  // THEN annotatedrawseq
+  private static boolean tryblock_4_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "tryblock_4_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, THEN);
+    r = r && annotatedrawseq(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -3877,7 +3506,20 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // USE [id EQUALS] (string | use_ffi) [IF infix]
+  // IF infix
+  public static boolean useinfix(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "useinfix")) return false;
+    if (!nextTokenIs(b, IF)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IF);
+    r = r && infix(b, l + 1);
+    exit_section_(b, m, USEINFIX, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // USE [id EQUALS] (string | use_ffi) [useinfix]
   public static boolean usestmt(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "usestmt")) return false;
     if (!nextTokenIs(b, USE)) return false;
@@ -3907,22 +3549,11 @@ public class PonyParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [IF infix]
+  // [useinfix]
   private static boolean usestmt_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "usestmt_3")) return false;
-    usestmt_3_0(b, l + 1);
+    useinfix(b, l + 1);
     return true;
-  }
-
-  // IF infix
-  private static boolean usestmt_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "usestmt_3_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, IF);
-    r = r && infix(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
   }
 
   /* ********************************************************** */

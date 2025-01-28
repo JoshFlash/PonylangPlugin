@@ -19,15 +19,23 @@
                 extensions="pony"/>
         <fileBasedIndex
                 implementation="com.github.joshflash.ponylangplugin.language.indexing.PonyTypeReferenceIndex" />
+        <fileBasedIndex
+                implementation="com.github.joshflash.ponylangplugin.language.indexing.PonyMemberReferenceIndex" />
         <lang.parserDefinition
                 language="Pony"
                 implementationClass="com.github.joshflash.ponylangplugin.language.PonyParserDefinition"/>
         <lang.syntaxHighlighterFactory
                 language="Pony"
                 implementationClass="com.github.joshflash.ponylangplugin.language.PonySyntaxHighlighterFactory"/>
+        <lang.elementManipulator
+                implementationClass="com.github.joshflash.ponylangplugin.language.PonyIdManipulator"
+                forClass="com.github.joshflash.ponylangplugin.language.psi.impl.PonyMemberRefExt"/>
+        <lang.elementManipulator
+                implementationClass="com.github.joshflash.ponylangplugin.language.PonyIdManipulator"
+                forClass="com.github.joshflash.ponylangplugin.language.psi.impl.PonyIdVarExt"/>
         <annotator
                 language="Pony"
-                implementationClass="com.github.joshflash.ponylangplugin.language.PonyTypeAnnotator"/>
+                implementationClass="com.github.joshflash.ponylangplugin.language.PonyAnnotator"/>
         <completion.contributor
                 language="Pony"
                 implementationClass="com.github.joshflash.ponylangplugin.language.PonyCompletionContributor"/>

@@ -29,8 +29,8 @@ public class PonyNextexprseqImpl extends ASTWrapperPsiElement implements PonyNex
 
   @Override
   @NotNull
-  public PonyNextassignment getNextassignment() {
-    return findNotNullChildByClass(PonyNextassignment.class);
+  public PonyAssignment getAssignment() {
+    return findNotNullChildByClass(PonyAssignment.class);
   }
 
   @Override

@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface PonyNamed extends PsiElement {
 
   @NotNull
-  List<PonyNamedarg> getNamedargList();
+  List<PonyRawseq> getRawseqList();
 
 }

@@ -17,7 +17,7 @@ public interface PonyPostfixelem extends PsiElement {
   PonyDotId getDotId();
 
   @Nullable
-  PonyDotTyperef getDotTyperef();
+  PonyDotType getDotType();
 
   @Nullable
   PonyTildeId getTildeId();

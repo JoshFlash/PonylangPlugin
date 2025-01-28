@@ -1,5 +1,6 @@
 package com.github.joshflash.ponylangplugin.listeners
 
+import com.github.joshflash.ponylangplugin.language.indexing.PonyMemberReferenceIndex
 import com.github.joshflash.ponylangplugin.language.indexing.PonyTypeReferenceIndex
 import com.intellij.openapi.project.DumbService
 import com.intellij.openapi.project.Project
@@ -22,6 +23,7 @@ class PonylangStartupActivity : ProjectActivity {
             if (proj != project) continue
             DumbService.getInstance(proj).smartInvokeLater {
                 FileBasedIndex.getInstance().requestRebuild(PonyTypeReferenceIndex.INDEX_ID)
+                FileBasedIndex.getInstance().requestRebuild(PonyMemberReferenceIndex.INDEX_ID)
             }
         }
     }

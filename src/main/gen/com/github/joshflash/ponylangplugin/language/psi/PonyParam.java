@@ -11,9 +11,9 @@ public interface PonyParam extends PsiElement {
   PonyInfix getInfix();
 
   @NotNull
-  PonyType getType();
+  PonyParamRef getParamRef();
 
   @NotNull
-  PsiElement getId();
+  PonyType getType();
 
 }

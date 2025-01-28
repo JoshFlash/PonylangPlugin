@@ -29,8 +29,8 @@ public class PonyNamedImpl extends ASTWrapperPsiElement implements PonyNamed {
 
   @Override
   @NotNull
-  public List<PonyNamedarg> getNamedargList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyNamedarg.class);
+  public List<PonyRawseq> getRawseqList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PonyRawseq.class);
   }
 
 }

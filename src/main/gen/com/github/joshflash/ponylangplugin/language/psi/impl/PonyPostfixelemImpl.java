@@ -47,8 +47,8 @@ public class PonyPostfixelemImpl extends ASTWrapperPsiElement implements PonyPos
 
   @Override
   @Nullable
-  public PonyDotTyperef getDotTyperef() {
-    return findChildByClass(PonyDotTyperef.class);
+  public PonyDotType getDotType() {
+    return findChildByClass(PonyDotType.class);
   }
 
   @Override

@@ -1,7 +1,7 @@
 package com.github.joshflash.ponylangplugin.language
 
-import com.github.joshflash.ponylangplugin.language.psi.PonyClassDef
-import com.github.joshflash.ponylangplugin.language.psi.PonyNominal
+import com.github.joshflash.ponylangplugin.language.psi.PonyIdVar
+import com.github.joshflash.ponylangplugin.language.psi.PonyMemberRef
 import com.github.joshflash.ponylangplugin.language.psi.PonyTypeRef
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference
@@ -13,6 +13,8 @@ class PonyReferenceProvider : PsiReferenceProvider() {
     override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
         return when (element.elementType) {
             is PonyTypeRef -> arrayOf(PonyTypeReference(element as PonyTypeRef))
+            is PonyMemberRef -> arrayOf(PonyMemberReference(element as PonyMemberRef))
+            is PonyIdVar -> arrayOf(PonyVariableReference(element as PonyIdVar))
             else -> PsiReference.EMPTY_ARRAY
         }
     }

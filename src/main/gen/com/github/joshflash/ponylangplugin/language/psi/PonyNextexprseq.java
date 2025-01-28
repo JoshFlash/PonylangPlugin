@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface PonyNextexprseq extends PsiElement {
 
   @NotNull
-  PonyNextassignment getNextassignment();
+  PonyAssignment getAssignment();
 
   @Nullable
   PonyNosemi getNosemi();

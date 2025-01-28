@@ -34,6 +34,12 @@ public class PonyNominalImpl extends ASTWrapperPsiElement implements PonyNominal
   }
 
   @Override
+  @Nullable
+  public PonyIdVar getIdVar() {
+    return findChildByClass(PonyIdVar.class);
+  }
+
+  @Override
   @NotNull
   public PonyTypeRef getTypeRef() {
     return findNotNullChildByClass(PonyTypeRef.class);
@@ -49,12 +55,6 @@ public class PonyNominalImpl extends ASTWrapperPsiElement implements PonyNominal
   @Nullable
   public PsiElement getGencap() {
     return findChildByType(GENCAP);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getId() {
-    return findChildByType(ID);
   }
 
 }

@@ -35,8 +35,8 @@ public class PonyBarelambdatypeImpl extends ASTWrapperPsiElement implements Pony
 
   @Override
   @Nullable
-  public PonyIdRef getIdRef() {
-    return findChildByClass(PonyIdRef.class);
+  public PonyIdVar getIdVar() {
+    return findChildByClass(PonyIdVar.class);
   }
 
   @Override

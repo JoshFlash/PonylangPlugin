@@ -6,7 +6,7 @@ import com.intellij.codeInsight.completion.CompletionContributor
 class PonyCompletionContributor : CompletionContributor() {
     private val providers = listOf(
         PonyTypeIdCompletionProvider,
-        PonyKeywordCompletionProvider
+        PonyControlKeywordCompletionProvider
     )
     init {
         providers.forEach { extend(it.type, it.context, it) }
