@@ -33,10 +33,4 @@ public class PonyIdVarImpl extends ASTWrapperPsiElement implements PonyIdVar {
     return findChildByType(ID);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getTypeId() {
-    return findChildByType(TYPE_ID);
-  }
-
 }

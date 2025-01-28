@@ -10,7 +10,4 @@ public interface PonyIdVar extends PsiElement {
   @Nullable
   PsiElement getId();
 
-  @Nullable
-  PsiElement getTypeId();
-
 }

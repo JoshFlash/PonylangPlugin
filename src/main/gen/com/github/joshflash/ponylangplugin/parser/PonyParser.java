@@ -1252,13 +1252,13 @@ public class PonyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // id | type_id | SCORE
+  // id | SCORE
   public static boolean id_var(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "id_var")) return false;
+    if (!nextTokenIs(b, "<id var>", ID, SCORE)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, ID_VAR, "<id var>");
     r = consumeToken(b, ID);
-    if (!r) r = consumeToken(b, TYPE_ID);
     if (!r) r = consumeToken(b, SCORE);
     exit_section_(b, l, m, r, false, null);
     return r;

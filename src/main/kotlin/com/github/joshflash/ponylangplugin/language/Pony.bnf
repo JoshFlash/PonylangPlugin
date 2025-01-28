@@ -140,7 +140,7 @@
     float="regexp:([0-9]([0-9]|_)*(\.[0-9]([0-9]|_)*)?([eE][+-]?[0-9]([0-9]|_)*)?)"
     int="regexp:(0x[0-9a-fA-F]([0-9a-fA-F]|_)*)|(0b[01]([01]|_)*)"
     type_id="regexp:_?[A-Z][a-zA-Z0-9_]*"
-    id="regexp:(_[a-z]|[a-z])[a-zA-Z0-9_]*'*"
+    id="regexp:_?[a-z][a-zA-Z0-9_]*'*"
     tuple_id="regexp:_[1-9][0-9]?"
     doc_string="regexp:(\"\"\")([^\"]|\"\"?[^\"])*(\"\"\")?"
     string="regexp:(\"(\\[abefnrtuvx0'?\"\\]|[^\"\\])*\")"
@@ -168,7 +168,7 @@ type_ref ::= type_id ;
 member_ref ::= id ;
 term_ref ::= id | SCORE ;
 param_ref ::= id | SCORE ;
-id_var ::= id | type_id | SCORE ;
+id_var ::= id | SCORE ;
 
 members ::= field* method* ;
 

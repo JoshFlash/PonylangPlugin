@@ -22,10 +22,10 @@ class PonyVariableReference(idVar: PonyIdVar): PsiReferenceBase<PonyIdVar>(idVar
             return paramId
         }
 
-        val patternRefs = PsiTreeUtil.collectElementsOfType(method, PonyTermRef::class.java)
-        val patternId = patternRefs.firstOrNull { it.id?.text == key }
-        if (patternId != null) {
-            return patternId
+        val termRefs = PsiTreeUtil.collectElementsOfType(method, PonyTermRef::class.java)
+        val termId = termRefs.firstOrNull { it.id?.text == key }
+        if (termId != null) {
+            return termId
         }
 
         val ifdefblock = PsiTreeUtil.getParentOfType(element, PonyIfdefblock::class.java)
@@ -37,6 +37,13 @@ class PonyVariableReference(idVar: PonyIdVar): PsiReferenceBase<PonyIdVar>(idVar
 
             if (indexedId != null) {
                 return indexedId
+            }
+        }
+
+        if (PonyUtil.methodCallExists(element)) {
+            val methodCallId = PonyUtil.resolveMethodReference(key, element.project)
+            if (methodCallId != null) {
+                return methodCallId
             }
         }
 

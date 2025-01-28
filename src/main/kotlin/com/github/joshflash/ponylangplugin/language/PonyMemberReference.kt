@@ -22,9 +22,9 @@ class PonyMemberReference(memberRef: PonyMemberRef): PsiReferenceBase<PonyMember
             return element
         }
 
-        val memberRef = PonyUtil.resolveMembersInFile(element, key)
-        if (memberRef != null) {
-            return memberRef
+        val fieldReference = PonyUtil.resolveFieldReference(key, project)
+        if (fieldReference != null && !PonyUtil.methodCallExists(element)) {
+            return fieldReference
         }
 
         val methodReference = PonyUtil.resolveMethodReference(key, project)
@@ -32,11 +32,6 @@ class PonyMemberReference(memberRef: PonyMemberRef): PsiReferenceBase<PonyMember
             return methodReference
         }
 
-        val fieldReference = PonyUtil.resolveFieldReference(key, project)
-        if (fieldReference != null) {
-            return fieldReference
-        }
-
-        return null
+        return fieldReference
     }
 }

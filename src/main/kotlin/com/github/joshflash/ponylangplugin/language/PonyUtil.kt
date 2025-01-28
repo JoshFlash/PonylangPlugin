@@ -109,7 +109,7 @@ object PonyUtil {
     fun resolveMembersInFile(element: PsiElement, key: String): PsiElement? {
         val privateFields = findAllInFile<PonyField>(element.containingFile)
         val fieldId = privateFields.firstOrNull { it.memberRef.id.text == key }?.memberRef
-        if (fieldId != null && !memberCallExists(element)) {
+        if (fieldId != null && !methodCallExists(element)) {
             return fieldId
         }
 
@@ -128,7 +128,7 @@ object PonyUtil {
         return fieldId
     }
 
-    private fun memberCallExists(element: PsiElement): Boolean {
+    fun methodCallExists(element: PsiElement): Boolean {
         val atom = PsiTreeUtil.getContextOfType(element, PonyAtom::class.java)
         return PsiTreeUtil.getNextSiblingOfType(atom, PonyPostfixelem::class.java)?.call != null
     }
