@@ -2,7 +2,7 @@
 
 # PonylangPlugin Changelog
 
-## [Alpha 0.7.4]
+## [0.7.4]
 
 ### Added
 - Limited support for reference resolution of variables  
